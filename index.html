@@ -386,60 +386,32 @@
   <!-- ============================================================== -->
   <!-- MINIMALIST CONTACT FOOTER                                      -->
   <!-- ============================================================== -->
-  <footer id="contact" class="hairline-t bg-noir-subtle pt-20 pb-16">
-    <div class="max-w-7xl mx-auto px-6 md:px-12">
+  <footer id="contact" class="hairline-t bg-noir-subtle pt-24 pb-20">
+    <div class="max-w-4xl mx-auto px-6 md:px-12 text-center">
       
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 pb-16 hairline-b">
-        
-        <!-- Contact Column -->
-        <div class="space-y-6">
-          <span class="text-xs uppercase tracking-[0.25em] text-noir-muted block">04 / Concierge</span>
-          <h3 class="text-3xl font-serif text-white">Direct Contact</h3>
-          <p class="text-sm text-noir-muted font-light leading-relaxed max-w-md">
-            Inquire regarding private roastery access, tasting flight reservations, or bespoke micro-lot deliveries.
-          </p>
-
-          <!-- Clickable WhatsApp Phone Button -->
-          <div>
-            <a href="https://wa.me/15559876543?text=Starbucks%20Reserve%20Inquiry" 
-               target="_blank" 
-               rel="noopener noreferrer" 
-               class="inline-flex items-center gap-3 px-6 py-4 border border-noir-borderLight hover:border-white text-white text-xs uppercase tracking-widest font-semibold transition-colors">
-              <i data-lucide="phone" class="w-4 h-4 text-white"></i>
-              <span>WhatsApp: +1 (555) 987-6543</span>
-            </a>
-          </div>
-
-          <p class="text-xs text-noir-muted pt-2">
-            Direct dispatch: <a href="mailto:concierge@starbucksreserve.com" class="text-white hover:underline">concierge@starbucksreserve.com</a>
+      <div class="space-y-8 pb-16 hairline-b">
+        <div>
+          <span class="text-xs uppercase tracking-[0.28em] text-noir-muted block mb-3 font-medium">Concierge & Reservations</span>
+          <h3 class="text-3xl sm:text-4xl font-serif text-white mb-4">Direct Contact</h3>
+          <p class="text-sm text-noir-muted font-light leading-relaxed max-w-md mx-auto">
+            Inquire directly for private tasting flight reservations, bespoke micro-lot deliveries, or estate tours.
           </p>
         </div>
 
-        <!-- Flagship Address Column (Clean Typography, No Map) -->
-        <div class="space-y-6 md:border-l md:border-noir-border md:pl-12 flex flex-col justify-between">
-          <div>
-            <span class="text-xs uppercase tracking-[0.25em] text-noir-muted block">Global Sanctuary</span>
-            <h3 class="text-2xl font-serif text-white mt-1 mb-2">Seattle Flagship Roastery</h3>
-            <p class="text-sm text-noir-muted font-light leading-relaxed">
-              1124 Pike Street, Seattle, WA 98101, United States
-            </p>
-            <div class="mt-4 text-xs text-noir-muted space-y-1">
-              <p>Main Roastery: Daily 07:00 – 22:00</p>
-              <p>Arriviamo Bar: Cocktails & Flights from 16:00</p>
-            </div>
-          </div>
-
-          <div>
-            <a href="https://maps.google.com/?q=1124+Pike+St,+Seattle,+WA+98101" 
-               target="_blank" 
-               rel="noopener noreferrer" 
-               class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-noir-muted hover:text-white transition-colors">
-              <span>View On Google Maps</span>
-              <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
-            </a>
-          </div>
+        <!-- Clean WhatsApp Phone Button -->
+        <div class="flex justify-center">
+          <a href="https://wa.me/15559876543?text=Starbucks%20Reserve%20Inquiry" 
+             target="_blank" 
+             rel="noopener noreferrer" 
+             class="inline-flex items-center gap-3 px-8 py-4 border border-noir-borderLight hover:border-white text-white text-xs uppercase tracking-widest font-semibold transition-all hover:bg-white hover:text-black">
+            <i data-lucide="phone" class="w-4 h-4"></i>
+            <span>WhatsApp: +1 (555) 987-6543</span>
+          </a>
         </div>
 
+        <p class="text-xs text-noir-muted">
+          Direct dispatch: <a href="mailto:concierge@starbucksreserve.com" class="text-white hover:underline">concierge@starbucksreserve.com</a>
+        </p>
       </div>
 
       <!-- Copyright -->
@@ -463,13 +435,16 @@
     (function() {
       const beansStage = document.getElementById('beans-stage');
       const beanElements = document.querySelectorAll('.cocoa-item');
+      const menuSection = document.getElementById('menu-section');
+      const locationsSection = document.getElementById('locations-section');
+      const reviewsSection = document.getElementById('reviews-section');
       const contactFooter = document.getElementById('contact');
 
       let lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
       let targetVelocity = 0;
       let currentVelocity = 0;
       let levitationTime = 0;
-      let currentOpacity = 1;
+      let currentOpacity = 0;
       let currentBlur = 0;
 
       // Window dimensions cache
@@ -497,12 +472,11 @@
           el: el,
           speedFactor: parseFloat(el.getAttribute('data-speed')) || 1.3,
           rotFactor: parseFloat(el.getAttribute('data-rot')) || 0.18,
-          baseSway: parseFloat(el.getAttribute('data-sway')) || 20,
+          baseSway: parseFloat(el.getAttribute('data-sway')) || 22,
           phaseOffset: i * 1.5,
-          // World X position that continuously increments
+          // Continuous world X for toroidal loop
           worldX: init.x,
           baseY: init.y,
-          // Width of element for seamless boundary wrap
           itemWidth: 160,
           currentRenderX: init.x,
           currentRenderY: init.y,
@@ -517,9 +491,8 @@
         
         // As user scrolls DOWN, target velocity increases
         if (delta > 0) {
-          targetVelocity = Math.min(targetVelocity + delta * 0.35, 55);
+          targetVelocity = Math.min(targetVelocity + delta * 0.4, 60);
         } else if (delta < 0) {
-          // Subtle reverse or braking on scroll up
           targetVelocity = Math.max(targetVelocity + delta * 0.15, -15);
         }
         lastScrollY = nowY;
@@ -534,35 +507,55 @@
         prevFrameTime = currentTime;
 
         // Base constant slow ambient drift to the right
-        const ambientSpeed = 16; // px per second ambient glide
+        const ambientSpeed = 18; // px per second ambient glide
 
         // Velocity friction decay: smoothly slows down to 0 after scrolling stops
-        targetVelocity *= Math.pow(0.86, dt * 60);
+        targetVelocity *= Math.pow(0.85, dt * 60);
         if (Math.abs(targetVelocity) < 0.001) targetVelocity = 0;
 
         // Smooth acceleration lerp
-        currentVelocity += (targetVelocity - currentVelocity) * Math.min(1, dt * 9);
+        currentVelocity += (targetVelocity - currentVelocity) * Math.min(1, dt * 8);
         levitationTime += dt * 1.4;
 
-        // Check if footer contact section is entered to fade out beans
-        let targetOpacityVal = 1;
+        /* 
+          Section Visibility Logic:
+          Beans appear behind the main sections: Menu, Locations, and Reviews.
+          Smooth entry fade-in at Menu top, and smooth motion blur fade-out at Reviews bottom / Contact footer.
+        */
+        const menuRect = menuSection ? menuSection.getBoundingClientRect() : null;
+        const reviewsRect = reviewsSection ? reviewsSection.getBoundingClientRect() : null;
+
+        let targetOpacityVal = 0;
         let targetBlurVal = 0;
 
-        if (contactFooter) {
-          const footerRect = contactFooter.getBoundingClientRect();
-          // Fade out as footer comes into view
-          if (footerRect.top < winH) {
-            const distanceIntoView = winH - footerRect.top;
-            const fadeThreshold = 300;
-            const progress = Math.max(0, Math.min(1, distanceIntoView / fadeThreshold));
-            targetOpacityVal = 1 - progress;
-            targetBlurVal = progress * 24; // Smooth motion/gaussian blur
+        if (menuRect && reviewsRect) {
+          const zoneTop = menuRect.top;
+          const zoneBottom = reviewsRect.bottom;
+
+          // Check if user is within the experience boundaries
+          if (zoneTop < winH && zoneBottom > 0) {
+            let entryFactor = 1;
+            let exitFactor = 1;
+
+            // Fade in smoothly as Menu approaches
+            if (zoneTop > 0) {
+              entryFactor = Math.max(0, Math.min(1, (winH - zoneTop) / 250));
+            }
+
+            // Fade out smoothly with motion blur as Reviews ends
+            if (zoneBottom < 350) {
+              exitFactor = Math.max(0, zoneBottom / 350);
+            }
+
+            const activeFactor = Math.min(entryFactor, exitFactor);
+            targetOpacityVal = activeFactor;
+            targetBlurVal = (1 - activeFactor) * 22; // Dynamic motion/gaussian blur
           }
         }
 
-        // Lerp opacity & blur so it never blinks or pops
-        currentOpacity += (targetOpacityVal - currentOpacity) * Math.min(1, dt * 8);
-        currentBlur += (targetBlurVal - currentBlur) * Math.min(1, dt * 8);
+        // Lerp opacity & blur so transition is velvet-smooth on 120Hz
+        currentOpacity += (targetOpacityVal - currentOpacity) * Math.min(1, dt * 7);
+        currentBlur += (targetBlurVal - currentBlur) * Math.min(1, dt * 7);
 
         beansStage.style.opacity = currentOpacity.toFixed(3);
         beansStage.style.filter = currentBlur > 0.4 ? `blur(${currentBlur.toFixed(1)}px)` : 'none';
@@ -570,37 +563,38 @@
         if (currentOpacity < 0.005) return;
 
         // Dynamic amplitude multiplier based on scroll speed:
-        // As scroll speed increases, amplitude expands smoothly
+        // The faster the user scrolls, the wider the vertical and rotational sway becomes.
+        // Smooth decay back to base amplitude when scrolling stops.
         const speedMagnitude = Math.abs(currentVelocity);
-        const amplitudeMultiplier = 1 + (speedMagnitude * 0.08); // grows smoothly with scroll
+        const amplitudeMultiplier = 1 + (speedMagnitude * 0.12);
 
-        const wrapSpan = winW + 240; // Total horizontal wrap span including margins
+        const wrapSpan = winW + 260; // Total horizontal wrap span including margins
 
         for (let i = 0; i < beansData.length; i++) {
           const b = beansData[i];
 
-          // Movement delta: ambient drift + scroll acceleration thrust
-          const moveDeltaX = (ambientSpeed + (currentVelocity * b.speedFactor * 14)) * dt;
+          // Movement delta: ambient drift + scroll-driven acceleration to the right
+          const moveDeltaX = (ambientSpeed + (currentVelocity * b.speedFactor * 16)) * dt;
           b.worldX += moveDeltaX;
 
-          // Seamless toroidal wrap:
-          // When bean moves past right edge (winW + b.itemWidth), wrap to left edge (-b.itemWidth)
+          // Continuous horizontal loop:
+          // When a cocoa element fully moves off the RIGHT edge, immediately respawn and re-enter from the LEFT edge
           let screenX = ((b.worldX + b.itemWidth) % wrapSpan);
           if (screenX < 0) screenX += wrapSpan;
           screenX -= b.itemWidth;
 
-          // Dynamic harmonic levitation whose amplitude responds to velocity
+          // Dynamically altered sway amplitude (vertical and rotational)
           const dynamicSway = b.baseSway * amplitudeMultiplier;
-          const swayX = Math.cos(levitationTime + b.phaseOffset) * (dynamicSway * 0.35);
+          const swayX = Math.cos(levitationTime + b.phaseOffset) * (dynamicSway * 0.3);
           const swayY = Math.sin(levitationTime * 0.85 + b.phaseOffset) * dynamicSway;
-          const swayRot = Math.sin(levitationTime * 0.45 + b.phaseOffset) * (6 * amplitudeMultiplier) + (currentVelocity * b.rotFactor * 2.5);
+          const swayRot = Math.sin(levitationTime * 0.45 + b.phaseOffset) * (7 * amplitudeMultiplier) + (currentVelocity * b.rotFactor * 3.2);
 
           const finalX = screenX + swayX;
           const finalY = b.baseY + swayY;
 
-          // Edge fade effect for individual bean: fades softly right as it reaches edge
+          // Edge fade effect so re-entry from the left is organic
           let edgeAlpha = 1;
-          const margin = 120;
+          const margin = 100;
           if (finalX < -20) {
             edgeAlpha = Math.max(0, (finalX + b.itemWidth) / margin);
           } else if (finalX > winW - margin) {
@@ -608,7 +602,7 @@
           }
           b.el.style.opacity = edgeAlpha.toFixed(2);
 
-          // Smooth coordinate lerping for 120Hz buttery frame transition
+          // Frame-rate independent coordinate lerp for buttery 120Hz display
           const lerpRate = Math.min(1, dt * 12);
           b.currentRenderX += (finalX - b.currentRenderX) * lerpRate;
           b.currentRenderY += (finalY - b.currentRenderY) * lerpRate;
