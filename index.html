@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Starbucks Reserve™ | Crafted Distinction</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              dark: '#0B0D0B',
+              surface: '#121613',
+              card: '#161B17',
+              border: '#242C26',
+              emerald: '#006241',
+              accent: '#CBA258',
+              accentLight: '#E5C483',
+              cream: '#F4EFEA',
+              muted: '#8E9891'
+            }
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0B0D0B;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #242C26;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #006241;
+    }
+
+    /* Hardware acceleration & smooth rendering */
+    .gpu-accel {
+      transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+      perspective: 1000px;
+      will-change: transform, opacity, filter;
+    }
+
+    .bean-glow {
+      filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.7)) drop-shadow(0 4px 8px rgba(203, 162, 88, 0.15));
+    }
+
+    /* Ambient noise & luxury gradients */
+    .bg-grain {
+      background-image: radial-gradient(rgba(203, 162, 88, 0.04) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+
+    .radial-vignette {
+      background: radial-gradient(circle at 50% 0%, rgba(0, 98, 65, 0.12) 0%, rgba(11, 13, 11, 0.8) 60%, #0B0D0B 100%);
+    }
+
+    .glass-panel {
+      background: rgba(22, 27, 23, 0.72);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .glass-panel:hover {
+      border-color: rgba(203, 162, 88, 0.25);
+    }
+  </style>
+</head>
+<body class="bg-brand-dark text-brand-cream font-sans antialiased selection:bg-brand-accent selection:text-brand-dark overflow-x-hidden">
+
+  <!-- TOP ANNOUNCEMENT BAR -->
+  <div class="border-b border-brand-border/40 bg-brand-surface/70 py-2.5 px-4 text-center text-xs tracking-widest uppercase font-medium text-brand-accent/90">
+    <span>Private Reserve Collection 2026 • Handcrafted Single-Origin Micro-Lots</span>
+  </div>
+
+  <!-- NAVIGATION -->
+  <header class="sticky top-0 z-50 glass-panel border-b border-brand-border/40 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-11 h-11 rounded-full bg-brand-emerald flex items-center justify-center p-2 ring-1 ring-brand-accent/40 shadow-lg shadow-brand-emerald/20 transition-transform duration-300 group-hover:scale-105">
+          <!-- Starbucks Siren Stylized Vector -->
+          <svg viewBox="0 0 100 100" class="w-full h-full text-white fill-current">
+            <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="4"/>
+            <path d="M50 18 L53 26 L61 26 L55 31 L57 39 L50 34 L43 39 L45 31 L39 26 L47 26 Z" fill="currentColor"/>
+            <path d="M50 38 C42 38 36 44 36 52 C36 62 44 68 50 78 C56 68 64 62 64 52 C64 44 58 38 50 38 Z" fill="none" stroke="currentColor" stroke-width="3"/>
+            <circle cx="50" cy="51" r="5" fill="currentColor"/>
+            <path d="M26 62 C32 68 38 71 44 72" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/>
+            <path d="M74 62 C68 68 62 71 56 72" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-serif tracking-wider font-semibold text-lg text-white">STARBUCKS</span>
+          <span class="text-[10px] tracking-[0.25em] text-brand-accent uppercase -mt-1 font-semibold">Reserve™</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Anchors -->
+      <nav class="hidden md:flex items-center gap-10 text-sm font-medium tracking-wide">
+        <a href="#menu-section" class="text-brand-muted hover:text-brand-accent transition-colors">Menu</a>
+        <a href="#locations-section" class="text-brand-muted hover:text-brand-accent transition-colors">Locations</a>
+        <a href="#reviews-section" class="text-brand-muted hover:text-brand-accent transition-colors">Reviews</a>
+        <a href="#contact" class="text-brand-muted hover:text-brand-accent transition-colors">Contact</a>
+      </nav>
+
+      <!-- CTA & Status -->
+      <div class="flex items-center gap-4">
+        <a href="https://wa.me/15559876543?text=Hello%20Starbucks%20Reserve,%20I%20would%20like%20to%20reserve%20a%20table" target="_blank" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-gradient-to-r from-brand-emerald to-[#047a52] text-white hover:brightness-110 shadow-lg shadow-brand-emerald/25 transition-all">
+          <i data-lucide="message-circle" class="w-4 h-4"></i>
+          <span>Order Concierge</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="relative min-h-[85vh] flex items-center justify-center overflow-hidden radial-vignette bg-grain">
+    <div class="max-w-5xl mx-auto px-6 py-20 text-center relative z-10">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-surface border border-brand-border/60 text-xs text-brand-accent tracking-widest uppercase mb-6 shadow-inner">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand-accent animate-ping"></span>
+        Botanical Roastery & Reserve Bar
+      </div>
+      
+      <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-normal tracking-tight text-white leading-[1.08] mb-8">
+        Rare beans.<br>
+        <span class="italic font-normal text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-amber-200 to-brand-accent">Unrivaled craft.</span>
+      </h1>
+
+      <p class="max-w-2xl mx-auto text-base sm:text-lg text-brand-muted font-light leading-relaxed mb-12">
+        An intimate sensory voyage into terroir-specific estate harvests, roasted in small micro-batches with meticulous artisan calibration.
+      </p>
+
+      <!-- Quick Section Hop Links -->
+      <div class="flex flex-wrap items-center justify-center gap-4 text-sm font-medium">
+        <a href="#experience-zone" class="px-8 py-4 rounded-full bg-brand-accent text-brand-dark font-semibold tracking-wide hover:bg-brand-accentLight transition-all duration-200 shadow-xl shadow-brand-accent/15 flex items-center gap-2">
+          <span>Explore Experience Zone</span>
+          <i data-lucide="arrow-down" class="w-4 h-4"></i>
+        </a>
+        <a href="#menu-section" class="px-8 py-4 rounded-full glass-panel text-white hover:bg-white/5 transition-all border border-brand-border">
+          Taste Menu
+        </a>
+      </div>
+    </div>
+    
+    <!-- Subtle Hero Decorative Light -->
+    <div class="absolute -bottom-48 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-brand-emerald/15 rounded-full blur-[140px] pointer-events-none"></div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- MAIN EXPERIENCE CONTAINER WITH FLOATING 3D COCOA BEANS ENGINE -->
+  <!-- ONLY ACTIVE OVER MENU, LOCATIONS, AND REVIEWS SECTIONS        -->
+  <!-- ============================================================== -->
+  <div id="experience-zone" class="relative overflow-hidden">
+    
+    <!-- FLOATING 3D COCOA BEANS / PODS LAYER (ABSOLUTE OVER THIS WRAPPER ONLY) -->
+    <div id="cocoa-universe" class="pointer-events-none absolute inset-0 z-0 overflow-hidden select-none" aria-hidden="true">
+      <!-- Beans will be injected or anchored here with transform3d & dynamic physics -->
+      <div id="beans-stage" class="relative w-full h-full gpu-accel transition-opacity duration-300">
+        
+        <!-- Bean 1: Large Foreground Pod (Top Left -> Right) -->
+        <div class="cocoa-item absolute top-[8%] left-[4%] w-32 md:w-44 aspect-[1/1.3] gpu-accel" data-speed="1.4" data-rot="0.25" data-sway="32">
+          <svg viewBox="0 0 160 210" class="w-full h-full bean-glow">
+            <defs>
+              <radialGradient id="podGrad1" cx="35%" cy="30%" r="70%">
+                <stop offset="0%" stop-color="#8C5332"/>
+                <stop offset="40%" stop-color="#552C16"/>
+                <stop offset="85%" stop-color="#281308"/>
+                <stop offset="100%" stop-color="#140803"/>
+              </radialGradient>
+              <linearGradient id="podRidge" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#CBA258" stop-opacity="0.6"/>
+                <stop offset="50%" stop-color="#6E3A1D" stop-opacity="0.3"/>
+                <stop offset="100%" stop-color="#1F0D05" stop-opacity="0.8"/>
+              </linearGradient>
+            </defs>
+            <!-- Cocoa Pod Shape with 3D Depth & Ridges -->
+            <path d="M80 12 C125 35 150 90 142 145 C135 185 100 202 80 205 C60 202 25 185 18 145 C10 90 35 35 80 12 Z" fill="url(#podGrad1)"/>
+            <path d="M80 12 Q98 100 80 205" stroke="url(#podRidge)" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+            <path d="M80 12 Q125 100 110 185" stroke="url(#podRidge)" stroke-width="3" fill="none" opacity="0.7"/>
+            <path d="M80 12 Q35 100 50 185" stroke="url(#podRidge)" stroke-width="3" fill="none" opacity="0.7"/>
+            <!-- Cocoa Stem -->
+            <path d="M80 12 Q83 2 92 1" stroke="#3E2010" stroke-width="6" stroke-linecap="round" fill="none"/>
+            <!-- Surface Texture Sheen -->
+            <ellipse cx="65" cy="70" rx="14" ry="32" fill="#E5C483" opacity="0.12" transform="rotate(-18 65 70)"/>
+          </svg>
+        </div>
+
+        <!-- Bean 2: Crisp Roasted Artisan Bean (Center Right) -->
+        <div class="cocoa-item absolute top-[22%] right-[8%] w-24 md:w-32 aspect-square gpu-accel" data-speed="2.1" data-rot="-0.4" data-sway="45">
+          <svg viewBox="0 0 140 140" class="w-full h-full bean-glow">
+            <defs>
+              <radialGradient id="beanGrad1" cx="30%" cy="30%" r="75%">
+                <stop offset="0%" stop-color="#7B4B2A"/>
+                <stop offset="35%" stop-color="#4C2814"/>
+                <stop offset="85%" stop-color="#231006"/>
+                <stop offset="100%" stop-color="#0E0502"/>
+              </radialGradient>
+              <linearGradient id="creaseGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#120602"/>
+                <stop offset="60%" stop-color="#271107"/>
+                <stop offset="100%" stop-color="#84502E"/>
+              </linearGradient>
+            </defs>
+            <!-- Roasted Oval Bean Body -->
+            <path d="M22 68 C20 30 52 14 88 18 C124 22 135 60 130 92 C125 124 92 136 54 130 C24 125 24 96 22 68 Z" fill="url(#beanGrad1)"/>
+            <!-- Classic Characteristic Crease -->
+            <path d="M40 28 C64 45 68 85 96 118" stroke="url(#creaseGrad)" stroke-width="7" stroke-linecap="round" fill="none"/>
+            <path d="M42 30 C66 47 70 87 98 120" stroke="#000000" stroke-width="3" stroke-linecap="round" fill="none"/>
+            <!-- Highlight Reflection -->
+            <ellipse cx="95" cy="48" rx="8" ry="18" fill="#FFF" opacity="0.08" transform="rotate(25 95 48)"/>
+          </svg>
+        </div>
+
+        <!-- Bean 3: Midground Dark Cocoa Seed (Menu lower left) -->
+        <div class="cocoa-item absolute top-[38%] left-[7%] w-28 md:w-36 aspect-[1.2/1] gpu-accel opacity-90" data-speed="1.7" data-rot="0.32" data-sway="38">
+          <svg viewBox="0 0 150 120" class="w-full h-full bean-glow">
+            <defs>
+              <radialGradient id="beanGrad2" cx="35%" cy="25%" r="75%">
+                <stop offset="0%" stop-color="#9C5E37"/>
+                <stop offset="45%" stop-color="#582E17"/>
+                <stop offset="85%" stop-color="#210E05"/>
+                <stop offset="100%" stop-color="#0A0401"/>
+              </radialGradient>
+            </defs>
+            <path d="M25 60 C25 25 65 15 110 25 C145 35 145 78 130 98 C110 120 45 115 28 92 C18 78 25 70 25 60 Z" fill="url(#beanGrad2)"/>
+            <path d="M38 42 C70 52 85 70 125 80" stroke="#160803" stroke-width="6.5" stroke-linecap="round" fill="none"/>
+            <path d="M38 43 C70 53 85 71 125 81" stroke="#E5C483" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.4"/>
+          </svg>
+        </div>
+
+        <!-- Bean 4: Golden Harvest Raw Pod (Near Locations Section) -->
+        <div class="cocoa-item absolute top-[52%] right-[5%] w-36 md:w-48 aspect-[1/1.35] gpu-accel" data-speed="1.3" data-rot="-0.18" data-sway="28">
+          <svg viewBox="0 0 160 210" class="w-full h-full bean-glow">
+            <defs>
+              <radialGradient id="podGrad2" cx="40%" cy="30%" r="75%">
+                <stop offset="0%" stop-color="#A56338"/>
+                <stop offset="35%" stop-color="#6C391B"/>
+                <stop offset="75%" stop-color="#34180A"/>
+                <stop offset="100%" stop-color="#140702"/>
+              </radialGradient>
+            </defs>
+            <path d="M80 14 C128 38 152 92 144 148 C136 186 98 202 80 205 C62 202 24 186 16 148 C8 92 32 38 80 14 Z" fill="url(#podGrad2)"/>
+            <path d="M80 14 Q100 105 80 205" stroke="#CBA258" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.45"/>
+            <path d="M80 14 Q128 105 112 188" stroke="#3B1C0D" stroke-width="3.5" fill="none"/>
+            <path d="M80 14 Q32 105 48 188" stroke="#3B1C0D" stroke-width="3.5" fill="none"/>
+            <ellipse cx="68" cy="80" rx="16" ry="38" fill="#FFF" opacity="0.06" transform="rotate(-15 68 80)"/>
+          </svg>
+        </div>
+
+        <!-- Bean 5: Micro Floating Bean (Locations lower right) -->
+        <div class="cocoa-item absolute top-[68%] left-[10%] w-20 md:w-28 aspect-square gpu-accel opacity-80" data-speed="2.3" data-rot="0.45" data-sway="50">
+          <svg viewBox="0 0 140 140" class="w-full h-full bean-glow">
+            <defs>
+              <radialGradient id="beanGradSmall" cx="30%" cy="30%" r="70%">
+                <stop offset="0%" stop-color="#8A512C"/>
+                <stop offset="50%" stop-color="#46220E"/>
+                <stop offset="100%" stop-color="#150802"/>
+              </radialGradient>
+            </defs>
+            <path d="M25 65 C22 30 55 18 90 22 C125 26 132 62 128 92 C122 122 88 132 55 126 C28 120 27 92 25 65 Z" fill="url(#beanGradSmall)"/>
+            <path d="M42 32 C65 50 68 86 94 116" stroke="#0E0502" stroke-width="6" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+
+        <!-- Bean 6: Giant Luxury Pod Over Reviews -->
+        <div class="cocoa-item absolute top-[82%] right-[8%] w-36 md:w-52 aspect-[1/1.3] gpu-accel" data-speed="1.2" data-rot="-0.22" data-sway="34">
+          <svg viewBox="0 0 160 210" class="w-full h-full bean-glow">
+            <defs>
+              <radialGradient id="podGradRev" cx="35%" cy="30%" r="70%">
+                <stop offset="0%" stop-color="#995A34"/>
+                <stop offset="45%" stop-color="#5A2F17"/>
+                <stop offset="85%" stop-color="#261005"/>
+                <stop offset="100%" stop-color="#0E0401"/>
+              </radialGradient>
+            </defs>
+            <path d="M80 12 C125 35 150 90 142 145 C135 185 100 202 80 205 C60 202 25 185 18 145 C10 90 35 35 80 12 Z" fill="url(#podGradRev)"/>
+            <path d="M80 12 Q98 100 80 205" stroke="#CBA258" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.4"/>
+            <path d="M80 12 Q125 100 110 185" stroke="#2B1207" stroke-width="3" fill="none"/>
+            <path d="M80 12 Q35 100 50 185" stroke="#2B1207" stroke-width="3" fill="none"/>
+          </svg>
+        </div>
+
+        <!-- Bean 7: Lower Finishing Bean (Before Bottom Fade) -->
+        <div class="cocoa-item absolute top-[93%] left-[14%] w-24 md:w-32 aspect-square gpu-accel opacity-90" data-speed="1.9" data-rot="0.38" data-sway="42">
+          <svg viewBox="0 0 140 140" class="w-full h-full bean-glow">
+            <path d="M22 68 C20 30 52 14 88 18 C124 22 135 60 130 92 C125 124 92 136 54 130 C24 125 24 96 22 68 Z" fill="url(#beanGrad1)"/>
+            <path d="M40 28 C64 45 68 85 96 118" stroke="#120602" stroke-width="7" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CONTENT OVERLAY LAYER (Z-10) -->
+    <div class="relative z-10">
+
+      <!-- ========================================== -->
+      <!-- SECTION 1: MENU CARDS                      -->
+      <!-- ========================================== -->
+      <section id="menu-section" class="py-28 px-6 max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div>
+            <div class="flex items-center gap-2 text-brand-accent text-xs font-semibold tracking-widest uppercase mb-3">
+              <i data-lucide="sparkles" class="w-4 h-4"></i>
+              <span>Artisan Selections</span>
+            </div>
+            <h2 class="text-4xl md:text-5xl font-serif text-white font-normal">
+              Signature Reserve Menu
+            </h2>
+          </div>
+          <p class="max-w-md text-brand-muted text-sm leading-relaxed">
+            Every pour is brewed on state-of-the-art Clover® and Chemex extraction bars, bringing terroir profiles forward with vivid clarity.
+          </p>
+        </div>
+
+        <!-- 3 Premium Menu Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          <!-- Card 1 -->
+          <div class="glass-panel p-8 rounded-3xl group transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-brand-accent/5 flex flex-col justify-between">
+            <div>
+              <div class="w-full h-56 rounded-2xl bg-gradient-to-br from-brand-surface to-[#1F2620] p-6 mb-8 flex items-center justify-center relative overflow-hidden border border-brand-border/40">
+                <div class="absolute inset-0 bg-radial from-brand-accent/10 to-transparent"></div>
+                <!-- Drink Illustration -->
+                <div class="relative z-10 w-28 h-40 flex flex-col items-center justify-end">
+                  <!-- Glass -->
+                  <div class="w-24 h-36 border-2 border-white/20 rounded-b-2xl bg-gradient-to-b from-transparent via-[#4A2612]/70 to-[#2A1408] relative p-2 shadow-inner">
+                    <div class="w-full h-8 bg-amber-100/20 rounded-md filter blur-xs"></div>
+                    <div class="absolute top-2 right-4 w-3 h-3 rounded-full bg-white/20"></div>
+                  </div>
+                  <div class="w-16 h-2 bg-brand-accent/30 rounded-full blur-xs mt-1"></div>
+                </div>
+                <span class="absolute top-4 right-4 text-xs font-semibold px-2.5 py-1 rounded-full bg-brand-surface/90 text-brand-accent border border-brand-border">
+                  Origin: Ethiopia
+                </span>
+              </div>
+
+              <div class="flex items-baseline justify-between mb-3">
+                <h3 class="text-2xl font-serif text-white group-hover:text-brand-accent transition-colors">
+                  Geisha Estate Cold Brew
+                </h3>
+                <span class="text-xl font-serif text-brand-accent font-semibold">$14.50</span>
+              </div>
+              
+              <p class="text-sm text-brand-muted leading-relaxed mb-6 font-light">
+                Slow-steeped for 24 hours with fragrant notes of bergamot, jasmine florals, and Meyer lemon zest. Finished over hand-carved ice sphere.
+              </p>
+            </div>
+
+            <div class="pt-6 border-t border-brand-border/50 flex items-center justify-between text-xs text-brand-muted">
+              <span class="inline-flex items-center gap-1.5"><i data-lucide="flame" class="w-3.5 h-3.5 text-brand-accent"></i> Light Terroir Roast</span>
+              <a href="https://wa.me/15559876543?text=Order:%20Geisha%20Estate%20Cold%20Brew" target="_blank" class="text-white hover:text-brand-accent font-medium flex items-center gap-1">
+                Order <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="glass-panel p-8 rounded-3xl group transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-brand-accent/5 flex flex-col justify-between">
+            <div>
+              <div class="w-full h-56 rounded-2xl bg-gradient-to-br from-brand-surface to-[#1F2620] p-6 mb-8 flex items-center justify-center relative overflow-hidden border border-brand-border/40">
+                <div class="absolute inset-0 bg-radial from-brand-accent/10 to-transparent"></div>
+                <!-- Drink Illustration -->
+                <div class="relative z-10 w-28 h-40 flex flex-col items-center justify-end">
+                  <div class="w-20 h-28 border-2 border-white/20 rounded-b-xl bg-gradient-to-b from-[#D4AF37]/30 via-[#3B1D0E] to-[#1D0C05] relative p-1">
+                    <div class="w-full h-6 rounded bg-[#F7E7CE]/40"></div>
+                  </div>
+                  <div class="w-14 h-2 bg-brand-accent/30 rounded-full blur-xs mt-1"></div>
+                </div>
+                <span class="absolute top-4 right-4 text-xs font-semibold px-2.5 py-1 rounded-full bg-brand-surface/90 text-brand-accent border border-brand-border">
+                  Signature
+                </span>
+              </div>
+
+              <div class="flex items-baseline justify-between mb-3">
+                <h3 class="text-2xl font-serif text-white group-hover:text-brand-accent transition-colors">
+                  Smoked Barrel Cortado
+                </h3>
+                <span class="text-xl font-serif text-brand-accent font-semibold">$12.00</span>
+              </div>
+              
+              <p class="text-sm text-brand-muted leading-relaxed mb-6 font-light">
+                Aged green beans rested inside charred Kentucky oak bourbon barrels. Pulled with micro-textured oat foam and Madagascar vanilla bean.
+              </p>
+            </div>
+
+            <div class="pt-6 border-t border-brand-border/50 flex items-center justify-between text-xs text-brand-muted">
+              <span class="inline-flex items-center gap-1.5"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-brand-accent"></i> Oak Aged Note</span>
+              <a href="https://wa.me/15559876543?text=Order:%20Smoked%20Barrel%20Cortado" target="_blank" class="text-white hover:text-brand-accent font-medium flex items-center gap-1">
+                Order <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="glass-panel p-8 rounded-3xl group transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-brand-accent/5 flex flex-col justify-between">
+            <div>
+              <div class="w-full h-56 rounded-2xl bg-gradient-to-br from-brand-surface to-[#1F2620] p-6 mb-8 flex items-center justify-center relative overflow-hidden border border-brand-border/40">
+                <div class="absolute inset-0 bg-radial from-brand-accent/10 to-transparent"></div>
+                <!-- Drink Illustration -->
+                <div class="relative z-10 w-28 h-40 flex flex-col items-center justify-end">
+                  <div class="w-22 h-32 border-2 border-white/20 rounded-b-2xl bg-gradient-to-b from-[#2E1609] via-[#1D0C05] to-[#120703] relative p-1">
+                    <div class="w-full h-5 rounded-t bg-amber-400/20"></div>
+                  </div>
+                  <div class="w-16 h-2 bg-brand-accent/30 rounded-full blur-xs mt-1"></div>
+                </div>
+                <span class="absolute top-4 right-4 text-xs font-semibold px-2.5 py-1 rounded-full bg-brand-surface/90 text-brand-accent border border-brand-border">
+                  Micro-Lot
+                </span>
+              </div>
+
+              <div class="flex items-baseline justify-between mb-3">
+                <h3 class="text-2xl font-serif text-white group-hover:text-brand-accent transition-colors">
+                  Hacienda Nitro Reserve
+                </h3>
+                <span class="text-xl font-serif text-brand-accent font-semibold">$15.00</span>
+              </div>
+              
+              <p class="text-sm text-brand-muted leading-relaxed mb-6 font-light">
+                Infused with pure nitrogen for velvety cascara crema. Rich dark cocoa undertones paired with sweet black cherry and crushed hazelnuts.
+              </p>
+            </div>
+
+            <div class="pt-6 border-t border-brand-border/50 flex items-center justify-between text-xs text-brand-muted">
+              <span class="inline-flex items-center gap-1.5"><i data-lucide="coffee" class="w-3.5 h-3.5 text-brand-accent"></i> Cascara Infused</span>
+              <a href="https://wa.me/15559876543?text=Order:%20Hacienda%20Nitro%20Reserve" target="_blank" class="text-white hover:text-brand-accent font-medium flex items-center gap-1">
+                Order <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION 2: LOCATIONS & ROASTERY SHOWCASE   -->
+      <!-- ========================================== -->
+      <section id="locations-section" class="py-28 px-6 max-w-7xl mx-auto border-t border-brand-border/30">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <div class="inline-flex items-center gap-2 text-brand-accent text-xs font-semibold tracking-widest uppercase mb-3">
+            <i data-lucide="map-pin" class="w-4 h-4"></i>
+            <span>Global Flagship Roasteries</span>
+          </div>
+          <h2 class="text-4xl md:text-5xl font-serif text-white font-normal mb-4">
+            Sanctuaries of Coffee Architecture
+          </h2>
+          <p class="text-brand-muted text-sm leading-relaxed">
+            Step inside our architectural sanctuaries where copper roasting casks and barista mixology redefine the world’s most elevated coffee experience.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          <!-- Location 1 -->
+          <div class="glass-panel p-8 rounded-3xl group transition-all duration-300 hover:border-brand-accent/40">
+            <div class="flex items-center justify-between mb-6">
+              <span class="text-xs uppercase font-semibold tracking-wider text-brand-accent">Flagship Roastery</span>
+              <span class="flex items-center gap-1.5 text-xs text-emerald-400 bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-800/40">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Open Today
+              </span>
+            </div>
+            <h3 class="text-2xl font-serif text-white mb-2 group-hover:text-brand-accent transition-colors">Milan Piazza Cordusio</h3>
+            <p class="text-xs text-brand-muted font-light mb-6 flex items-center gap-1.5">
+              <i data-lucide="navigation" class="w-3.5 h-3.5 text-brand-accent"></i> Piazza Cordusio 3, 20123 Milano, Italy
+            </p>
+            <div class="space-y-2 text-xs text-brand-cream/80 border-t border-brand-border/40 pt-4 mb-6">
+              <div class="flex justify-between"><span>Tasting Flights:</span><span class="text-brand-accent font-medium">Daily 7:00 – 22:00</span></div>
+              <div class="flex justify-between"><span>Arriviamo Bar:</span><span class="text-brand-accent font-medium">Cocktails from 17:00</span></div>
+            </div>
+            <a href="https://maps.google.com/?q=Starbucks+Reserve+Roastery+Milano" target="_blank" class="w-full py-3 rounded-xl bg-white/5 hover:bg-brand-emerald hover:text-white transition-all text-xs font-semibold flex items-center justify-center gap-2 border border-brand-border">
+              <span>View On Interactive Map</span>
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+
+          <!-- Location 2 -->
+          <div class="glass-panel p-8 rounded-3xl group transition-all duration-300 hover:border-brand-accent/40">
+            <div class="flex items-center justify-between mb-6">
+              <span class="text-xs uppercase font-semibold tracking-wider text-brand-accent">Meatpacking District</span>
+              <span class="flex items-center gap-1.5 text-xs text-emerald-400 bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-800/40">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Open Today
+              </span>
+            </div>
+            <h3 class="text-2xl font-serif text-white mb-2 group-hover:text-brand-accent transition-colors">New York Reserve Roastery</h3>
+            <p class="text-xs text-brand-muted font-light mb-6 flex items-center gap-1.5">
+              <i data-lucide="navigation" class="w-3.5 h-3.5 text-brand-accent"></i> 61 9th Ave, New York, NY 10011, USA
+            </p>
+            <div class="space-y-2 text-xs text-brand-cream/80 border-t border-brand-border/40 pt-4 mb-6">
+              <div class="flex justify-between"><span>Roastery Bar:</span><span class="text-brand-accent font-medium">Daily 8:00 – 21:00</span></div>
+              <div class="flex justify-between"><span>Princi™ Bakery:</span><span class="text-brand-accent font-medium">Artisan Sourdough Fresh</span></div>
+            </div>
+            <a href="https://maps.google.com/?q=Starbucks+Reserve+Roastery+New+York" target="_blank" class="w-full py-3 rounded-xl bg-white/5 hover:bg-brand-emerald hover:text-white transition-all text-xs font-semibold flex items-center justify-center gap-2 border border-brand-border">
+              <span>View On Interactive Map</span>
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+
+          <!-- Location 3 -->
+          <div class="glass-panel p-8 rounded-3xl group transition-all duration-300 hover:border-brand-accent/40">
+            <div class="flex items-center justify-between mb-6">
+              <span class="text-xs uppercase font-semibold tracking-wider text-brand-accent">Nakameguro Oasis</span>
+              <span class="flex items-center gap-1.5 text-xs text-emerald-400 bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-800/40">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Open Today
+              </span>
+            </div>
+            <h3 class="text-2xl font-serif text-white mb-2 group-hover:text-brand-accent transition-colors">Tokyo Reserve Roastery</h3>
+            <p class="text-xs text-brand-muted font-light mb-6 flex items-center gap-1.5">
+              <i data-lucide="navigation" class="w-3.5 h-3.5 text-brand-accent"></i> 2-19-23 Aobadai, Meguro City, Tokyo, Japan
+            </p>
+            <div class="space-y-2 text-xs text-brand-cream/80 border-t border-brand-border/40 pt-4 mb-6">
+              <div class="flex justify-between"><span>Teavana™ Bar:</span><span class="text-brand-accent font-medium">Daily 7:00 – 23:00</span></div>
+              <div class="flex justify-between"><span>Copper Cask View:</span><span class="text-brand-accent font-medium">Cherry Blossom Terrace</span></div>
+            </div>
+            <a href="https://maps.google.com/?q=Starbucks+Reserve+Roastery+Tokyo" target="_blank" class="w-full py-3 rounded-xl bg-white/5 hover:bg-brand-emerald hover:text-white transition-all text-xs font-semibold flex items-center justify-center gap-2 border border-brand-border">
+              <span>View On Interactive Map</span>
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION 3: REVIEWS (CRITICS & CONNOISSEURS) -->
+      <!-- ========================================== -->
+      <section id="reviews-section" class="py-28 px-6 max-w-7xl mx-auto border-t border-brand-border/30">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div>
+            <div class="flex items-center gap-2 text-brand-accent text-xs font-semibold tracking-widest uppercase mb-3">
+              <i data-lucide="award" class="w-4 h-4"></i>
+              <span>Connoisseur Reviews</span>
+            </div>
+            <h2 class="text-4xl md:text-5xl font-serif text-white font-normal">
+              Acclaim & Critique
+            </h2>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="flex text-brand-accent">
+              <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+              <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+              <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+              <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+              <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+            </div>
+            <span class="text-sm font-semibold text-white">4.9 / 5.0</span>
+            <span class="text-xs text-brand-muted">(Over 3,400 Verified Visits)</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          <!-- Review 1 -->
+          <div class="glass-panel p-8 rounded-3xl flex flex-col justify-between">
+            <div>
+              <div class="flex text-brand-accent mb-6">
+                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+              </div>
+              <p class="text-brand-cream/90 font-serif italic text-lg leading-relaxed mb-8">
+                “The sensory experience of their Geisha cold brew is pure poetry. Unmatched attention to temperature, grind geometry, and terroir nuance.”
+              </p>
+            </div>
+            <div class="flex items-center gap-4 pt-4 border-t border-brand-border/40">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-accent to-amber-200 text-brand-dark flex items-center justify-center font-bold text-sm">
+                ES
+              </div>
+              <div>
+                <h4 class="text-sm font-semibold text-white">Elena Sarti</h4>
+                <p class="text-xs text-brand-muted">Lead Food & Wine Critic, Milano</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review 2 -->
+          <div class="glass-panel p-8 rounded-3xl flex flex-col justify-between">
+            <div>
+              <div class="flex text-brand-accent mb-6">
+                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+              </div>
+              <p class="text-brand-cream/90 font-serif italic text-lg leading-relaxed mb-8">
+                “Starbucks Reserve has fundamentally transformed the micro-lot roast into high luxury. The barrel-aged cortado is in a class of its own.”
+              </p>
+            </div>
+            <div class="flex items-center gap-4 pt-4 border-t border-brand-border/40">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-emerald to-emerald-300 text-white flex items-center justify-center font-bold text-sm">
+                MK
+              </div>
+              <div>
+                <h4 class="text-sm font-semibold text-white">Marcus Vance</h4>
+                <p class="text-xs text-brand-muted">Hospitality Editor, Manhattan</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review 3 -->
+          <div class="glass-panel p-8 rounded-3xl flex flex-col justify-between">
+            <div>
+              <div class="flex text-brand-accent mb-6">
+                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+              </div>
+              <p class="text-brand-cream/90 font-serif italic text-lg leading-relaxed mb-8">
+                “Sitting on the terrace in Nakameguro while tasting the cascara-infused reserve flight was the highlight of our culinary tour in Tokyo.”
+              </p>
+            </div>
+            <div class="flex items-center gap-4 pt-4 border-t border-brand-border/40">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-purple-500 to-indigo-400 text-white flex items-center justify-center font-bold text-sm">
+                YT
+              </div>
+              <div>
+                <h4 class="text-sm font-semibold text-white">Yuto Takahashi</h4>
+                <p class="text-xs text-brand-muted">Specialty Coffee Q-Grader</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </div>
+  <!-- END OF COCOA EXPERIENCE ZONE -->
+
+  <!-- ============================================================== -->
+  <!-- LUXURY FOOTER & CONTACT SECTION WITH WHATSAPP & MAP           -->
+  <!-- ============================================================== -->
+  <footer id="contact" class="relative bg-brand-surface border-t border-brand-border/60 pt-20 pb-12 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6">
+      
+      <!-- Upper Footer Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 pb-16 border-b border-brand-border/40">
+        
+        <!-- Left Column: Brand & WhatsApp Concierge -->
+        <div class="lg:col-span-5 flex flex-col justify-between space-y-8">
+          <div>
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 rounded-full bg-brand-emerald flex items-center justify-center p-2 ring-1 ring-brand-accent/40">
+                <svg viewBox="0 0 100 100" class="w-full h-full text-white fill-current">
+                  <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="4"/>
+                  <path d="M50 18 L53 26 L61 26 L55 31 L57 39 L50 34 L43 39 L45 31 L39 26 L47 26 Z" fill="currentColor"/>
+                  <circle cx="50" cy="51" r="5" fill="currentColor"/>
+                </svg>
+              </div>
+              <span class="font-serif tracking-widest text-xl text-white font-semibold">STARBUCKS RESERVE™</span>
+            </div>
+            <p class="text-sm text-brand-muted leading-relaxed font-light mb-8 max-w-md">
+              Connecting passionate growers from elevated volcanic regions to coffee enthusiasts worldwide through bespoke brewing mastery.
+            </p>
+
+            <!-- DIRECT WHATSAPP CONCIERGE BUTTON -->
+            <div class="p-6 rounded-2xl bg-brand-card border border-brand-border/80">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-9 h-9 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+                  <i data-lucide="message-square-code" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h4 class="text-sm font-semibold text-white">Instant WhatsApp Concierge</h4>
+                  <p class="text-xs text-brand-muted">Private reservations, orders & tasting tours</p>
+                </div>
+              </div>
+
+              <!-- Clickable WhatsApp Phone Button -->
+              <a href="https://wa.me/15559876543?text=Hello%20Starbucks%20Reserve!%20I%20would%20like%20to%20inquire%20about%20a%20table%20reservation." 
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 class="group mt-4 inline-flex items-center justify-center gap-3 w-full px-6 py-4 rounded-xl bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white font-semibold text-sm shadow-xl shadow-[#25D366]/20 hover:brightness-110 active:scale-[0.99] transition-all">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                  <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.634.07-1.782-.406-1.464-.608-2.42-2.096-2.493-2.193-.071-.098-.592-.787-.592-1.5 0-.713.375-1.063.508-1.208.133-.146.291-.182.388-.182.097 0 .194.002.279.006.09.004.21-.034.328.25.12.288.412 1.006.448 1.08.036.073.06.16.012.257-.048.097-.072.158-.144.242-.072.085-.152.19-.217.255-.072.072-.147.151-.063.295.084.145.374.617.803.999.553.492 1.018.644 1.162.716.145.072.229.06.314-.037.085-.097.362-.423.459-.569.097-.145.194-.121.327-.072.133.048.847.399.992.472.145.072.242.109.278.17.036.06.036.351-.108.756zM12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.659 1.438 5.176L2 22l4.982-1.306A9.957 9.957 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.2c-1.637 0-3.158-.465-4.453-1.272l-.319-.199-2.955.775.789-2.881-.208-.331A8.176 8.176 0 013.8 12c0-4.521 3.679-8.2 8.2-8.2 4.521 0 8.2 3.679 8.2 8.2 0 4.521-3.679 8.2-8.2 8.2z"/>
+                </svg>
+                <span>WhatsApp: +1 (555) 987-6543</span>
+                <i data-lucide="arrow-up-right" class="w-4 h-4 ml-auto group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="text-xs text-brand-muted space-y-1">
+            <p>Direct Inquiries: <a href="mailto:concierge@starbucksreserve.com" class="text-brand-accent hover:underline">concierge@starbucksreserve.com</a></p>
+            <p>Private Events & Barista Masterclasses available upon request.</p>
+          </div>
+        </div>
+
+        <!-- Right Column: Interactive Styled Map & Address Card -->
+        <div class="lg:col-span-7">
+          <div class="p-6 md:p-8 rounded-3xl bg-brand-card border border-brand-border/80 flex flex-col h-full">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+              <div>
+                <span class="text-xs font-semibold uppercase tracking-wider text-brand-accent">Flagship Address</span>
+                <h3 class="text-xl font-serif text-white">Central Roastery & Tasting Room</h3>
+                <p class="text-xs text-brand-muted mt-1">1124 Pike Street, Seattle, WA 98101, United States</p>
+              </div>
+              <a href="https://maps.google.com/?q=1124+Pike+St,+Seattle,+WA+98101" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-brand-surface hover:bg-brand-emerald text-white text-xs font-medium border border-brand-border transition-colors">
+                <i data-lucide="map" class="w-4 h-4 text-brand-accent"></i>
+                <span>Open in Google Maps</span>
+              </a>
+            </div>
+
+            <!-- Stylized Interactive Dark Mode Map Frame -->
+            <div class="relative w-full h-64 md:h-80 rounded-2xl overflow-hidden border border-brand-border group">
+              <!-- OpenStreetMap Dark Tile Embed for Live Interactive Pan & Zoom -->
+              <iframe 
+                title="Starbucks Reserve Location"
+                class="w-full h-full filter invert hue-rotate-180 contrast-125 brightness-90 grayscale-[35%]"
+                frameborder="0" 
+                scrolling="no" 
+                marginheight="0" 
+                marginwidth="0" 
+                src="https://www.openstreetmap.org/export/embed.html?bbox=-122.3325%2C47.6110%2C-122.3245%2C47.6160&amp;layer=mapnik&amp;marker=47.6135%2C-122.3285">
+              </iframe>
+              
+              <!-- Floating Location Pill inside map -->
+              <div class="absolute bottom-4 left-4 right-4 sm:right-auto glass-panel p-3.5 rounded-xl border border-brand-border/80 shadow-2xl flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-brand-accent text-brand-dark flex items-center justify-center font-bold">
+                  <i data-lucide="coffee" class="w-4 h-4"></i>
+                </div>
+                <div class="text-xs">
+                  <p class="font-semibold text-white">Starbucks Reserve Roastery</p>
+                  <p class="text-brand-muted">Valet parking & walk-in seating open</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Disclaimer / Credits -->
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-brand-muted/70 gap-4">
+        <p>© 2026 Starbucks Coffee Company. All Rights Reserved. Crafted for sensory distinction.</p>
+        <div class="flex items-center gap-6">
+          <a href="#" class="hover:text-brand-accent transition-colors">Privacy Policy</a>
+          <a href="#" class="hover:text-brand-accent transition-colors">Terms of Experience</a>
+          <a href="#" class="hover:text-brand-accent transition-colors">Supply Chain Transparency</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ============================================================== -->
+  <!-- HIGH-PERFORMANCE 120HZ SCROLL VELOCITY ENGINE (VANILLA JS)     -->
+  <!-- ============================================================== -->
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    (function() {
+      // Configuration & Physics State
+      const zone = document.getElementById('experience-zone');
+      const beansStage = document.getElementById('beans-stage');
+      const beanElements = document.querySelectorAll('.cocoa-item');
+
+      let lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
+      let lastTime = performance.now();
+      
+      // Target dynamic velocity computed from scroll
+      let scrollSpeed = 0; // px/ms
+      let smoothVelocity = 0; // Lerped velocity for fluid motion
+      
+      // Floating animation phase accumulator
+      let levitationTick = 0;
+
+      // Track whether experience zone is active
+      let inZone = false;
+      let exitProgress = 0; // 0 (fully visible) to 1 (fully blurred & vanished at bottom)
+
+      // Bean state containers for individual physics
+      const beansData = Array.from(beanElements).map((el, i) => {
+        return {
+          el: el,
+          speedFactor: parseFloat(el.getAttribute('data-speed')) || 1.5,
+          rotFactor: parseFloat(el.getAttribute('data-rot')) || 0.2,
+          swayMagnitude: parseFloat(el.getAttribute('data-sway')) || 30,
+          phaseOffset: i * 1.35, // Unique organic sine phase offset
+          currentX: 0,
+          currentY: 0,
+          currentRot: 0
+        };
+      });
+
+      // Passive scroll listener: calculate instantaneous scroll delta
+      window.addEventListener('scroll', () => {
+        const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+        const now = performance.now();
+        const dt = Math.max(now - lastTime, 8); // clamp to avoid div by zero
+
+        const delta = Math.abs(currentScrollY - lastScrollY);
+        // Instant speed in px/frame
+        scrollSpeed = delta / dt * 16.6;
+
+        lastScrollY = currentScrollY;
+        lastTime = now;
+      }, { passive: true });
+
+      // Core 120Hz Animation Loop via requestAnimationFrame
+      function renderLoop(timestamp) {
+        requestAnimationFrame(renderLoop);
+
+        // Smoothly interpolate scroll speed (ease out when user stops)
+        // Lerp factor 0.08 yields a luscious inertia deceleration
+        smoothVelocity += (scrollSpeed - smoothVelocity) * 0.08;
+        // Dampen raw scrollSpeed so it returns to 0 when scrolling stops
+        scrollSpeed *= 0.88;
+        if (scrollSpeed < 0.01) scrollSpeed = 0;
+
+        levitationTick += 0.022; // Continuous gentle levitation clock
+
+        // Calculate Experience Zone bounds & fadeout trigger
+        const zoneRect = zone.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+
+        // Zone is active when top has entered and bottom hasn't completely scrolled away
+        const hasEntered = zoneRect.top < windowHeight;
+        const hasExited = zoneRect.bottom < 0;
+        inZone = hasEntered && !hasExited;
+
+        if (!inZone) {
+          // If completely outside the zone, ensure stage is hidden to conserve GPU
+          beansStage.style.opacity = '0';
+          return;
+        }
+
+        /* 
+          Requirement 5: At the bottom of the section, cocoa elements must beautifully
+          FADE OUT with a BLUR effect (motion blur / gaussian blur) and disappear completely.
+          Trigger blur & fade in the final 350px before exiting.
+        */
+        const fadeThreshold = 400; // px from bottom of zone
+        if (zoneRect.bottom < fadeThreshold) {
+          // Normalizes between 1 (approaching bottom) and 0 (vanished)
+          exitProgress = Math.max(0, zoneRect.bottom / fadeThreshold);
+        } else {
+          exitProgress = 1; // fully visible inside section
+        }
+
+        // Apply progressive blur & opacity to the container
+        const blurAmount = (1 - exitProgress) * 24; // up to 24px gaussian blur
+        const targetOpacity = Math.max(0, Math.min(1, exitProgress));
+
+        beansStage.style.opacity = targetOpacity.toFixed(3);
+        beansStage.style.filter = blurAmount > 0.5 ? `blur(${blurAmount.toFixed(1)}px)` : 'none';
+
+        // Update each cocoa bean independently with hardware acceleration
+        beansData.forEach((bean) => {
+          // 1. Organic slow levitation floating oscillation
+          const floatX = Math.cos(levitationTick + bean.phaseOffset) * (bean.swayMagnitude * 0.4);
+          const floatY = Math.sin(levitationTick * 0.85 + bean.phaseOffset) * bean.swayMagnitude;
+          const floatRot = Math.sin(levitationTick * 0.5 + bean.phaseOffset) * 12;
+
+          // 2. Dynamic Scroll-Driven Acceleration:
+          // Moves smoothly to the RIGHT (positive X) proportional to scroll speed
+          // Plus slight tilt in rotation matching the momentum
+          const rightThrustX = smoothVelocity * bean.speedFactor * 18;
+          const momentumRot = smoothVelocity * bean.rotFactor * 15;
+
+          // Target values
+          const targetX = floatX + rightThrustX;
+          const targetY = floatY;
+          const targetRot = floatRot + momentumRot;
+
+          // Smooth lerp to individual positions (buttery 120Hz feel)
+          bean.currentX += (targetX - bean.currentX) * 0.12;
+          bean.currentY += (targetY - bean.currentY) * 0.12;
+          bean.currentRot += (targetRot - bean.currentRot) * 0.12;
+
+          // Pure GPU translate3d hardware accelerated transform
+          bean.el.style.transform = `translate3d(${bean.currentX.toFixed(2)}px, ${bean.currentY.toFixed(2)}px, 0) rotate(${bean.currentRot.toFixed(2)}deg)`;
+        });
+      }
+
+      // Start the engine
+      requestAnimationFrame(renderLoop);
+    })();
+  </script>
+</body>
+</html>
