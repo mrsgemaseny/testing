@@ -471,91 +471,116 @@
       const beanElements = document.querySelectorAll('.cocoa-item');
 
       let lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
-      let lastTime = performance.now();
-      
-      let scrollSpeed = 0;
-      let smoothVelocity = 0;
-      let levitationTick = 0;
+      let targetVelocity = 0;
+      let currentVelocity = 0;
+      let levitationTime = 0;
+      let currentOpacity = 0;
+      let currentBlur = 0;
 
       const beansData = Array.from(beanElements).map((el, i) => {
         return {
           el: el,
-          speedFactor: parseFloat(el.getAttribute('data-speed')) || 1.4,
-          rotFactor: parseFloat(el.getAttribute('data-rot')) || 0.2,
-          swayMagnitude: parseFloat(el.getAttribute('data-sway')) || 24,
-          phaseOffset: i * 1.5,
-          currentX: 0,
-          currentY: 0,
-          currentRot: 0
+          speedFactor: parseFloat(el.getAttribute('data-speed')) || 1.3,
+          rotFactor: parseFloat(el.getAttribute('data-rot')) || 0.15,
+          swayMagnitude: parseFloat(el.getAttribute('data-sway')) || 18,
+          phaseOffset: i * 1.45,
+          posX: 0,
+          posY: 0,
+          rot: 0
         };
       });
 
-      // Passive scroll monitor
+      // Continuous scroll velocity tracker with smooth decay
       window.addEventListener('scroll', () => {
-        const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
-        const now = performance.now();
-        const dt = Math.max(now - lastTime, 8);
-
-        const delta = Math.abs(currentScrollY - lastScrollY);
-        scrollSpeed = delta / dt * 16.6;
-
-        lastScrollY = currentScrollY;
-        lastTime = now;
+        const nowY = window.pageYOffset || document.documentElement.scrollTop;
+        const delta = nowY - lastScrollY;
+        
+        // Positive velocity when scrolling down
+        if (delta > 0) {
+          targetVelocity = Math.min(targetVelocity + delta * 0.45, 45);
+        } else if (delta < 0) {
+          targetVelocity = Math.max(targetVelocity + delta * 0.2, -15);
+        }
+        lastScrollY = nowY;
       }, { passive: true });
 
-      function renderLoop() {
+      let prevFrameTime = performance.now();
+
+      function renderLoop(currentTime) {
         requestAnimationFrame(renderLoop);
 
-        // Smooth physics interpolation
-        smoothVelocity += (scrollSpeed - smoothVelocity) * 0.08;
-        scrollSpeed *= 0.88;
-        if (scrollSpeed < 0.01) scrollSpeed = 0;
+        const dt = Math.min((currentTime - prevFrameTime) / 1000, 0.1);
+        prevFrameTime = currentTime;
 
-        levitationTick += 0.02;
+        // Exponential smoothing (friction) so it never stutters or resets abruptly
+        targetVelocity *= Math.pow(0.85, dt * 60);
+        if (Math.abs(targetVelocity) < 0.001) targetVelocity = 0;
 
+        currentVelocity += (targetVelocity - currentVelocity) * Math.min(1, dt * 10);
+        levitationTime += dt * 1.5;
+
+        // Bounding calculation with smooth entry and exit transitions
         const zoneRect = zone.getBoundingClientRect();
         const windowHeight = window.innerHeight;
 
-        const hasEntered = zoneRect.top < windowHeight;
-        const hasExited = zoneRect.bottom < 0;
+        // Smooth fade-in on enter, smooth blur/fade-out on exit
+        let targetOpacity = 0;
+        let targetBlur = 0;
 
-        if (!hasEntered || hasExited) {
-          beansStage.style.opacity = '0';
-          return;
+        const isVisible = zoneRect.bottom > 0 && zoneRect.top < windowHeight;
+
+        if (isVisible) {
+          // Bottom exit fade (last 350px)
+          const exitDistance = zoneRect.bottom;
+          const exitThreshold = 350;
+
+          // Top entry fade (first 250px)
+          const enterDistance = windowHeight - zoneRect.top;
+          const enterThreshold = 250;
+
+          let factor = 1;
+          if (exitDistance < exitThreshold) {
+            factor = Math.max(0, exitDistance / exitThreshold);
+            targetBlur = (1 - factor) * 20; // motion/gaussian blur on exit
+          } else if (enterDistance < enterThreshold) {
+            factor = Math.max(0, enterDistance / enterThreshold);
+            targetBlur = (1 - factor) * 10;
+          }
+
+          targetOpacity = factor;
         }
 
-        // Fade out and motion/gaussian blur at the bottom of the section
-        const fadeThreshold = 380;
-        let exitProgress = 1;
-        if (zoneRect.bottom < fadeThreshold) {
-          exitProgress = Math.max(0, zoneRect.bottom / fadeThreshold);
+        // Smoothly interpolate opacity and filter (prevents flashing/popping)
+        currentOpacity += (targetOpacity - currentOpacity) * Math.min(1, dt * 8);
+        currentBlur += (targetBlur - currentBlur) * Math.min(1, dt * 8);
+
+        beansStage.style.opacity = currentOpacity.toFixed(3);
+        beansStage.style.filter = currentBlur > 0.4 ? `blur(${currentBlur.toFixed(1)}px)` : 'none';
+
+        // Animate individual beans if visible
+        if (currentOpacity > 0.01) {
+          for (let i = 0; i < beansData.length; i++) {
+            const b = beansData[i];
+
+            // Harmonic gentle floating
+            const floatX = Math.cos(levitationTime + b.phaseOffset) * (b.swayMagnitude * 0.35);
+            const floatY = Math.sin(levitationTime * 0.8 + b.phaseOffset) * b.swayMagnitude;
+            const floatRot = Math.sin(levitationTime * 0.4 + b.phaseOffset) * 6;
+
+            // Fluid rightward drift driven by scroll velocity
+            const targetX = floatX + (currentVelocity * b.speedFactor * 6.5);
+            const targetY = floatY;
+            const targetRot = floatRot + (currentVelocity * b.rotFactor * 3.5);
+
+            // Frame-rate independent lerp (smooth on 60Hz, 120Hz, 144Hz)
+            const lerpFactor = Math.min(1, dt * 7);
+            b.posX += (targetX - b.posX) * lerpFactor;
+            b.posY += (targetY - b.posY) * lerpFactor;
+            b.rot += (targetRot - b.rot) * lerpFactor;
+
+            b.el.style.transform = `translate3d(${b.posX.toFixed(2)}px, ${b.posY.toFixed(2)}px, 0) rotate(${b.rot.toFixed(2)}deg)`;
+          }
         }
-
-        const blurAmount = (1 - exitProgress) * 22;
-        beansStage.style.opacity = exitProgress.toFixed(3);
-        beansStage.style.filter = blurAmount > 0.5 ? `blur(${blurAmount.toFixed(1)}px)` : 'none';
-
-        // 120Hz smooth translate3d update
-        beansData.forEach((bean) => {
-          // Subtle harmonic floating
-          const floatX = Math.cos(levitationTick + bean.phaseOffset) * (bean.swayMagnitude * 0.3);
-          const floatY = Math.sin(levitationTick * 0.8 + bean.phaseOffset) * bean.swayMagnitude;
-          const floatRot = Math.sin(levitationTick * 0.5 + bean.phaseOffset) * 8;
-
-          // Dynamic rightward acceleration matching scroll speed
-          const rightThrustX = smoothVelocity * bean.speedFactor * 16;
-          const momentumRot = smoothVelocity * bean.rotFactor * 12;
-
-          const targetX = floatX + rightThrustX;
-          const targetY = floatY;
-          const targetRot = floatRot + momentumRot;
-
-          bean.currentX += (targetX - bean.currentX) * 0.12;
-          bean.currentY += (targetY - bean.currentY) * 0.12;
-          bean.currentRot += (targetRot - bean.currentRot) * 0.12;
-
-          bean.el.style.transform = `translate3d(${bean.currentX.toFixed(2)}px, ${bean.currentY.toFixed(2)}px, 0) rotate(${bean.currentRot.toFixed(2)}deg)`;
-        });
       }
 
       requestAnimationFrame(renderLoop);
