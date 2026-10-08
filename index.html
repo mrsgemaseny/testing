@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Starbucks Reserve — Editorial Coffee Architecture</title>
+  <title>Starbucks Reserve™ | Pure Terroir</title>
+  
+  <!-- Premium Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
@@ -16,19 +18,21 @@
         extend: {
           colors: {
             noir: {
-              base: '#0A0A0A',
-              subtle: '#121212',
-              card: '#161616',
-              border: '#222222',
-              borderLight: '#333333',
-              muted: '#7A7A7A',
-              light: '#EDEDED',
-              accent: '#C5A059'
+              950: '#070707',
+              900: '#0D0D0D', // Solid luxury dark background
+              850: '#121212',
+              800: '#171717',
+              700: '#262626',
+              600: '#3D3D3D',
+              muted: '#7E7E7E',
+              light: '#EAEAEA',
+              cream: '#F5F2EB',
+              accent: '#C79D58'
             }
           },
           fontFamily: {
             serif: ['"Playfair Display"', 'Georgia', 'serif'],
-            sans: ['"Plus Jakarta Sans"', '-apple-system', 'sans-serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
           }
         }
       }
@@ -39,415 +43,430 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
-    /* Monochromatic Crisp Scrollbar */
+    /* Custom Dark Track Scrollbar */
     ::-webkit-scrollbar {
       width: 5px;
     }
     ::-webkit-scrollbar-track {
-      background: #0A0A0A;
+      background: #0D0D0D;
     }
     ::-webkit-scrollbar-thumb {
-      background: #262626;
+      background: #242424;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #404040;
+      background: #3B3B3B;
     }
 
-    /* 120Hz Hardware Acceleration */
-    .gpu-accel {
+    /* Dedicated Global Background Canvas layer */
+    #global-cocoa-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    /* 120Hz Hardware acceleration primitives */
+    .cocoa-particle {
+      position: absolute;
+      top: 0;
+      left: 0;
       transform: translate3d(0, 0, 0);
       backface-visibility: hidden;
       perspective: 1000px;
       will-change: transform, opacity, filter;
     }
 
-    /* Minimalist hairline dividers */
     .hairline-b {
-      border-bottom: 1px solid #1E1E1E;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
     .hairline-t {
-      border-top: 1px solid #1E1E1E;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
   </style>
 </head>
-<body class="bg-noir-base text-noir-light font-sans antialiased selection:bg-white selection:text-black overflow-x-hidden">
+<body class="bg-noir-900 text-noir-cream font-sans antialiased selection:bg-noir-accent selection:text-noir-950 overflow-x-hidden">
 
-  <!-- MINIMALIST NAVIGATION -->
-  <header class="sticky top-0 z-50 bg-noir-base/90 backdrop-blur-md hairline-b transition-colors duration-200">
-    <div class="max-w-7xl mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
-      
-      <!-- Logo: Pure Editorial Typography -->
-      <a href="#" class="flex items-center gap-3 group">
-        <span class="font-serif tracking-tight text-xl font-normal text-white">Starbucks</span>
-        <span class="text-[11px] uppercase tracking-[0.25em] text-noir-muted pl-2 border-l border-noir-border">Reserve</span>
-      </a>
+  <!-- ========================================================================= -->
+  <!-- 2. GLOBAL BACKGROUND CANVAS FOR COCOA ELEMENTS (FULLSCREEN FIXED Z-INDEX: 1)-->
+  <!-- ========================================================================= -->
+  <div id="global-cocoa-canvas" aria-hidden="true">
+    <div id="cocoa-stage" class="relative w-full h-full">
 
-      <!-- Desktop Nav Anchors -->
-      <nav class="hidden md:flex items-center gap-10 text-xs uppercase tracking-[0.18em] font-medium text-noir-muted">
-        <a href="#menu-section" class="hover:text-white transition-colors">Menu</a>
-        <a href="#locations-section" class="hover:text-white transition-colors">Locations</a>
-        <a href="#reviews-section" class="hover:text-white transition-colors">Reviews</a>
-        <a href="#contact" class="hover:text-white transition-colors">Contact</a>
-      </nav>
-
-      <!-- Minimal WhatsApp Action -->
-      <div>
-        <a href="https://wa.me/15559876543?text=Inquiry%20regarding%20Starbucks%20Reserve" 
-           target="_blank" 
-           rel="noopener noreferrer" 
-           class="inline-flex items-center gap-2 text-xs uppercase tracking-wider px-4 py-2 border border-noir-border hover:border-white text-noir-light hover:text-white transition-all">
-          <i data-lucide="message-circle" class="w-3.5 h-3.5 text-noir-muted"></i>
-          <span>Concierge</span>
-        </a>
-      </div>
-    </div>
-  </header>
-
-  <!-- HERO SECTION: Clean Monochromatic Editorial -->
-  <section class="max-w-7xl mx-auto px-6 md:px-12 pt-28 pb-32">
-    <div class="max-w-4xl">
-      <p class="text-xs uppercase tracking-[0.25em] text-noir-muted mb-8 font-medium">Estate Roastery & Bar</p>
-      
-      <h1 class="text-5xl sm:text-7xl md:text-8xl font-serif font-normal text-white tracking-tight leading-[1.05] mb-10">
-        Rare harvest.<br>
-        <span class="italic font-normal text-noir-muted">Artisan calibration.</span>
-      </h1>
-
-      <p class="text-base md:text-lg text-noir-muted font-light leading-relaxed max-w-xl mb-12">
-        A deliberate exploration of terroir, micro-lot coffee beans, and slow extraction methods designed for the purist.
-      </p>
-
-      <div class="flex items-center gap-6">
-        <a href="#experience-zone" class="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-semibold text-white hover:text-noir-muted transition-colors">
-          <span>Scroll to explore</span>
-          <i data-lucide="arrow-down" class="w-3.5 h-3.5"></i>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- FIXED FULL-SCREEN COCOA ENGINE (ACTIVE FROM HERO THROUGH ENTIRE PAGE WITH WRAP-AROUND) -->
-  <div id="cocoa-universe" class="pointer-events-none fixed inset-0 z-0 overflow-hidden select-none" aria-hidden="true">
-    <div id="beans-stage" class="relative w-full h-full gpu-accel transition-opacity duration-300">
-      
-      <!-- Bean 1: Large Pod -->
-      <div class="cocoa-item absolute w-28 md:w-36 aspect-[1/1.3] gpu-accel" data-speed="1.2" data-rot="0.2" data-sway="22">
-        <svg viewBox="0 0 160 210" class="w-full h-full drop-shadow-2xl">
+      <!-- Particle 1: Majestic Cocoa Pod (Hero Upper Left) -->
+      <div class="cocoa-particle w-32 md:w-44 aspect-[1/1.3]" data-base-y="0.14" data-speed="1.25" data-rot-bias="0.22" data-sway="22">
+        <svg viewBox="0 0 160 210" class="w-full h-full drop-shadow-[0_25px_35px_rgba(0,0,0,0.85)]">
           <defs>
-            <radialGradient id="podMinimal1" cx="35%" cy="30%" r="70%">
-              <stop offset="0%" stop-color="#443226"/>
-              <stop offset="45%" stop-color="#261A13"/>
-              <stop offset="100%" stop-color="#0E0A08"/>
+            <radialGradient id="podGrad1" cx="35%" cy="30%" r="72%">
+              <stop offset="0%" stop-color="#5A3A25"/>
+              <stop offset="38%" stop-color="#362013"/>
+              <stop offset="85%" stop-color="#190D07"/>
+              <stop offset="100%" stop-color="#080402"/>
+            </radialGradient>
+            <linearGradient id="ridgeGrad1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#7B5034" stop-opacity="0.8"/>
+              <stop offset="50%" stop-color="#381E10" stop-opacity="0.4"/>
+              <stop offset="100%" stop-color="#120603" stop-opacity="0.9"/>
+            </linearGradient>
+          </defs>
+          <path d="M80 12 C125 35 150 90 142 145 C135 185 100 202 80 205 C60 202 25 185 18 145 C10 90 35 35 80 12 Z" fill="url(#podGrad1)"/>
+          <path d="M80 12 Q98 100 80 205" stroke="url(#ridgeGrad1)" stroke-width="3" fill="none"/>
+          <path d="M80 12 Q125 100 110 185" stroke="url(#ridgeGrad1)" stroke-width="2.2" fill="none"/>
+          <path d="M80 12 Q35 100 50 185" stroke="url(#ridgeGrad1)" stroke-width="2.2" fill="none"/>
+          <ellipse cx="68" cy="74" rx="14" ry="34" fill="#C79D58" opacity="0.08" transform="rotate(-18 68 74)"/>
+        </svg>
+      </div>
+
+      <!-- Particle 2: Roasted Micro-Lot Bean (Hero Right) -->
+      <div class="cocoa-particle w-24 md:w-32 aspect-square" data-base-y="0.26" data-speed="1.7" data-rot-bias="-0.32" data-sway="28">
+        <svg viewBox="0 0 140 140" class="w-full h-full drop-shadow-[0_20px_30px_rgba(0,0,0,0.85)]">
+          <defs>
+            <radialGradient id="beanGrad1" cx="30%" cy="30%" r="72%">
+              <stop offset="0%" stop-color="#4F3320"/>
+              <stop offset="45%" stop-color="#2D190E"/>
+              <stop offset="100%" stop-color="#0A0503"/>
             </radialGradient>
           </defs>
-          <path d="M80 12 C125 35 150 90 142 145 C135 185 100 202 80 205 C60 202 25 185 18 145 C10 90 35 35 80 12 Z" fill="url(#podMinimal1)"/>
-          <path d="M80 12 Q98 100 80 205" stroke="#5A4334" stroke-width="2.5" fill="none"/>
-          <path d="M80 12 Q125 100 110 185" stroke="#1F150F" stroke-width="2" fill="none"/>
-          <path d="M80 12 Q35 100 50 185" stroke="#1F150F" stroke-width="2" fill="none"/>
+          <path d="M22 68 C20 30 52 14 88 18 C124 22 135 60 130 92 C125 124 92 136 54 130 C24 125 24 96 22 68 Z" fill="url(#beanGrad1)"/>
+          <path d="M40 28 C64 45 68 85 96 118" stroke="#000000" stroke-width="5" stroke-linecap="round" fill="none"/>
+          <ellipse cx="92" cy="50" rx="8" ry="16" fill="#FFF" opacity="0.06" transform="rotate(22 92 50)"/>
         </svg>
       </div>
 
-      <!-- Bean 2: Medium Roasted Bean -->
-      <div class="cocoa-item absolute w-24 md:w-32 aspect-square gpu-accel" data-speed="1.6" data-rot="-0.3" data-sway="28">
-        <svg viewBox="0 0 140 140" class="w-full h-full drop-shadow-2xl">
+      <!-- Particle 3: Cocoa Pod Husk (Hero Lower Center-Left) -->
+      <div class="cocoa-particle w-28 md:w-36 aspect-[1.2/1]" data-base-y="0.44" data-speed="1.4" data-rot-bias="0.25" data-sway="24">
+        <svg viewBox="0 0 150 120" class="w-full h-full drop-shadow-[0_20px_25px_rgba(0,0,0,0.8)]">
           <defs>
-            <radialGradient id="beanMinimal1" cx="30%" cy="30%" r="70%">
-              <stop offset="0%" stop-color="#3D2B20"/>
-              <stop offset="50%" stop-color="#211610"/>
-              <stop offset="100%" stop-color="#0B0806"/>
+            <radialGradient id="beanGrad2" cx="35%" cy="30%" r="70%">
+              <stop offset="0%" stop-color="#553621"/>
+              <stop offset="50%" stop-color="#2A170C"/>
+              <stop offset="100%" stop-color="#090402"/>
             </radialGradient>
           </defs>
-          <path d="M22 68 C20 30 52 14 88 18 C124 22 135 60 130 92 C125 124 92 136 54 130 C24 125 24 96 22 68 Z" fill="url(#beanMinimal1)"/>
+          <path d="M25 60 C25 25 65 15 110 25 C145 35 145 78 130 98 C110 120 45 115 28 92 C18 78 25 70 25 60 Z" fill="url(#beanGrad2)"/>
+          <path d="M38 42 C70 52 85 70 125 80" stroke="#000000" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+        </svg>
+      </div>
+
+      <!-- Particle 4: Golden Slender Reserve Pod (Mid-Page Right) -->
+      <div class="cocoa-particle w-32 md:w-44 aspect-[1/1.35]" data-base-y="0.60" data-speed="1.15" data-rot-bias="-0.18" data-sway="20">
+        <svg viewBox="0 0 160 210" class="w-full h-full drop-shadow-[0_25px_35px_rgba(0,0,0,0.85)]">
+          <path d="M80 14 C128 38 152 92 144 148 C136 186 98 202 80 205 C62 202 24 186 16 148 C8 92 32 38 80 14 Z" fill="#311D12"/>
+          <path d="M80 14 Q100 105 80 205" stroke="#C79D58" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.35"/>
+          <path d="M80 14 Q128 105 112 188" stroke="#170A04" stroke-width="2.5" fill="none"/>
+          <path d="M80 14 Q32 105 48 188" stroke="#170A04" stroke-width="2.5" fill="none"/>
+        </svg>
+      </div>
+
+      <!-- Particle 5: Dark Terroir Roasted Seed (Lower Mid) -->
+      <div class="cocoa-particle w-24 md:w-32 aspect-square" data-base-y="0.75" data-speed="1.55" data-rot-bias="0.3" data-sway="26">
+        <svg viewBox="0 0 140 140" class="w-full h-full drop-shadow-[0_20px_30px_rgba(0,0,0,0.85)]">
+          <path d="M22 68 C20 30 52 14 88 18 C124 22 135 60 130 92 C125 124 92 136 54 130 C24 125 24 96 22 68 Z" fill="#2E1B10"/>
+          <path d="M40 28 C64 45 68 85 96 118" stroke="#050201" stroke-width="5" stroke-linecap="round" fill="none"/>
+        </svg>
+      </div>
+
+      <!-- Particle 6: Floating Petite Bean (Lower Viewport) -->
+      <div class="cocoa-particle w-20 md:w-28 aspect-square" data-base-y="0.88" data-speed="1.35" data-rot-bias="-0.25" data-sway="22">
+        <svg viewBox="0 0 140 140" class="w-full h-full drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)]">
+          <path d="M22 68 C20 30 52 14 88 18 C124 22 135 60 130 92 C125 124 92 136 54 130 C24 125 24 96 22 68 Z" fill="#24150C"/>
           <path d="M40 28 C64 45 68 85 96 118" stroke="#000000" stroke-width="4.5" stroke-linecap="round" fill="none"/>
-        </svg>
-      </div>
-
-      <!-- Bean 3: Flat Roasted Bean -->
-      <div class="cocoa-item absolute w-24 md:w-32 aspect-[1.2/1] gpu-accel" data-speed="1.35" data-rot="0.25" data-sway="24">
-        <svg viewBox="0 0 150 120" class="w-full h-full drop-shadow-2xl">
-          <path d="M25 60 C25 25 65 15 110 25 C145 35 145 78 130 98 C110 120 45 115 28 92 C18 78 25 70 25 60 Z" fill="#241912"/>
-          <path d="M38 42 C70 52 85 70 125 80" stroke="#000000" stroke-width="4" stroke-linecap="round" fill="none"/>
-        </svg>
-      </div>
-
-      <!-- Bean 4: Slender Pod -->
-      <div class="cocoa-item absolute w-28 md:w-40 aspect-[1/1.3] gpu-accel" data-speed="1.15" data-rot="-0.15" data-sway="20">
-        <svg viewBox="0 0 160 210" class="w-full h-full drop-shadow-2xl">
-          <path d="M80 12 C125 35 150 90 142 145 C135 185 100 202 80 205 C60 202 25 185 18 145 C10 90 35 35 80 12 Z" fill="#2E2017"/>
-          <path d="M80 12 Q98 100 80 205" stroke="#483427" stroke-width="2" fill="none"/>
-        </svg>
-      </div>
-
-      <!-- Bean 5: Round Bean -->
-      <div class="cocoa-item absolute w-24 md:w-32 aspect-square gpu-accel" data-speed="1.5" data-rot="-0.25" data-sway="26">
-        <svg viewBox="0 0 140 140" class="w-full h-full drop-shadow-2xl">
-          <path d="M22 68 C20 30 52 14 88 18 C124 22 135 60 130 92 C125 124 92 136 54 130 C24 125 24 96 22 68 Z" fill="#251913"/>
-          <path d="M40 28 C64 45 68 85 96 118" stroke="#000000" stroke-width="4.5" stroke-linecap="round" fill="none"/>
-        </svg>
-      </div>
-
-      <!-- Bean 6: Small Fast Bean -->
-      <div class="cocoa-item absolute w-20 md:w-28 aspect-square gpu-accel" data-speed="1.4" data-rot="0.2" data-sway="22">
-        <svg viewBox="0 0 140 140" class="w-full h-full drop-shadow-2xl">
-          <path d="M22 68 C20 30 52 14 88 18 C124 22 135 60 130 92 C125 124 92 136 54 130 C24 125 24 96 22 68 Z" fill="#1E140F"/>
-          <path d="M40 28 C64 45 68 85 96 118" stroke="#000000" stroke-width="4" stroke-linecap="round" fill="none"/>
         </svg>
       </div>
 
     </div>
   </div>
 
-  <!-- MAIN EXPERIENCE CONTAINER -->
-  <div id="experience-zone" class="relative">
-    <!-- FOREGROUND CONTENT -->
-    <div class="relative z-10">
+  <!-- ========================================================================= -->
+  <!-- FOREGROUND INTERACTIVE CONTENT (Z-INDEX: 10 RELATIVE TO CANVAS)           -->
+  <!-- ========================================================================= -->
+  <div class="relative z-10">
 
-      <!-- ========================================== -->
-      <!-- SECTION 1: MENU                            -->
-      <!-- ========================================== -->
-      <section id="menu-section" class="py-24 px-6 md:px-12 max-w-7xl mx-auto hairline-t">
-        <div class="flex flex-col md:flex-row md:items-baseline justify-between mb-16 gap-6">
-          <div>
-            <span class="text-xs uppercase tracking-[0.25em] text-noir-muted block mb-3">01 / Selection</span>
-            <h2 class="text-3xl md:text-4xl font-serif text-white font-normal">Menu</h2>
-          </div>
-          <p class="text-xs uppercase tracking-widest text-noir-muted">Single-Origin Terroir Harvests</p>
-        </div>
+    <!-- MINIMALIST NAVIGATION -->
+    <header class="sticky top-0 z-50 bg-noir-900/90 backdrop-blur-md hairline-b">
+      <div class="max-w-7xl mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
+        
+        <!-- Logo -->
+        <a href="#" class="flex items-center gap-3">
+          <span class="font-serif tracking-tight text-xl font-normal text-white">Starbucks</span>
+          <span class="text-[11px] uppercase tracking-[0.25em] text-noir-muted pl-2 border-l border-white/10 font-medium">Reserve</span>
+        </a>
 
-        <!-- Monochromatic Editorial Menu Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          
-          <!-- Item 1 -->
-          <article class="p-8 border border-noir-border bg-noir-base/80 hover:border-noir-borderLight transition-colors flex flex-col justify-between">
-            <div>
-              <div class="flex items-baseline justify-between pb-4 hairline-b mb-6">
-                <span class="text-xs uppercase tracking-widest text-noir-muted">Ethiopia</span>
-                <span class="font-serif text-white text-lg">$14.50</span>
-              </div>
-              <h3 class="text-2xl font-serif text-white mb-4">Geisha Cold Brew</h3>
-              <p class="text-sm text-noir-muted leading-relaxed font-light mb-8">
-                Slow-steeped over 24 hours. Bergamot, delicate white florals, Meyer lemon clarity, served over hand-carved ice.
-              </p>
-            </div>
-            <div class="pt-4 hairline-t flex items-center justify-between text-xs tracking-wider text-noir-muted">
-              <span>Clover® Extraction</span>
-              <a href="https://wa.me/15559876543?text=Order:%20Geisha%20Cold%20Brew" target="_blank" class="text-white hover:text-noir-muted">Inquire</a>
-            </div>
-          </article>
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center gap-10 text-xs uppercase tracking-[0.18em] font-medium text-noir-muted">
+          <a href="#menu" class="hover:text-white transition-colors">Menu</a>
+          <a href="#locations" class="hover:text-white transition-colors">Locations</a>
+          <a href="#reviews" class="hover:text-white transition-colors">Reviews</a>
+          <a href="#contact" class="hover:text-white transition-colors">Concierge</a>
+        </nav>
 
-          <!-- Item 2 -->
-          <article class="p-8 border border-noir-border bg-noir-base/80 hover:border-noir-borderLight transition-colors flex flex-col justify-between">
-            <div>
-              <div class="flex items-baseline justify-between pb-4 hairline-b mb-6">
-                <span class="text-xs uppercase tracking-widest text-noir-muted">Kentucky Rested</span>
-                <span class="font-serif text-white text-lg">$12.00</span>
-              </div>
-              <h3 class="text-2xl font-serif text-white mb-4">Oak Cortado</h3>
-              <p class="text-sm text-noir-muted leading-relaxed font-light mb-8">
-                Green beans conditioned in charred oak barrels. Pulled with micro-textured oat foam and whole vanilla pod.
-              </p>
-            </div>
-            <div class="pt-4 hairline-t flex items-center justify-between text-xs tracking-wider text-noir-muted">
-              <span>Double Ristretto</span>
-              <a href="https://wa.me/15559876543?text=Order:%20Oak%20Cortado" target="_blank" class="text-white hover:text-noir-muted">Inquire</a>
-            </div>
-          </article>
-
-          <!-- Item 3 -->
-          <article class="p-8 border border-noir-border bg-noir-base/80 hover:border-noir-borderLight transition-colors flex flex-col justify-between">
-            <div>
-              <div class="flex items-baseline justify-between pb-4 hairline-b mb-6">
-                <span class="text-xs uppercase tracking-widest text-noir-muted">Costa Rica</span>
-                <span class="font-serif text-white text-lg">$15.00</span>
-              </div>
-              <h3 class="text-2xl font-serif text-white mb-4">Nitro Reserve</h3>
-              <p class="text-sm text-noir-muted leading-relaxed font-light mb-8">
-                Infused with nitrogen for velvety cascara crema. Pure dark cocoa, black cherry, and crushed walnut finish.
-              </p>
-            </div>
-            <div class="pt-4 hairline-t flex items-center justify-between text-xs tracking-wider text-noir-muted">
-              <span>Nitrogen Infused</span>
-              <a href="https://wa.me/15559876543?text=Order:%20Nitro%20Reserve" target="_blank" class="text-white hover:text-noir-muted">Inquire</a>
-            </div>
-          </article>
-
-        </div>
-      </section>
-
-      <!-- ========================================== -->
-      <!-- SECTION 2: LOCATIONS                       -->
-      <!-- ========================================== -->
-      <section id="locations-section" class="py-24 px-6 md:px-12 max-w-7xl mx-auto hairline-t">
-        <div class="flex flex-col md:flex-row md:items-baseline justify-between mb-16 gap-6">
-          <div>
-            <span class="text-xs uppercase tracking-[0.25em] text-noir-muted block mb-3">02 / Geography</span>
-            <h2 class="text-3xl md:text-4xl font-serif text-white font-normal">Locations</h2>
-          </div>
-          <p class="text-xs uppercase tracking-widest text-noir-muted">Roasteries Worldwide</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          
-          <!-- Milan -->
-          <div class="p-8 border border-noir-border bg-noir-base/80 flex flex-col justify-between">
-            <div>
-              <span class="text-xs uppercase tracking-widest text-noir-muted block mb-4">Italy</span>
-              <h3 class="text-2xl font-serif text-white mb-2">Milano</h3>
-              <p class="text-sm text-noir-muted font-light mb-8">Piazza Cordusio 3, 20123 Milano</p>
-            </div>
-            <div class="pt-6 hairline-t flex items-center justify-between text-xs">
-              <span class="text-noir-muted">Daily 07:00 – 22:00</span>
-              <a href="https://maps.google.com/?q=Starbucks+Reserve+Roastery+Milano" target="_blank" class="text-white hover:text-noir-muted">Directions</a>
-            </div>
-          </div>
-
-          <!-- New York -->
-          <div class="p-8 border border-noir-border bg-noir-base/80 flex flex-col justify-between">
-            <div>
-              <span class="text-xs uppercase tracking-widest text-noir-muted block mb-4">United States</span>
-              <h3 class="text-2xl font-serif text-white mb-2">New York</h3>
-              <p class="text-sm text-noir-muted font-light mb-8">61 9th Ave, Meatpacking District</p>
-            </div>
-            <div class="pt-6 hairline-t flex items-center justify-between text-xs">
-              <span class="text-noir-muted">Daily 08:00 – 21:00</span>
-              <a href="https://maps.google.com/?q=Starbucks+Reserve+Roastery+New+York" target="_blank" class="text-white hover:text-noir-muted">Directions</a>
-            </div>
-          </div>
-
-          <!-- Tokyo -->
-          <div class="p-8 border border-noir-border bg-noir-base/80 flex flex-col justify-between">
-            <div>
-              <span class="text-xs uppercase tracking-widest text-noir-muted block mb-4">Japan</span>
-              <h3 class="text-2xl font-serif text-white mb-2">Tokyo</h3>
-              <p class="text-sm text-noir-muted font-light mb-8">2-19-23 Aobadai, Meguro City</p>
-            </div>
-            <div class="pt-6 hairline-t flex items-center justify-between text-xs">
-              <span class="text-noir-muted">Daily 07:00 – 23:00</span>
-              <a href="https://maps.google.com/?q=Starbucks+Reserve+Roastery+Tokyo" target="_blank" class="text-white hover:text-noir-muted">Directions</a>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- ========================================== -->
-      <!-- SECTION 3: REVIEWS                         -->
-      <!-- ========================================== -->
-      <section id="reviews-section" class="py-24 px-6 md:px-12 max-w-7xl mx-auto hairline-t">
-        <div class="flex flex-col md:flex-row md:items-baseline justify-between mb-16 gap-6">
-          <div>
-            <span class="text-xs uppercase tracking-[0.25em] text-noir-muted block mb-3">03 / Critique</span>
-            <h2 class="text-3xl md:text-4xl font-serif text-white font-normal">Reviews</h2>
-          </div>
-          <p class="text-xs uppercase tracking-widest text-noir-muted">Press & Palates</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          
-          <!-- Review 1 -->
-          <blockquote class="p-8 border border-noir-border bg-noir-base/80 flex flex-col justify-between">
-            <p class="font-serif italic text-white text-lg leading-relaxed mb-8">
-              “Precision in temperature and grind geometry elevates their Geisha cold brew beyond ordinary coffee service.”
-            </p>
-            <footer class="pt-4 hairline-t">
-              <cite class="not-italic block text-sm text-white font-medium">Elena Sarti</cite>
-              <span class="text-xs text-noir-muted">Milan Food & Wine</span>
-            </footer>
-          </blockquote>
-
-          <!-- Review 2 -->
-          <blockquote class="p-8 border border-noir-border bg-noir-base/80 flex flex-col justify-between">
-            <p class="font-serif italic text-white text-lg leading-relaxed mb-8">
-              “A restrained, deliberate space where micro-lot roasting is treated with culinary reverence.”
-            </p>
-            <footer class="pt-4 hairline-t">
-              <cite class="not-italic block text-sm text-white font-medium">Marcus Vance</cite>
-              <span class="text-xs text-noir-muted">Manhattan Hospitality Index</span>
-            </footer>
-          </blockquote>
-
-          <!-- Review 3 -->
-          <blockquote class="p-8 border border-noir-border bg-noir-base/80 flex flex-col justify-between">
-            <p class="font-serif italic text-white text-lg leading-relaxed mb-8">
-              “Cascara notes and copper cask architecture provide an uncompromising tasting experience.”
-            </p>
-            <footer class="pt-4 hairline-t">
-              <cite class="not-italic block text-sm text-white font-medium">Yuto Takahashi</cite>
-              <span class="text-xs text-noir-muted">Specialty Coffee Q-Grader</span>
-            </footer>
-          </blockquote>
-
-        </div>
-      </section>
-
-    </div>
-  </div>
-
-  <!-- ============================================================== -->
-  <!-- MINIMALIST CONTACT FOOTER                                      -->
-  <!-- ============================================================== -->
-  <footer id="contact" class="hairline-t bg-noir-subtle pt-24 pb-20">
-    <div class="max-w-4xl mx-auto px-6 md:px-12 text-center">
-      
-      <div class="space-y-8 pb-16 hairline-b">
+        <!-- Header Concierge Link -->
         <div>
-          <span class="text-xs uppercase tracking-[0.28em] text-noir-muted block mb-3 font-medium">Concierge & Reservations</span>
-          <h3 class="text-3xl sm:text-4xl font-serif text-white mb-4">Direct Contact</h3>
-          <p class="text-sm text-noir-muted font-light leading-relaxed max-w-md mx-auto">
-            Inquire directly for private tasting flight reservations, bespoke micro-lot deliveries, or estate tours.
-          </p>
-        </div>
-
-        <!-- Clean WhatsApp Phone Button -->
-        <div class="flex justify-center">
           <a href="https://wa.me/15559876543?text=Starbucks%20Reserve%20Inquiry" 
              target="_blank" 
              rel="noopener noreferrer" 
-             class="inline-flex items-center gap-3 px-8 py-4 border border-noir-borderLight hover:border-white text-white text-xs uppercase tracking-widest font-semibold transition-all hover:bg-white hover:text-black">
-            <i data-lucide="phone" class="w-4 h-4"></i>
-            <span>WhatsApp: +1 (555) 987-6543</span>
+             class="inline-flex items-center gap-2 text-xs uppercase tracking-wider px-4 py-2 border border-white/15 hover:border-white text-noir-cream hover:text-white transition-all">
+            <i data-lucide="message-circle" class="w-3.5 h-3.5 text-noir-muted"></i>
+            <span>Concierge</span>
           </a>
         </div>
-
-        <p class="text-xs text-noir-muted">
-          Direct dispatch: <a href="mailto:concierge@starbucksreserve.com" class="text-white hover:underline">concierge@starbucksreserve.com</a>
-        </p>
       </div>
+    </header>
 
-      <!-- Copyright -->
-      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-noir-muted gap-4">
-        <p>© 2026 Starbucks Coffee Company. Reserve™ Roasteries.</p>
-        <div class="flex gap-8">
-          <a href="#" class="hover:text-white transition-colors">Privacy</a>
-          <a href="#" class="hover:text-white transition-colors">Terms</a>
+    <!-- 3. HERO SECTION (WITH PARTICLES SURROUNDING TEXT) -->
+    <section id="hero" class="max-w-7xl mx-auto px-6 md:px-12 pt-32 pb-36 min-h-[85vh] flex flex-col justify-center">
+      <div class="max-w-4xl">
+        <p class="text-xs uppercase tracking-[0.25em] text-noir-muted mb-8 font-medium">Starbucks Reserve™ Roastery</p>
+        
+        <h1 class="text-5xl sm:text-7xl md:text-8xl font-serif font-normal text-white tracking-tight leading-[1.05] mb-10">
+          Rare harvest.<br>
+          <span class="italic font-normal text-noir-muted">Artisan calibration.</span>
+        </h1>
+
+        <p class="text-base md:text-lg text-noir-muted font-light leading-relaxed max-w-xl mb-12">
+          An intimate exploration of terroir, micro-lot coffee beans, and slow extraction bar methods roasted exclusively in micro-batches.
+        </p>
+
+        <div class="flex items-center gap-6">
+          <a href="#menu" class="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-semibold text-white hover:text-noir-accent transition-colors">
+            <span>Explore Menu</span>
+            <i data-lucide="arrow-down" class="w-3.5 h-3.5"></i>
+          </a>
         </div>
       </div>
+    </section>
 
-    </div>
-  </footer>
+    <!-- SECTION 1: MENU -->
+    <section id="menu" class="py-28 px-6 md:px-12 max-w-7xl mx-auto hairline-t">
+      <div class="flex flex-col md:flex-row md:items-baseline justify-between mb-16 gap-6">
+        <div>
+          <span class="text-xs uppercase tracking-[0.25em] text-noir-muted block mb-3">01 / Selection</span>
+          <h2 class="text-3xl md:text-4xl font-serif text-white font-normal">Signature Menu</h2>
+        </div>
+        <p class="text-xs uppercase tracking-widest text-noir-muted">Clover® & Chemex Micro-Lot Pours</p>
+      </div>
 
-  <!-- ============================================================== -->
-  <!-- 120HZ SEAMLESS WRAP-AROUND PHYSICS & DYNAMIC VELOCITY AMPLITUDE-->
-  <!-- ============================================================== -->
+      <!-- Menu Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Card 1 -->
+        <article class="p-8 border border-white/10 bg-noir-850/60 backdrop-blur-sm hover:border-white/20 transition-colors flex flex-col justify-between">
+          <div>
+            <div class="flex items-baseline justify-between pb-4 hairline-b mb-6">
+              <span class="text-xs uppercase tracking-widest text-noir-muted">Ethiopia</span>
+              <span class="font-serif text-white text-lg">$14.50</span>
+            </div>
+            <h3 class="text-2xl font-serif text-white mb-4">Geisha Cold Brew</h3>
+            <p class="text-sm text-noir-muted leading-relaxed font-light mb-8">
+              Slow-steeped over 24 hours. Bergamot, delicate white florals, Meyer lemon clarity, served over hand-carved ice sphere.
+            </p>
+          </div>
+          <div class="pt-4 hairline-t flex items-center justify-between text-xs tracking-wider text-noir-muted">
+            <span>Clover® Extraction</span>
+            <a href="https://wa.me/15559876543?text=Order:%20Geisha%20Cold%20Brew" target="_blank" class="text-white hover:text-noir-accent font-medium">Inquire</a>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="p-8 border border-white/10 bg-noir-850/60 backdrop-blur-sm hover:border-white/20 transition-colors flex flex-col justify-between">
+          <div>
+            <div class="flex items-baseline justify-between pb-4 hairline-b mb-6">
+              <span class="text-xs uppercase tracking-widest text-noir-muted">Kentucky Rested</span>
+              <span class="font-serif text-white text-lg">$12.00</span>
+            </div>
+            <h3 class="text-2xl font-serif text-white mb-4">Oak Cortado</h3>
+            <p class="text-sm text-noir-muted leading-relaxed font-light mb-8">
+              Aged green beans conditioned in charred oak barrels. Pulled with micro-textured oat foam and whole vanilla bean.
+            </p>
+          </div>
+          <div class="pt-4 hairline-t flex items-center justify-between text-xs tracking-wider text-noir-muted">
+            <span>Double Ristretto</span>
+            <a href="https://wa.me/15559876543?text=Order:%20Oak%20Cortado" target="_blank" class="text-white hover:text-noir-accent font-medium">Inquire</a>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="p-8 border border-white/10 bg-noir-850/60 backdrop-blur-sm hover:border-white/20 transition-colors flex flex-col justify-between">
+          <div>
+            <div class="flex items-baseline justify-between pb-4 hairline-b mb-6">
+              <span class="text-xs uppercase tracking-widest text-noir-muted">Costa Rica</span>
+              <span class="font-serif text-white text-lg">$15.00</span>
+            </div>
+            <h3 class="text-2xl font-serif text-white mb-4">Nitro Reserve</h3>
+            <p class="text-sm text-noir-muted leading-relaxed font-light mb-8">
+              Infused with pure nitrogen for velvety cascara crema. Rich dark cocoa undertones, black cherry, and crushed walnut finish.
+            </p>
+          </div>
+          <div class="pt-4 hairline-t flex items-center justify-between text-xs tracking-wider text-noir-muted">
+            <span>Cascara Infused</span>
+            <a href="https://wa.me/15559876543?text=Order:%20Nitro%20Reserve" target="_blank" class="text-white hover:text-noir-accent font-medium">Inquire</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- SECTION 2: LOCATIONS -->
+    <section id="locations" class="py-28 px-6 md:px-12 max-w-7xl mx-auto hairline-t">
+      <div class="flex flex-col md:flex-row md:items-baseline justify-between mb-16 gap-6">
+        <div>
+          <span class="text-xs uppercase tracking-[0.25em] text-noir-muted block mb-3">02 / Geography</span>
+          <h2 class="text-3xl md:text-4xl font-serif text-white font-normal">Flagship Roasteries</h2>
+        </div>
+        <p class="text-xs uppercase tracking-widest text-noir-muted">Sanctuaries of Coffee Architecture</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Milan -->
+        <div class="p-8 border border-white/10 bg-noir-850/60 backdrop-blur-sm flex flex-col justify-between">
+          <div>
+            <span class="text-xs uppercase tracking-widest text-noir-muted block mb-4">Italy</span>
+            <h3 class="text-2xl font-serif text-white mb-2">Milano</h3>
+            <p class="text-sm text-noir-muted font-light mb-8">Piazza Cordusio 3, 20123 Milano</p>
+          </div>
+          <div class="pt-6 hairline-t flex items-center justify-between text-xs">
+            <span class="text-noir-muted">Daily 07:00 – 22:00</span>
+            <span class="text-white">Arriviamo Bar</span>
+          </div>
+        </div>
+
+        <!-- New York -->
+        <div class="p-8 border border-white/10 bg-noir-850/60 backdrop-blur-sm flex flex-col justify-between">
+          <div>
+            <span class="text-xs uppercase tracking-widest text-noir-muted block mb-4">United States</span>
+            <h3 class="text-2xl font-serif text-white mb-2">New York</h3>
+            <p class="text-sm text-noir-muted font-light mb-8">61 9th Ave, Meatpacking District</p>
+          </div>
+          <div class="pt-6 hairline-t flex items-center justify-between text-xs">
+            <span class="text-noir-muted">Daily 08:00 – 21:00</span>
+            <span class="text-white">Princi™ Bakery</span>
+          </div>
+        </div>
+
+        <!-- Tokyo -->
+        <div class="p-8 border border-white/10 bg-noir-850/60 backdrop-blur-sm flex flex-col justify-between">
+          <div>
+            <span class="text-xs uppercase tracking-widest text-noir-muted block mb-4">Japan</span>
+            <h3 class="text-2xl font-serif text-white mb-2">Tokyo</h3>
+            <p class="text-sm text-noir-muted font-light mb-8">2-19-23 Aobadai, Meguro City</p>
+          </div>
+          <div class="pt-6 hairline-t flex items-center justify-between text-xs">
+            <span class="text-noir-muted">Daily 07:00 – 23:00</span>
+            <span class="text-white">Cherry Terrace</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 3: REVIEWS -->
+    <section id="reviews" class="py-28 px-6 md:px-12 max-w-7xl mx-auto hairline-t">
+      <div class="flex flex-col md:flex-row md:items-baseline justify-between mb-16 gap-6">
+        <div>
+          <span class="text-xs uppercase tracking-[0.25em] text-noir-muted block mb-3">03 / Critique</span>
+          <h2 class="text-3xl md:text-4xl font-serif text-white font-normal">Acclaim & Critique</h2>
+        </div>
+        <p class="text-xs uppercase tracking-widest text-noir-muted">Press & Palates</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Review 1 -->
+        <blockquote class="p-8 border border-white/10 bg-noir-850/60 backdrop-blur-sm flex flex-col justify-between">
+          <p class="font-serif italic text-white text-lg leading-relaxed mb-8">
+            “Precision in extraction temperature and grind geometry elevates their single-origin pours into pure sensory poetry.”
+          </p>
+          <footer class="pt-4 hairline-t">
+            <cite class="not-italic block text-sm text-white font-medium">Elena Sarti</cite>
+            <span class="text-xs text-noir-muted">Milan Food & Wine</span>
+          </footer>
+        </blockquote>
+
+        <!-- Review 2 -->
+        <blockquote class="p-8 border border-white/10 bg-noir-850/60 backdrop-blur-sm flex flex-col justify-between">
+          <p class="font-serif italic text-white text-lg leading-relaxed mb-8">
+            “A restrained, deliberate space where micro-lot roasting is treated with culinary reverence. The oak cortado is singular.”
+          </p>
+          <footer class="pt-4 hairline-t">
+            <cite class="not-italic block text-sm text-white font-medium">Marcus Vance</cite>
+            <span class="text-xs text-noir-muted">Manhattan Hospitality Index</span>
+          </footer>
+        </blockquote>
+
+        <!-- Review 3 -->
+        <blockquote class="p-8 border border-white/10 bg-noir-850/60 backdrop-blur-sm flex flex-col justify-between">
+          <p class="font-serif italic text-white text-lg leading-relaxed mb-8">
+            “Cascara notes and copper cask architecture provide an uncompromising, elevated tasting experience.”
+          </p>
+          <footer class="pt-4 hairline-t">
+            <cite class="not-italic block text-sm text-white font-medium">Yuto Takahashi</cite>
+            <span class="text-xs text-noir-muted">Specialty Coffee Q-Grader</span>
+          </footer>
+        </blockquote>
+
+      </div>
+    </section>
+
+    <!-- 1. FOOTER: CLEAN CONTACT AREA ONLY (NO MAP CONTAINERS) -->
+    <footer id="contact" class="hairline-t bg-noir-950 pt-24 pb-20">
+      <div class="max-w-4xl mx-auto px-6 md:px-12 text-center">
+        
+        <div class="space-y-8 pb-16 hairline-b">
+          <div>
+            <span class="text-xs uppercase tracking-[0.28em] text-noir-muted block mb-3 font-medium">Concierge Inquiries</span>
+            <h3 class="text-3xl sm:text-4xl font-serif text-white mb-4">Direct Contact</h3>
+            <p class="text-sm text-noir-muted font-light leading-relaxed max-w-md mx-auto">
+              Inquire directly for private tasting flights, roastery reservations, or rare harvest micro-lot shipments.
+            </p>
+          </div>
+
+          <!-- Clean WhatsApp Phone Button with Icon -->
+          <div class="flex justify-center">
+            <a href="https://wa.me/15559876543?text=Starbucks%20Reserve%20Inquiry" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="inline-flex items-center gap-3 px-8 py-4 border border-white/15 hover:border-white text-white text-xs uppercase tracking-widest font-semibold transition-all hover:bg-white hover:text-noir-950">
+              <i data-lucide="phone" class="w-4 h-4"></i>
+              <span>WhatsApp: +1 (555) 987-6543</span>
+            </a>
+          </div>
+
+          <p class="text-xs text-noir-muted">
+            Direct dispatch: <a href="mailto:concierge@starbucksreserve.com" class="text-white hover:underline">concierge@starbucksreserve.com</a>
+          </p>
+        </div>
+
+        <!-- Copyright -->
+        <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-noir-muted gap-4">
+          <p>© 2026 Starbucks Coffee Company. All Rights Reserved. Pure Terroir Distinction.</p>
+          <div class="flex gap-8">
+            <a href="#" class="hover:text-white transition-colors">Privacy</a>
+            <a href="#" class="hover:text-white transition-colors">Terms of Experience</a>
+          </div>
+        </div>
+
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 4. 120HZ SEAMLESS SCREEN-EDGE LOOP & DYNAMIC AMPLITUDE PHYSICS ENGINE     -->
+  <!-- ========================================================================= -->
   <script>
     lucide.createIcons();
 
     (function() {
-      const beansStage = document.getElementById('beans-stage');
-      const beanElements = document.querySelectorAll('.cocoa-item');
-      const menuSection = document.getElementById('menu-section');
-      const locationsSection = document.getElementById('locations-section');
-      const reviewsSection = document.getElementById('reviews-section');
-      const contactFooter = document.getElementById('contact');
+      const stage = document.getElementById('cocoa-stage');
+      const particles = document.querySelectorAll('.cocoa-particle');
+      const menuSection = document.getElementById('menu');
+      const contactSection = document.getElementById('contact');
 
-      let lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
-      let targetVelocity = 0;
-      let currentVelocity = 0;
-      let levitationTime = 0;
-      let currentOpacity = 0;
-      let currentBlur = 0;
-
-      // Window dimensions cache
+      // Global viewport dimensions
       let winW = window.innerWidth;
       let winH = window.innerHeight;
 
@@ -456,163 +475,157 @@
         winH = window.innerHeight;
       }, { passive: true });
 
-      // Initial distributed positions across screen (x in px, y in fraction of viewport)
-      const initialPositions = [
-        { x: 0.08 * winW, y: 0.18 * winH },
-        { x: 0.78 * winW, y: 0.28 * winH },
-        { x: 0.18 * winW, y: 0.48 * winH },
-        { x: 0.85 * winW, y: 0.62 * winH },
-        { x: 0.35 * winW, y: 0.78 * winH },
-        { x: 0.65 * winW, y: 0.88 * winH }
+      let lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
+      let targetVelocity = 0;
+      let currentVelocity = 0;
+      let levitationClock = 0;
+
+      // Blur & opacity state
+      let currentBlur = 0;
+      let currentOpacity = 1;
+
+      // Particle State Array
+      // Distinct initial spread across the viewport from top to bottom
+      const initialSpreads = [
+        0.08 * winW,
+        0.72 * winW,
+        0.28 * winW,
+        0.82 * winW,
+        0.18 * winW,
+        0.58 * winW
       ];
 
-      const beansData = Array.from(beanElements).map((el, i) => {
-        const init = initialPositions[i] || { x: (i * 0.16) * winW, y: (0.15 + i * 0.14) * winH };
+      const particlesData = Array.from(particles).map((el, index) => {
+        const itemWidth = el.offsetWidth || 150;
+        const baseYRatio = parseFloat(el.getAttribute('data-base-y')) || (0.15 + index * 0.14);
+        
         return {
           el: el,
+          itemWidth: itemWidth,
+          x: initialSpreads[index] % (winW + itemWidth), // Precise screen coordinate
+          baseYRatio: baseYRatio,
           speedFactor: parseFloat(el.getAttribute('data-speed')) || 1.3,
-          rotFactor: parseFloat(el.getAttribute('data-rot')) || 0.18,
+          rotBias: parseFloat(el.getAttribute('data-rot-bias')) || 0.2,
           baseSway: parseFloat(el.getAttribute('data-sway')) || 22,
-          phaseOffset: i * 1.5,
-          // Continuous world X for toroidal loop
-          worldX: init.x,
-          baseY: init.y,
-          itemWidth: 160,
-          currentRenderX: init.x,
-          currentRenderY: init.y,
+          phaseOffset: index * 1.45,
+          currentRenderX: initialSpreads[index],
+          currentRenderY: baseYRatio * winH,
           currentRot: 0
         };
       });
 
-      // Passive scroll tracker: captures scroll speed dynamically
+      // Passive scroll monitor for instantaneous velocity computation
       window.addEventListener('scroll', () => {
-        const nowY = window.pageYOffset || document.documentElement.scrollTop;
-        const delta = nowY - lastScrollY;
-        
-        // As user scrolls DOWN, target velocity increases
+        const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+        const delta = currentScrollY - lastScrollY;
+
+        // Downward scroll adds positive rightward impulse
         if (delta > 0) {
-          targetVelocity = Math.min(targetVelocity + delta * 0.4, 60);
+          targetVelocity = Math.min(targetVelocity + delta * 0.45, 65);
         } else if (delta < 0) {
+          // Upward scroll decelerates velocity slightly
           targetVelocity = Math.max(targetVelocity + delta * 0.15, -15);
         }
-        lastScrollY = nowY;
+
+        lastScrollY = currentScrollY;
       }, { passive: true });
 
-      let prevFrameTime = performance.now();
+      let prevTime = performance.now();
 
-      function renderLoop(currentTime) {
-        requestAnimationFrame(renderLoop);
+      function animationLoop(timestamp) {
+        requestAnimationFrame(animationLoop);
 
-        const dt = Math.min((currentTime - prevFrameTime) / 1000, 0.1);
-        prevFrameTime = currentTime;
+        const dt = Math.min((timestamp - prevTime) / 1000, 0.1);
+        prevTime = timestamp;
 
-        // Base constant slow ambient drift to the right
-        const ambientSpeed = 18; // px per second ambient glide
-
-        // Velocity friction decay: smoothly slows down to 0 after scrolling stops
+        // 1. Friction decay: smoothly slow down velocity to 0 when user stops scrolling
         targetVelocity *= Math.pow(0.85, dt * 60);
         if (Math.abs(targetVelocity) < 0.001) targetVelocity = 0;
 
-        // Smooth acceleration lerp
         currentVelocity += (targetVelocity - currentVelocity) * Math.min(1, dt * 8);
-        levitationTime += dt * 1.4;
+        levitationClock += dt * 1.5;
 
-        /* 
-          Section Visibility Logic:
-          Beans appear behind the main sections: Menu, Locations, and Reviews.
-          Smooth entry fade-in at Menu top, and smooth motion blur fade-out at Reviews bottom / Contact footer.
-        */
-        const menuRect = menuSection ? menuSection.getBoundingClientRect() : null;
-        const reviewsRect = reviewsSection ? reviewsSection.getBoundingClientRect() : null;
-
-        let targetOpacityVal = 0;
+        // 2. Visual Polish: Motion Blur & Fade at specific trigger areas ("Menu", "Concierge")
         let targetBlurVal = 0;
+        let targetOpacityVal = 1;
 
-        if (menuRect && reviewsRect) {
-          const zoneTop = menuRect.top;
-          const zoneBottom = reviewsRect.bottom;
-
-          // Check if user is within the experience boundaries
-          if (zoneTop < winH && zoneBottom > 0) {
-            let entryFactor = 1;
-            let exitFactor = 1;
-
-            // Fade in smoothly as Menu approaches
-            if (zoneTop > 0) {
-              entryFactor = Math.max(0, Math.min(1, (winH - zoneTop) / 250));
-            }
-
-            // Fade out smoothly with motion blur as Reviews ends
-            if (zoneBottom < 350) {
-              exitFactor = Math.max(0, zoneBottom / 350);
-            }
-
-            const activeFactor = Math.min(entryFactor, exitFactor);
-            targetOpacityVal = activeFactor;
-            targetBlurVal = (1 - activeFactor) * 22; // Dynamic motion/gaussian blur
+        // Menu trigger region
+        if (menuSection) {
+          const menuRect = menuSection.getBoundingClientRect();
+          // Near the menu heading/trigger area
+          if (menuRect.top < winH * 0.5 && menuRect.top > -winH * 0.4) {
+            targetBlurVal = 8;
+            targetOpacityVal = 0.55;
           }
         }
 
-        // Lerp opacity & blur so transition is velvet-smooth on 120Hz
-        currentOpacity += (targetOpacityVal - currentOpacity) * Math.min(1, dt * 7);
-        currentBlur += (targetBlurVal - currentBlur) * Math.min(1, dt * 7);
+        // Concierge / Contact trigger region
+        if (contactSection) {
+          const contactRect = contactSection.getBoundingClientRect();
+          if (contactRect.top < winH) {
+            const progress = Math.max(0, Math.min(1, (winH - contactRect.top) / 350));
+            targetBlurVal = Math.max(targetBlurVal, progress * 20); // Deep Gaussian blur on exit
+            targetOpacityVal = Math.min(targetOpacityVal, 1 - progress); // Gracefully fade to 0
+          }
+        }
 
-        beansStage.style.opacity = currentOpacity.toFixed(3);
-        beansStage.style.filter = currentBlur > 0.4 ? `blur(${currentBlur.toFixed(1)}px)` : 'none';
+        // Smooth transition of blur and opacity
+        currentBlur += (targetBlurVal - currentBlur) * Math.min(1, dt * 6);
+        currentOpacity += (targetOpacityVal - currentOpacity) * Math.min(1, dt * 6);
+
+        stage.style.filter = currentBlur > 0.4 ? `blur(${currentBlur.toFixed(1)}px)` : 'none';
+        stage.style.opacity = currentOpacity.toFixed(3);
 
         if (currentOpacity < 0.005) return;
 
-        // Dynamic amplitude multiplier based on scroll speed:
-        // The faster the user scrolls, the wider the vertical and rotational sway becomes.
-        // Smooth decay back to base amplitude when scrolling stops.
+        // 3. Dynamic Amplitude Physics:
+        // Faster scroll = wider vertical sway + increased rotational sway
         const speedMagnitude = Math.abs(currentVelocity);
-        const amplitudeMultiplier = 1 + (speedMagnitude * 0.12);
+        const amplitudeMultiplier = 1 + (speedMagnitude * 0.14);
 
-        const wrapSpan = winW + 260; // Total horizontal wrap span including margins
+        // Ambient gentle drift to the right (px/sec)
+        const ambientRightSpeed = 16;
 
-        for (let i = 0; i < beansData.length; i++) {
-          const b = beansData[i];
+        // 4. Update Particle Coordinates with True Screen Edge Loop
+        for (let i = 0; i < particlesData.length; i++) {
+          const p = particlesData[i];
 
-          // Movement delta: ambient drift + scroll-driven acceleration to the right
-          const moveDeltaX = (ambientSpeed + (currentVelocity * b.speedFactor * 16)) * dt;
-          b.worldX += moveDeltaX;
+          // Rightward horizontal advance: ambient float + scroll acceleration
+          const advanceX = (ambientRightSpeed + (currentVelocity * p.speedFactor * 16)) * dt;
+          p.x += advanceX;
 
-          // Continuous horizontal loop:
-          // When a cocoa element fully moves off the RIGHT edge, immediately respawn and re-enter from the LEFT edge
-          let screenX = ((b.worldX + b.itemWidth) % wrapSpan);
-          if (screenX < 0) screenX += wrapSpan;
-          screenX -= b.itemWidth;
-
-          // Dynamically altered sway amplitude (vertical and rotational)
-          const dynamicSway = b.baseSway * amplitudeMultiplier;
-          const swayX = Math.cos(levitationTime + b.phaseOffset) * (dynamicSway * 0.3);
-          const swayY = Math.sin(levitationTime * 0.85 + b.phaseOffset) * dynamicSway;
-          const swayRot = Math.sin(levitationTime * 0.45 + b.phaseOffset) * (7 * amplitudeMultiplier) + (currentVelocity * b.rotFactor * 3.2);
-
-          const finalX = screenX + swayX;
-          const finalY = b.baseY + swayY;
-
-          // Edge fade effect so re-entry from the left is organic
-          let edgeAlpha = 1;
-          const margin = 100;
-          if (finalX < -20) {
-            edgeAlpha = Math.max(0, (finalX + b.itemWidth) / margin);
-          } else if (finalX > winW - margin) {
-            edgeAlpha = Math.max(0, (winW + 40 - finalX) / (margin + 40));
+          // TRUE SCREEN EDGE CONVEYOR BELT LOOP:
+          // When the element moves completely past the RIGHT edge (winW),
+          // immediately reset position to enter from the LEFT edge (-p.itemWidth).
+          if (p.x > winW) {
+            p.x = -p.itemWidth;
+            p.currentRenderX = -p.itemWidth;
+          } else if (p.x < -p.itemWidth) {
+            // Reverse handling if scrolled up vigorously
+            p.x = winW;
+            p.currentRenderX = winW;
           }
-          b.el.style.opacity = edgeAlpha.toFixed(2);
 
-          // Frame-rate independent coordinate lerp for buttery 120Hz display
-          const lerpRate = Math.min(1, dt * 12);
-          b.currentRenderX += (finalX - b.currentRenderX) * lerpRate;
-          b.currentRenderY += (finalY - b.currentRenderY) * lerpRate;
-          b.currentRot += (swayRot - b.currentRot) * lerpRate;
+          // Dynamic harmonic levitation
+          const currentSway = p.baseSway * amplitudeMultiplier;
+          const swayX = Math.cos(levitationClock + p.phaseOffset) * (currentSway * 0.35);
+          const swayY = Math.sin(levitationClock * 0.85 + p.phaseOffset) * currentSway;
+          const swayRot = Math.sin(levitationClock * 0.45 + p.phaseOffset) * (7 * amplitudeMultiplier) + (currentVelocity * p.rotBias * 3.5);
 
-          b.el.style.transform = `translate3d(${b.currentRenderX.toFixed(2)}px, ${b.currentRenderY.toFixed(2)}px, 0) rotate(${b.currentRot.toFixed(2)}deg)`;
+          const targetPosX = p.x + swayX;
+          const targetPosY = (p.baseYRatio * winH) + swayY;
+
+          // 120Hz smooth coordinate lerp
+          const lerpRate = Math.min(1, dt * 14);
+          p.currentRenderX += (targetPosX - p.currentRenderX) * lerpRate;
+          p.currentRenderY += (targetPosY - p.currentRenderY) * lerpRate;
+          p.currentRot += (swayRot - p.currentRot) * lerpRate;
+
+          p.el.style.transform = `translate3d(${p.currentRenderX.toFixed(2)}px, ${p.currentRenderY.toFixed(2)}px, 0) rotate(${p.currentRot.toFixed(2)}deg)`;
         }
       }
 
-      requestAnimationFrame(renderLoop);
+      requestAnimationFrame(animationLoop);
     })();
   </script>
 </body>
