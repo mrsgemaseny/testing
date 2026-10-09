@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SKYPARK | Edge of Adrenaline</title>
+  <title>SKYPARK EXTREME | Edge of Adrenaline</title>
 
-  <!-- Typography -->
+  <!-- High-Energy Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -17,24 +17,15 @@
       theme: {
         extend: {
           colors: {
-            charcoal: {
-              950: '#050608',
-              900: '#090B0E',
-              850: '#0F1217',
-              800: '#151921',
-              700: '#202632',
-              muted: '#7A8496',
-              border: '#1C222D',
-              light: '#F1F4F9'
-            },
-            accent: {
-              cyan: '#00F0FF',
-              amber: '#FFB800',
-              emerald: '#00FF9D',
-              rose: '#FF2A6D'
-            }
+            deepIndigo: '#060714',
+            cyberCyan: '#00F0FF',
+            cyberPink: '#FF0055',
+            cyberYellow: '#FFE600',
+            panicRed: '#FF0A37',
+            cockpitDark: '#0A0E1A'
           },
           fontFamily: {
+            cyber: ['"Orbitron"', 'sans-serif'],
             display: ['"Syne"', 'sans-serif'],
             sans: ['"Plus Jakarta Sans"', 'sans-serif'],
             mono: ['"JetBrains Mono"', 'monospace'],
@@ -48,480 +39,557 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 5px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #090B0E;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #1C222D;
-      border-radius: 9999px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #2C3545;
-    }
-
     /* 120Hz Hardware acceleration primitives */
     .gpu-accel {
       transform: translate3d(0, 0, 0);
       backface-visibility: hidden;
       perspective: 1000px;
-      will-change: transform;
+      will-change: transform, opacity;
     }
 
-    .hairline-b {
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
     }
-    .hairline-t {
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    ::-webkit-scrollbar-track {
+      background: #060714;
     }
-
-    /* Mascot subtle breathing & warm embracing pose */
-    @keyframes subtleBreathe {
-      0%, 100% { transform: translate3d(0, 0, 0); }
-      50% { transform: translate3d(0, -9px, 0); }
-    }
-    @keyframes armGentleLeft {
-      0%, 100% { transform: rotate(-3deg); }
-      50% { transform: rotate(5deg); }
-    }
-    @keyframes armGentleRight {
-      0%, 100% { transform: rotate(3deg); }
-      50% { transform: rotate(-5deg); }
-    }
-
-    .mascot-core {
-      animation: subtleBreathe 4.5s ease-in-out infinite;
-    }
-    .arm-left {
-      transform-origin: 100px 135px;
-      animation: armGentleLeft 4s ease-in-out infinite;
-    }
-    .arm-right {
-      transform-origin: 260px 135px;
-      animation: armGentleRight 4s ease-in-out infinite;
-    }
-
-    /* Custom range slider styling */
-    input[type=range] {
-      -webkit-appearance: none;
-      background: transparent;
-    }
-    input[type=range]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      height: 22px;
-      width: 22px;
-      border-radius: 50%;
-      background: #00F0FF;
-      box-shadow: 0 0 14px rgba(0, 240, 255, 0.8);
-      cursor: pointer;
-      margin-top: -8px;
-      border: 2px solid #FFFFFF;
-      transition: transform 0.15s ease;
-    }
-    input[type=range]::-webkit-slider-thumb:hover {
-      transform: scale(1.15);
-    }
-    input[type=range]::-webkit-slider-runnable-track {
-      width: 100%;
-      height: 6px;
-      cursor: pointer;
-      background: #1C222D;
+    ::-webkit-scrollbar-thumb {
+      background: #00F0FF44;
       border-radius: 9999px;
     }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #00F0FFaa;
+    }
 
-    /* River Flow Animation inside SVG Map */
-    @keyframes riverShimmer {
+    /* Deep Midnight-Indigo Gradient Canvas Background */
+    .bg-indigo-neon-mesh {
+      background: radial-gradient(circle at 50% 15%, #131238 0%, #080A1F 45%, #04050D 100%);
+      background-attachment: fixed;
+    }
+
+    /* High-Alert Panic Mode Theme */
+    body.panic-active {
+      background: radial-gradient(circle at 50% 20%, #3B000C 0%, #1A0208 50%, #080003 100%) !important;
+      animation: panicFlashPulse 1.2s infinite alternate ease-in-out;
+    }
+    body.panic-active .neon-cyan-glow {
+      color: #FF0A37 !important;
+      text-shadow: 0 0 20px #FF0A37, 0 0 45px #FF0A37 !important;
+    }
+    body.panic-active .panic-border {
+      border-color: #FF0A37 !important;
+      box-shadow: 0 0 25px rgba(255, 10, 55, 0.45) !important;
+    }
+
+    @keyframes panicFlashPulse {
+      0% { filter: contrast(100%) brightness(100%); }
+      100% { filter: contrast(125%) brightness(115%); }
+    }
+
+    /* Radar Node Waves */
+    @keyframes radarWave {
+      0% { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(2.2); opacity: 0; }
+    }
+    .radar-pulse-ring {
+      animation: radarWave 2.2s cubic-bezier(0.1, 0.8, 0.3, 1) infinite;
+    }
+
+    /* River Flow SVG Stream */
+    @keyframes riverTorrent {
       0% { stroke-dashoffset: 0; }
-      100% { stroke-dashoffset: 120; }
+      100% { stroke-dashoffset: -160; }
     }
-    .river-anim {
-      stroke-dasharray: 20 10;
-      animation: riverShimmer 12s linear infinite;
+    .river-torrent {
+      stroke-dasharray: 25 15;
+      animation: riverTorrent 8s linear infinite;
     }
 
-    /* Ambient pulse */
-    .pin-pulse {
-      box-shadow: 0 0 0 0 rgba(0, 240, 255, 0.4);
-      animation: pulseGlow 2.5s infinite;
+    /* EKG Monitor Line Heartbeat Animation */
+    @keyframes ekgLoop {
+      0% { stroke-dashoffset: 600; }
+      100% { stroke-dashoffset: 0; }
     }
-    @keyframes pulseGlow {
-      0% { box-shadow: 0 0 0 0 rgba(0, 240, 255, 0.5); }
-      70% { box-shadow: 0 0 0 14px rgba(0, 240, 255, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(0, 240, 255, 0); }
+    .ekg-line {
+      stroke-dasharray: 600;
+      stroke-dashoffset: 600;
+      animation: ekgLoop 2s linear infinite;
+    }
+
+    /* Idle hover for footer ambient logos */
+    @keyframes floatHover {
+      0%, 100% { transform: translate3d(0, 0, 0) rotate(-3deg); }
+      50% { transform: translate3d(0, -18px, 0) rotate(4deg); }
+    }
+    .anim-float {
+      animation: floatHover 6s ease-in-out infinite;
+    }
+
+    /* Mascot balancing animation */
+    .mascot-sway {
+      transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.4, 1);
     }
   </style>
 </head>
-<body class="bg-charcoal-900 text-charcoal-light font-sans antialiased overflow-x-hidden selection:bg-white selection:text-black">
+<body id="master-body" class="bg-indigo-neon-mesh text-white font-sans antialiased overflow-x-hidden selection:bg-cyberCyan selection:text-black min-h-screen">
 
   <!-- ========================================================================= -->
-  <!-- 4. PARALLAX VECTOR CLOUDS (PARTS TO SIDES ON ACCELERATED DOWNWARD SCROLL) -->
+  <!-- 1. FERRIS WHEEL ABSOLUTE OVERLAY (LOCKED ON HIGHEST Z-INDEX: 999)         -->
+  <!-- ========================================================================= -->
+  <div class="fixed right-0 top-0 h-screen w-40 sm:w-64 md:w-80 lg:w-[420px] pointer-events-none z-[999] overflow-hidden select-none" aria-hidden="true">
+    <div id="ferris-wheel-master" class="absolute -right-4 top-1/2 w-[360px] sm:w-[500px] md:w-[680px] aspect-square gpu-accel drop-shadow-[0_0_45px_rgba(0,240,255,0.45)]" style="transform: translate3d(50%, -50%, 0) rotate(0deg);">
+      <svg viewBox="0 0 600 600" class="w-full h-full">
+        <defs>
+          <linearGradient id="neonWheelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#00F0FF"/>
+            <stop offset="45%" stop-color="#FF0055"/>
+            <stop offset="100%" stop-color="#FFE600"/>
+          </linearGradient>
+          <radialGradient id="masterHubGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#00F0FF"/>
+            <stop offset="70%" stop-color="#140D36"/>
+            <stop offset="100%" stop-color="#04050D"/>
+          </radialGradient>
+        </defs>
+
+        <!-- Outer Double High-Energy Glowing Rings -->
+        <circle cx="300" cy="300" r="275" stroke="url(#neonWheelGrad)" stroke-width="4.5" fill="none" opacity="0.95" stroke-dasharray="14 8"/>
+        <circle cx="300" cy="300" r="258" stroke="#00F0FF" stroke-width="2" fill="none" opacity="0.75"/>
+        <circle cx="300" cy="300" r="165" stroke="#FF0055" stroke-width="2.2" fill="none" opacity="0.55"/>
+
+        <!-- 12 Structural High-Tension Spokes -->
+        <g stroke="url(#neonWheelGrad)" stroke-width="2.5" opacity="0.8">
+          <line x1="300" y1="300" x2="575" y2="300"/>
+          <line x1="300" y1="300" x2="538.1" y2="437.5"/>
+          <line x1="300" y1="300" x2="437.5" y2="538.1"/>
+          <line x1="300" y1="300" x2="300" y2="575"/>
+          <line x1="300" y1="300" x2="162.5" y2="538.1"/>
+          <line x1="300" y1="300" x2="61.9" y2="437.5"/>
+          <line x1="300" y1="300" x2="25" y2="300"/>
+          <line x1="300" y1="300" x2="61.9" y2="162.5"/>
+          <line x1="300" y1="300" x2="162.5" y2="61.9"/>
+          <line x1="300" y1="300" x2="300" y2="25"/>
+          <line x1="300" y1="300" x2="437.5" y2="61.9"/>
+          <line x1="300" y1="300" x2="538.1" y2="162.5"/>
+        </g>
+
+        <!-- Dynamic Neon Gondolas / Cabins -->
+        <circle cx="575" cy="300" r="16" fill="#060714" stroke="#00F0FF" stroke-width="3"/>
+        <circle cx="575" cy="300" r="5" fill="#00F0FF"/>
+        <circle cx="538.1" cy="437.5" r="16" fill="#060714" stroke="#FF0055" stroke-width="3"/>
+        <circle cx="538.1" cy="437.5" r="5" fill="#FF0055"/>
+        <circle cx="437.5" cy="538.1" r="16" fill="#060714" stroke="#FFE600" stroke-width="3"/>
+        <circle cx="437.5" cy="538.1" r="5" fill="#FFE600"/>
+        <circle cx="300" cy="575" r="16" fill="#060714" stroke="#00F0FF" stroke-width="3"/>
+        <circle cx="300" cy="575" r="5" fill="#00F0FF"/>
+        <circle cx="162.5" cy="538.1" r="16" fill="#060714" stroke="#FF0055" stroke-width="3"/>
+        <circle cx="162.5" cy="538.1" r="5" fill="#FF0055"/>
+        <circle cx="61.9" cy="437.5" r="16" fill="#060714" stroke="#FFE600" stroke-width="3"/>
+        <circle cx="61.9" cy="437.5" r="5" fill="#FFE600"/>
+        <circle cx="25" cy="300" r="16" fill="#060714" stroke="#00F0FF" stroke-width="3"/>
+        <circle cx="25" cy="300" r="5" fill="#00F0FF"/>
+        <circle cx="61.9" cy="162.5" r="16" fill="#060714" stroke="#FF0055" stroke-width="3"/>
+        <circle cx="61.9" cy="162.5" r="5" fill="#FF0055"/>
+        <circle cx="162.5" cy="61.9" r="16" fill="#060714" stroke="#FFE600" stroke-width="3"/>
+        <circle cx="162.5" cy="61.9" r="5" fill="#FFE600"/>
+        <circle cx="300" cy="25" r="16" fill="#060714" stroke="#00F0FF" stroke-width="3"/>
+        <circle cx="300" cy="25" r="5" fill="#00F0FF"/>
+        <circle cx="437.5" cy="61.9" r="16" fill="#060714" stroke="#FF0055" stroke-width="3"/>
+        <circle cx="437.5" cy="61.9" r="5" fill="#FF0055"/>
+        <circle cx="538.1" cy="162.5" r="16" fill="#060714" stroke="#FFE600" stroke-width="3"/>
+        <circle cx="538.1" cy="162.5" r="5" fill="#FFE600"/>
+
+        <!-- Center Rotational Plasma Hub -->
+        <circle cx="300" cy="300" r="44" fill="url(#masterHubGrad)" stroke="#00F0FF" stroke-width="3"/>
+        <circle cx="300" cy="300" r="16" fill="#00F0FF"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 1. DRIFTING PARALLAX VECTOR CLOUDS (SEPARATE HORIZONTALLY ON SCROLL)      -->
   <!-- ========================================================================= -->
   <div class="fixed inset-0 pointer-events-none z-10 overflow-hidden" aria-hidden="true">
-    <!-- Left Cloud Bank (Translates Leftward) -->
-    <div id="cloud-left" class="absolute -left-20 top-1/4 w-[480px] md:w-[720px] aspect-[1.8/1] gpu-accel opacity-30 transition-transform duration-300">
-      <svg viewBox="0 0 600 320" class="w-full h-full fill-white/10 filter blur-2xl">
+    <div id="cloud-drift-left" class="absolute -left-28 top-1/4 w-[550px] md:w-[850px] aspect-[1.8/1] gpu-accel opacity-35 transition-transform duration-300">
+      <svg viewBox="0 0 600 320" class="w-full h-full fill-cyberCyan/10 filter blur-3xl">
         <path d="M 80 200 C 60 140 160 80 260 120 C 320 60 440 90 480 160 C 560 180 570 270 480 300 C 380 320 180 320 80 200 Z"/>
       </svg>
     </div>
-    <!-- Right Cloud Bank (Translates Rightward) -->
-    <div id="cloud-right" class="absolute -right-20 top-1/3 w-[480px] md:w-[720px] aspect-[1.8/1] gpu-accel opacity-30 transition-transform duration-300">
-      <svg viewBox="0 0 600 320" class="w-full h-full fill-white/10 filter blur-2xl">
+    <div id="cloud-drift-right" class="absolute -right-28 top-1/3 w-[550px] md:w-[850px] aspect-[1.8/1] gpu-accel opacity-35 transition-transform duration-300">
+      <svg viewBox="0 0 600 320" class="w-full h-full fill-cyberPink/10 filter blur-3xl">
         <path d="M 120 180 C 140 100 240 70 340 110 C 400 50 500 80 540 160 C 600 210 540 300 440 310 C 320 320 160 300 120 180 Z"/>
       </svg>
     </div>
   </div>
 
   <!-- ========================================================================= -->
-  <!-- 4. GLOBAL FERRIS WHEEL OVERLAY (PERSISTENT TOP LAYER Z-INDEX: 40)         -->
+  <!-- NAVIGATION BAR + PANIC MODE SWITCH                                        -->
   <!-- ========================================================================= -->
-  <div class="fixed right-0 top-0 h-screen w-44 sm:w-64 md:w-80 lg:w-96 pointer-events-none z-40 overflow-hidden" aria-hidden="true">
-    <div id="global-ferris-wheel" class="absolute -right-4 top-1/2 w-[340px] sm:w-[480px] md:w-[620px] aspect-square gpu-accel opacity-90" style="transform: translate3d(50%, -50%, 0) rotate(0deg);">
-      <svg viewBox="0 0 600 600" class="w-full h-full drop-shadow-[0_20px_40px_rgba(0,0,0,0.9)]">
-        <defs>
-          <linearGradient id="wheelRimGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.8"/>
-            <stop offset="50%" stop-color="#7A8496" stop-opacity="0.4"/>
-            <stop offset="100%" stop-color="#202632" stop-opacity="0.8"/>
-          </linearGradient>
-          <radialGradient id="hubGrad" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#2C3545"/>
-            <stop offset="80%" stop-color="#151921"/>
-            <stop offset="100%" stop-color="#090B0E"/>
-          </radialGradient>
-        </defs>
-
-        <!-- Precision Engineering Rims -->
-        <circle cx="300" cy="300" r="270" stroke="url(#wheelRimGrad)" stroke-width="2.5" fill="none" opacity="0.85"/>
-        <circle cx="300" cy="300" r="256" stroke="rgba(255,255,255,0.2)" stroke-width="1.2" fill="none"/>
-        <circle cx="300" cy="300" r="160" stroke="rgba(255,255,255,0.15)" stroke-width="1.2" fill="none"/>
-
-        <!-- 12 Structural Cable Spokes -->
-        <g stroke="rgba(255,255,255,0.25)" stroke-width="1.5">
-          <line x1="300" y1="300" x2="570" y2="300"/>
-          <line x1="300" y1="300" x2="533.8" y2="435"/>
-          <line x1="300" y1="300" x2="435" y2="533.8"/>
-          <line x1="300" y1="300" x2="300" y2="570"/>
-          <line x1="300" y1="300" x2="165" y2="533.8"/>
-          <line x1="300" y1="300" x2="66.2" y2="435"/>
-          <line x1="300" y1="300" x2="30" y2="300"/>
-          <line x1="300" y1="300" x2="66.2" y2="165"/>
-          <line x1="300" y1="300" x2="165" y2="66.2"/>
-          <line x1="300" y1="300" x2="300" y2="30"/>
-          <line x1="300" y1="300" x2="435" y2="66.2"/>
-          <line x1="300" y1="300" x2="533.8" y2="165"/>
-        </g>
-
-        <!-- Minimalist Architectural Passenger Pods -->
-        <circle cx="570" cy="300" r="14" fill="#0F1217" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
-        <circle cx="570" cy="300" r="4" fill="#00F0FF"/>
-        <circle cx="533.8" cy="435" r="14" fill="#0F1217" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
-        <circle cx="533.8" cy="435" r="4" fill="#FFFFFF"/>
-        <circle cx="435" cy="533.8" r="14" fill="#0F1217" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
-        <circle cx="435" cy="533.8" r="4" fill="#00F0FF"/>
-        <circle cx="300" cy="570" r="14" fill="#0F1217" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
-        <circle cx="300" cy="570" r="4" fill="#FFFFFF"/>
-        <circle cx="165" cy="533.8" r="14" fill="#0F1217" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
-        <circle cx="165" cy="533.8" r="4" fill="#00F0FF"/>
-        <circle cx="66.2" cy="435" r="14" fill="#0F1217" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
-        <circle cx="66.2" cy="435" r="4" fill="#FFFFFF"/>
-        <circle cx="30" cy="300" r="14" fill="#0F1217" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
-        <circle cx="30" cy="300" r="4" fill="#00F0FF"/>
-        <circle cx="66.2" cy="165" r="14" fill="#0F1217" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
-        <circle cx="66.2" cy="165" r="4" fill="#FFFFFF"/>
-        <circle cx="165" cy="66.2" r="14" fill="#0F1217" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
-        <circle cx="165" cy="66.2" r="4" fill="#00F0FF"/>
-        <circle cx="300" cy="30" r="14" fill="#0F1217" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
-        <circle cx="300" cy="30" r="4" fill="#FFFFFF"/>
-        <circle cx="435" cy="66.2" r="14" fill="#0F1217" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
-        <circle cx="435" cy="66.2" r="4" fill="#00F0FF"/>
-        <circle cx="533.8" cy="165" r="14" fill="#0F1217" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
-        <circle cx="533.8" cy="165" r="4" fill="#FFFFFF"/>
-
-        <!-- Center Hub -->
-        <circle cx="300" cy="300" r="36" fill="url(#hubGrad)" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
-        <circle cx="300" cy="300" r="14" fill="#090B0E" stroke="#00F0FF" stroke-width="2"/>
-      </svg>
-    </div>
-  </div>
-
-  <!-- ========================================================================= -->
-  <!-- 1. NAVIGATION BAR (STRICTLY MINIMALIST: SKYPARK, LIVE STATUS, BOOK)       -->
-  <!-- ========================================================================= -->
-  <header class="sticky top-0 z-30 bg-charcoal-900/90 backdrop-blur-md hairline-b">
+  <header class="sticky top-0 z-50 bg-deepIndigo/80 backdrop-blur-xl border-b border-white/10">
     <div class="max-w-7xl mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
       
-      <!-- Brand Minimal Wordmark -->
-      <a href="#" class="flex items-center gap-2.5">
-        <span class="font-display text-2xl font-black tracking-tight text-white uppercase">SKYPARK</span>
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyberCyan to-cyberPink flex items-center justify-center p-0.5 shadow-[0_0_20px_#00F0FF]">
+          <div class="w-full h-full bg-deepIndigo rounded-[10px] flex items-center justify-center">
+            <i data-lucide="zap" class="w-5 h-5 text-cyberCyan"></i>
+          </div>
+        </div>
+        <span class="font-cyber text-2xl font-black tracking-widest text-white">SKY<span class="text-cyberCyan neon-cyan-glow">PARK</span></span>
       </a>
 
-      <!-- Clean Minimal Actions: LIVE STATUS & BOOK -->
+      <!-- Controls: EKG Monitor + Panic Switch -->
       <div class="flex items-center gap-6">
-        <a href="#control-center" class="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-charcoal-muted hover:text-white transition-colors">
-          <span class="w-2 h-2 rounded-full bg-accent-emerald animate-pulse"></span>
-          <span>Live Status</span>
-        </a>
+        
+        <!-- Live Cockpit EKG Heart Rate Display -->
+        <div id="ekg-container" class="hidden sm:flex items-center gap-3 px-4 py-2 rounded-xl bg-black/60 border border-white/10 font-mono text-xs">
+          <svg viewBox="0 0 100 24" class="w-20 h-6 text-cyberCyan">
+            <path d="M 0 12 L 25 12 L 32 3 L 42 21 L 52 12 L 60 12 L 66 7 L 72 12 L 100 12" fill="none" stroke="currentColor" stroke-width="2" class="ekg-line"/>
+          </svg>
+          <div class="flex flex-col">
+            <span id="ekg-heart-rate" class="text-xs font-bold text-cyberCyan leading-none">84 BPM</span>
+            <span class="text-[9px] text-white/50 uppercase leading-none mt-0.5">Biometrics</span>
+          </div>
+        </div>
 
-        <a href="#contact" class="px-5 py-2.5 rounded-full bg-white text-charcoal-950 font-bold text-xs uppercase tracking-wider hover:bg-charcoal-light transition-all">
-          Book
-        </a>
+        <!-- 3. PANIC MODE TOGGLE SWITCH -->
+        <button id="panic-toggle-btn" 
+                onclick="togglePanicMode()" 
+                class="px-4 py-2 rounded-xl bg-panicRed/15 border-2 border-panicRed/50 hover:border-panicRed text-white font-cyber text-xs uppercase tracking-wider flex items-center gap-2.5 transition-all shadow-[0_0_15px_rgba(255,10,55,0.3)] active:scale-95">
+          <span class="w-2.5 h-2.5 rounded-full bg-panicRed animate-ping"></span>
+          <span id="panic-label">PANIC MODE</span>
+        </button>
+
       </div>
     </div>
   </header>
 
   <!-- ========================================================================= -->
-  <!-- HERO SECTION WITH WELCOMING MASCOT (WARM EMBRACE)                         -->
+  <!-- 2. HERO SECTION + PARALLAX MOUSE/GYRO BALANCING MASCOT                    -->
   <!-- ========================================================================= -->
-  <section id="hero" class="relative min-h-[85vh] flex flex-col justify-between px-6 md:px-12 pt-16 pb-20 max-w-7xl mx-auto z-20">
+  <section id="hero" class="relative min-h-[90vh] flex flex-col justify-between px-6 md:px-12 pt-16 pb-20 max-w-7xl mx-auto z-20">
     
-    <div class="max-w-4xl pt-6">
-      <span class="text-xs uppercase tracking-[0.3em] text-charcoal-muted font-semibold block mb-4">
-        International High-Altitude Suspension
-      </span>
-      
-      <h1 class="font-display text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black uppercase text-white tracking-tight leading-[0.95] mb-6">
+    <div class="text-center max-w-4xl mx-auto space-y-4">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyberCyan/10 border border-cyberCyan/30 text-cyberCyan font-cyber text-xs uppercase tracking-widest">
+        <span>Highest European Suspension Rigging • Sochi Canyon Gorge</span>
+      </div>
+
+      <h1 class="font-cyber text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black uppercase text-transparent bg-clip-text bg-gradient-to-b from-white via-cyberCyan to-blue-500 tracking-wider leading-none">
         SKYPARK
       </h1>
-      
-      <p class="text-base sm:text-lg md:text-xl text-charcoal-muted font-light leading-relaxed max-w-xl">
-        Welcome to the edge of adrenaline. Precision suspension engineering and extreme aeronautical freefall over the Olympic canyon gorge.
+
+      <p class="font-sans text-base sm:text-lg text-white/70 font-light max-w-xl mx-auto">
+        Welcome to the edge of adrenaline. Tilt screen or move mouse to balance on the gorge ledge.
       </p>
     </div>
 
-    <!-- Centerpiece Mascot: Clean, Warm, Embracing Mascot SVG -->
+    <!-- Centerpiece Mascot: Welcoming Arms with Mouse/Gyro Cliff Balance Parallax -->
     <div class="my-6 flex justify-center items-center">
-      <div class="w-60 sm:w-72 md:w-88 aspect-[1.2/1] mascot-core gpu-accel">
-        <svg viewBox="0 0 360 300" class="w-full h-full drop-shadow-[0_25px_40px_rgba(0,0,0,0.6)]">
+      <div id="mascot-parallax-stage" class="relative w-64 sm:w-80 md:w-96 aspect-[1.2/1] mascot-sway gpu-accel cursor-crosshair">
+        
+        <!-- Glow Core under cliff balance -->
+        <div class="absolute inset-0 bg-gradient-to-r from-cyberCyan/25 to-cyberPink/25 rounded-full blur-3xl pointer-events-none"></div>
+
+        <svg viewBox="0 0 360 300" class="w-full h-full filter drop-shadow-[0_20px_45px_rgba(0,240,255,0.5)]">
           <defs>
-            <linearGradient id="mascotBodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#202632"/>
-              <stop offset="60%" stop-color="#151921"/>
-              <stop offset="100%" stop-color="#0B0D12"/>
-            </linearGradient>
-            <linearGradient id="visorSilver" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#F1F4F9"/>
-              <stop offset="100%" stop-color="#94A3B8"/>
-            </linearGradient>
+            <radialGradient id="cliffHelmetGrad" cx="35%" cy="30%" r="65%">
+              <stop offset="0%" stop-color="#00F0FF"/>
+              <stop offset="60%" stop-color="#0055AA"/>
+              <stop offset="100%" stop-color="#050818"/>
+            </radialGradient>
+            <radialGradient id="cliffVisorGrad" cx="50%" cy="35%" r="70%">
+              <stop offset="0%" stop-color="#FFE600"/>
+              <stop offset="45%" stop-color="#FF0055"/>
+              <stop offset="100%" stop-color="#3A004C"/>
+            </radialGradient>
           </defs>
 
-          <!-- ANTENNA PIN -->
-          <line x1="180" y1="52" x2="180" y2="24" stroke="#7A8496" stroke-width="3.5" stroke-linecap="round"/>
-          <circle cx="180" cy="20" r="7" fill="#00F0FF"/>
+          <!-- ANTENNA WITH GLOWING APEX BULB -->
+          <line x1="180" y1="50" x2="180" y2="18" stroke="#00F0FF" stroke-width="4.5" stroke-linecap="round"/>
+          <circle cx="180" cy="14" r="8" fill="#00F0FF" class="animate-pulse"/>
 
-          <!-- LEFT ARM: WELCOMING EMBRACE WIDE OPEN -->
-          <g class="arm-left">
-            <path d="M 120 150 Q 60 140 18 100 Q 12 115 50 160 Q 85 180 120 170 Z" fill="url(#mascotBodyGrad)" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
-            <ellipse cx="20" cy="95" rx="14" ry="12" fill="#FFB800" stroke="#151921" stroke-width="2.5" transform="rotate(-25 20 95)"/>
-            <circle cx="10" cy="85" r="4" fill="#FFFFFF"/>
-            <circle cx="20" cy="80" r="4" fill="#FFFFFF"/>
-            <circle cx="30" cy="82" r="4" fill="#FFFFFF"/>
+          <!-- LEFT ARM SPREAD IN ADRENALINE EMBRACE -->
+          <g id="mascot-arm-l" class="gpu-accel">
+            <path d="M 120 150 Q 60 140 18 100 Q 12 115 50 160 Q 85 180 120 170 Z" fill="#0C132B" stroke="#00F0FF" stroke-width="3"/>
+            <ellipse cx="20" cy="95" rx="14" ry="12" fill="#FFE600" stroke="#04050D" stroke-width="2.5" transform="rotate(-25 20 95)"/>
+            <circle cx="10" cy="85" r="4" fill="#00F0FF"/>
+            <circle cx="20" cy="80" r="4" fill="#00F0FF"/>
+            <circle cx="30" cy="82" r="4" fill="#00F0FF"/>
           </g>
 
-          <!-- RIGHT ARM: WELCOMING EMBRACE WIDE OPEN -->
-          <g class="arm-right">
-            <path d="M 240 150 Q 300 140 342 100 Q 348 115 310 160 Q 275 180 240 170 Z" fill="url(#mascotBodyGrad)" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
-            <ellipse cx="340" cy="95" rx="14" ry="12" fill="#FFB800" stroke="#151921" stroke-width="2.5" transform="rotate(25 340 95)"/>
-            <circle cx="350" cy="85" r="4" fill="#FFFFFF"/>
-            <circle cx="340" cy="80" r="4" fill="#FFFFFF"/>
-            <circle cx="330" cy="82" r="4" fill="#FFFFFF"/>
+          <!-- RIGHT ARM SPREAD IN ADRENALINE EMBRACE -->
+          <g id="mascot-arm-r" class="gpu-accel">
+            <path d="M 240 150 Q 300 140 342 100 Q 348 115 310 160 Q 275 180 240 170 Z" fill="#0C132B" stroke="#00F0FF" stroke-width="3"/>
+            <ellipse cx="340" cy="95" rx="14" ry="12" fill="#FFE600" stroke="#04050D" stroke-width="2.5" transform="rotate(25 340 95)"/>
+            <circle cx="350" cy="85" r="4" fill="#00F0FF"/>
+            <circle cx="340" cy="80" r="4" fill="#00F0FF"/>
+            <circle cx="330" cy="82" r="4" fill="#00F0FF"/>
           </g>
 
-          <!-- TORSO WITH CLEAN MONOCHROME PANELING -->
-          <path d="M 125 140 Q 180 125 235 140 L 225 250 Q 180 265 135 250 Z" fill="url(#mascotBodyGrad)" stroke="rgba(255,255,255,0.25)" stroke-width="2.5"/>
-          <circle cx="180" cy="195" r="14" fill="#0F1217" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
-          <circle cx="180" cy="195" r="5" fill="#00F0FF"/>
+          <!-- TORSO SUIT -->
+          <path d="M 125 140 Q 180 125 235 140 L 225 250 Q 180 265 135 250 Z" fill="#0C132B" stroke="#00F0FF" stroke-width="3"/>
+          <polygon points="180,172 194,192 180,212 166,192" fill="#FFE600" stroke="#FF0055" stroke-width="2.5"/>
+          <circle cx="180" cy="192" r="5" fill="#FFF"/>
 
-          <!-- SLEEK HELMET HEAD -->
-          <ellipse cx="180" cy="100" rx="65" ry="60" fill="url(#mascotBodyGrad)" stroke="rgba(255,255,255,0.3)" stroke-width="3"/>
-          <path d="M 130 95 Q 180 82 230 95 Q 225 125 180 132 Q 135 125 130 95 Z" fill="url(#visorSilver)" opacity="0.9"/>
-          <path d="M 162 114 Q 180 122 198 114" stroke="#0F172A" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <!-- HELMET & VISOR -->
+          <ellipse cx="180" cy="100" rx="65" ry="60" fill="url(#cliffHelmetGrad)" stroke="#00F0FF" stroke-width="3.5"/>
+          <path d="M 130 95 Q 180 82 230 95 Q 225 125 180 132 Q 135 125 130 95 Z" fill="url(#cliffVisorGrad)" stroke="#FFE600" stroke-width="2"/>
+          <path d="M 160 115 Q 180 125 200 115" stroke="#FFF" stroke-width="3" stroke-linecap="round" fill="none"/>
         </svg>
       </div>
     </div>
 
-    <!-- Live Telemetry Tag -->
-    <div class="flex items-center justify-between text-xs font-mono uppercase tracking-widest text-charcoal-muted pt-4 hairline-t">
-      <span>Gorge Altitude: 207m</span>
-      <span>Certified ISO Flight Zone</span>
-    </div>
-  </section>
-
-  <!-- ========================================================================= -->
-  <!-- 1. MAP LAUNCH SECTION (EXACTLY ONE CLEAN CENTERED PRIMARY BUTTON)         -->
-  <!-- ========================================================================= -->
-  <section id="map-section" class="py-28 px-6 md:px-12 max-w-4xl mx-auto hairline-t text-center z-20 relative">
-    <div class="space-y-6">
-      <span class="text-xs uppercase tracking-[0.3em] text-charcoal-muted font-semibold block">
-        Topographic Navigation
+    <!-- Scroll Down Telemetry Prompt -->
+    <div class="flex items-center justify-between text-xs font-mono uppercase tracking-widest text-white/50 border-t border-white/10 pt-4">
+      <span>Gorge Floor Drop: 207M</span>
+      <span class="flex items-center gap-1.5 text-cyberCyan">
+        <span>Scroll Down for Live Canyon Map</span>
+        <i data-lucide="arrow-down" class="w-3.5 h-3.5 animate-bounce"></i>
       </span>
-      <h2 class="font-display text-4xl sm:text-5xl font-black uppercase text-white tracking-tight">
-        Interactive Gorge Map
-      </h2>
-      <p class="text-charcoal-muted text-sm sm:text-base font-light leading-relaxed max-w-xl mx-auto">
-        Explore canyon elevations, suspension cable bridge spans, real-time wait queues, and allowed rider ages.
-      </p>
+    </div>
+  </section>
 
-      <!-- EXACTLY ONE PRIMARY CALL TO ACTION BUTTON WITH SMOOTH HOVER -->
-      <div class="pt-6">
-        <button onclick="openMapModal()" class="group px-10 py-5 rounded-full border border-white/20 hover:border-white text-white text-xs font-bold uppercase tracking-[0.25em] transition-all duration-300 hover:bg-white hover:text-charcoal-950 shadow-2xl flex items-center gap-3 mx-auto active:scale-95">
-          <span>Explore All Rides</span>
-          <i data-lucide="arrow-up-right" class="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
-        </button>
+  <!-- ========================================================================= -->
+  <!-- 2. EMBEDDED LIVE CANYON MAP + SLINGSHOT LAUNCH MECHANIC                   -->
+  <!-- ========================================================================= -->
+  <section id="canyon-map-section" class="py-20 px-4 sm:px-8 max-w-7xl mx-auto z-20 relative">
+    
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyberPink/10 border border-cyberPink/30 text-cyberPink font-cyber text-xs uppercase tracking-widest mb-2">
+        <i data-lucide="radio" class="w-3.5 h-3.5 animate-pulse"></i>
+        <span>Embedded Live Canyon Radars</span>
+      </div>
+      <h2 class="font-cyber text-4xl sm:text-5xl font-black uppercase text-white tracking-wider">
+        Sochi <span class="text-cyberCyan neon-cyan-glow">Gorge Arena</span>
+      </h2>
+      <p class="text-xs sm:text-sm text-white/60 font-mono mt-1">
+        Drag any circular radar node downwards to stretch the slingshot cable & launch ride telemetry!
+      </p>
+    </div>
+
+    <!-- Slingshot SVG Tension Line Canvas -->
+    <svg id="slingshot-canvas" class="absolute inset-0 pointer-events-none z-30 w-full h-full" style="display: none;">
+      <line id="slingshot-line" x1="0" y1="0" x2="0" y2="0" stroke="#00F0FF" stroke-width="4" stroke-linecap="round" stroke-dasharray="8 4"/>
+    </svg>
+
+    <!-- Embedded Live Gorge Map Canvas -->
+    <div class="relative w-full aspect-[16/10] sm:aspect-[16/9] md:aspect-[2/1] rounded-3xl overflow-hidden border-2 border-cyberCyan/40 panic-border bg-[#050714] shadow-[0_0_60px_rgba(0,240,255,0.2)]">
+      
+      <!-- Topographic Vector Landscape: Mountain Cliffs, Gorge Depth, Luminous Cyan River -->
+      <svg viewBox="0 0 1000 500" class="w-full h-full absolute inset-0 select-none pointer-events-none">
+        <defs>
+          <linearGradient id="gorgeWallWest" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#0E1229"/>
+            <stop offset="75%" stop-color="#141B3B"/>
+            <stop offset="100%" stop-color="#060814"/>
+          </linearGradient>
+          <linearGradient id="gorgeWallEast" x1="100%" y1="0%" x2="0%" y2="0%">
+            <stop offset="0%" stop-color="#0E1229"/>
+            <stop offset="75%" stop-color="#141B3B"/>
+            <stop offset="100%" stop-color="#060814"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Gorge Valley Basin -->
+        <rect width="1000" height="500" fill="#04050D"/>
+
+        <!-- West Plateau Cliffs -->
+        <path d="M 0 0 L 300 0 C 340 120 250 200 300 320 C 330 400 270 470 320 500 L 0 500 Z" fill="url(#gorgeWallWest)"/>
+        <!-- East Plateau Cliffs -->
+        <path d="M 1000 0 L 700 0 C 660 120 750 200 700 320 C 670 400 730 470 680 500 L 1000 500 Z" fill="url(#gorgeWallEast)"/>
+
+        <!-- Luminous Winding Cyan River running down the center -->
+        <path d="M 490 0 C 540 120 440 220 520 340 C 570 410 470 470 500 500" stroke="#003554" stroke-width="50" fill="none" opacity="0.8"/>
+        <path d="M 490 0 C 540 120 440 220 520 340 C 570 410 470 470 500 500" stroke="#00F0FF" stroke-width="3.5" fill="none" opacity="0.95" class="river-torrent filter drop-shadow-[0_0_12px_#00F0FF]"/>
+
+        <!-- Glowing Skybridge Pedestrian Cable Bridge -->
+        <line x1="200" y1="250" x2="800" y2="250" stroke="#FFE600" stroke-width="5" stroke-dasharray="10 5" opacity="0.85"/>
+        <line x1="200" y1="250" x2="800" y2="250" stroke="#FFFFFF" stroke-width="2" opacity="0.95"/>
+        <rect x="185" y="235" width="30" height="30" rx="6" fill="#141B3B" stroke="#00F0FF" stroke-width="2"/>
+        <rect x="785" y="235" width="30" height="30" rx="6" fill="#141B3B" stroke="#00F0FF" stroke-width="2"/>
+
+        <!-- High-Velocity Zipline Cable crossing diagonally -->
+        <line x1="210" y1="120" x2="790" y2="380" stroke="#FF0055" stroke-width="2.5" stroke-dasharray="14 6" opacity="0.75"/>
+      </svg>
+
+      <!-- ============================================== -->
+      <!-- MASSIVE PULSING INTERACTIVE CIRCULAR RADAR NODES-->
+      <!-- ============================================== -->
+      <div id="slingshot-nodes-arena" class="absolute inset-0 z-20">
+        
+        <!-- RADAR NODE 1: BUNGEE 207M -->
+        <div id="node-bungee" 
+             class="slingshot-drag-node absolute top-[44%] left-[22%] -translate-x-1/2 -translate-y-1/2 cursor-grab active:cursor-grabbing select-none"
+             data-ride="bungee"
+             data-origin-x="22" 
+             data-origin-y="44">
+          <!-- Pulse Wave -->
+          <div class="absolute inset-0 rounded-full bg-cyberCyan radar-pulse-ring pointer-events-none"></div>
+          <!-- Outer Radar Core -->
+          <div class="relative w-16 sm:w-20 aspect-square rounded-full bg-deepIndigo border-3 border-cyberCyan shadow-[0_0_30px_#00F0FF] flex flex-col items-center justify-center text-cyberCyan group hover:scale-110 transition-transform">
+            <i data-lucide="activity" class="w-7 h-7 sm:w-8 sm:h-8"></i>
+            <span class="text-[9px] font-cyber font-black tracking-wider text-white mt-0.5">207M</span>
+          </div>
+          <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] font-cyber font-black tracking-widest text-cyberCyan bg-black/80 px-2 py-0.5 rounded border border-cyberCyan/40 pointer-events-none">
+            BUNGEE 207M
+          </span>
+        </div>
+
+        <!-- RADAR NODE 2: MEGA ZIPLINE -->
+        <div id="node-zipline" 
+             class="slingshot-drag-node absolute top-[24%] left-[46%] -translate-x-1/2 -translate-y-1/2 cursor-grab active:cursor-grabbing select-none"
+             data-ride="zipline"
+             data-origin-x="46" 
+             data-origin-y="24">
+          <div class="absolute inset-0 rounded-full bg-cyberPink radar-pulse-ring pointer-events-none"></div>
+          <div class="relative w-16 sm:w-20 aspect-square rounded-full bg-deepIndigo border-3 border-cyberPink shadow-[0_0_30px_#FF0055] flex flex-col items-center justify-center text-cyberPink group hover:scale-110 transition-transform">
+            <i data-lucide="wind" class="w-7 h-7 sm:w-8 sm:h-8"></i>
+            <span class="text-[9px] font-cyber font-black tracking-wider text-white mt-0.5">120 KM</span>
+          </div>
+          <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] font-cyber font-black tracking-widest text-cyberPink bg-black/80 px-2 py-0.5 rounded border border-cyberPink/40 pointer-events-none">
+            MEGA ZIPLINE
+          </span>
+        </div>
+
+        <!-- RADAR NODE 3: GIANT SWING -->
+        <div id="node-swing" 
+             class="slingshot-drag-node absolute top-[44%] left-[78%] -translate-x-1/2 -translate-y-1/2 cursor-grab active:cursor-grabbing select-none"
+             data-ride="swing"
+             data-origin-x="78" 
+             data-origin-y="44">
+          <div class="absolute inset-0 rounded-full bg-cyberYellow radar-pulse-ring pointer-events-none"></div>
+          <div class="relative w-16 sm:w-20 aspect-square rounded-full bg-deepIndigo border-3 border-cyberYellow shadow-[0_0_30px_#FFE600] flex flex-col items-center justify-center text-cyberYellow group hover:scale-110 transition-transform">
+            <i data-lucide="rotate-ccw" class="w-7 h-7 sm:w-8 sm:h-8"></i>
+            <span class="text-[9px] font-cyber font-black tracking-wider text-white mt-0.5">170M</span>
+          </div>
+          <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] font-cyber font-black tracking-widest text-cyberYellow bg-black/80 px-2 py-0.5 rounded border border-cyberYellow/40 pointer-events-none">
+            GIANT SWING
+          </span>
+        </div>
+
+      </div>
+
+      <!-- Quick Drag Indicator Overlay -->
+      <div class="absolute bottom-4 left-4 px-3 py-1.5 rounded-xl bg-black/80 border border-white/20 text-xs font-mono text-white/70 flex items-center gap-2">
+        <i data-lucide="move" class="w-4 h-4 text-cyberCyan"></i>
+        <span>Pull down node to slingshot launch info card</span>
       </div>
     </div>
   </section>
 
   <!-- ========================================================================= -->
-  <!-- 3. INTERACTIVE FEATURE MODULES (REPLACING CLUTTERED TEXT CARDS)           -->
-  <!-- A) ADRENALINE METER (AI FILTER)                                           -->
-  <!-- B) LIVE QUEUE & WEATHER STATION                                           -->
+  <!-- 3. SLINGSHOT LAUNCH POPPED GLASSMORPHIC OVERLAY MODAL                     -->
   <!-- ========================================================================= -->
-  <section id="control-center" class="py-24 px-6 md:px-12 max-w-7xl mx-auto hairline-t z-20 relative">
-    
-    <div class="flex flex-col md:flex-row md:items-baseline justify-between mb-12 gap-4">
-      <div>
-        <span class="text-xs uppercase tracking-[0.3em] text-charcoal-muted font-semibold block mb-2">Live Telemetry & Safety</span>
-        <h2 class="font-display text-3xl sm:text-4xl font-black uppercase text-white">Park Control Center</h2>
-      </div>
-      <p class="text-xs font-mono text-charcoal-muted uppercase tracking-wider">
-        Updated every 15s • Real-time Canyon Sensors
-      </p>
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+  <div id="slingshot-modal-overlay" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-2xl opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-6">
+    <div id="slingshot-modal-card" class="relative w-full max-w-lg p-8 rounded-3xl bg-cockpitDark/95 border-2 border-cyberCyan shadow-[0_0_60px_rgba(0,240,255,0.4)] text-left transform scale-90 transition-transform duration-300">
       
-      <!-- MODULE A: ADRENALINE METER (AI INTENSITY FILTER SLIDER) -->
-      <div class="lg:col-span-6 p-8 rounded-3xl border border-charcoal-border bg-charcoal-850/80 backdrop-blur-md flex flex-col justify-between">
+      <!-- Close Button -->
+      <button onclick="closeSlingshotModal()" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="space-y-6">
         <div>
-          <div class="flex items-center justify-between pb-4 hairline-b mb-6">
-            <div class="flex items-center gap-2">
-              <i data-lucide="gauge" class="w-4 h-4 text-accent-cyan"></i>
-              <span class="text-xs font-mono uppercase tracking-wider text-charcoal-muted">Interactive Module A</span>
-            </div>
-            <span class="text-xs font-mono text-accent-cyan font-bold tracking-widest uppercase">Smart Filter</span>
-          </div>
+          <span id="modal-badge" class="px-3 py-1 rounded-full text-xs font-cyber tracking-widest uppercase bg-cyberCyan/20 text-cyberCyan font-bold">
+            SLINGSHOT LAUNCHED
+          </span>
+          <h3 id="modal-title" class="font-cyber text-3xl font-black uppercase text-white mt-3">
+            BUNGEE 207M
+          </h3>
+        </div>
 
-          <h3 class="font-display text-2xl font-black uppercase text-white mb-2">Adrenaline Meter</h3>
-          <p class="text-sm text-charcoal-muted font-light leading-relaxed mb-8">
-            Filter and isolate canyon experiences according to your thrill threshold. Adjusting the slider dynamically highlights the target ride pins on the interactive map.
+        <!-- High-Contrast Price and Age Restriction Grid -->
+        <div class="grid grid-cols-2 gap-4 p-5 rounded-2xl bg-black/60 border border-white/10 font-mono">
+          <div>
+            <span class="text-xs uppercase tracking-widest text-white/50 block mb-1">Flight Pass</span>
+            <span id="modal-price" class="font-cyber text-3xl font-black text-cyberYellow">$65</span>
+          </div>
+          <div>
+            <span class="text-xs uppercase tracking-widest text-white/50 block mb-1">Allowed Age</span>
+            <span id="modal-age" class="font-cyber text-2xl font-black text-white">14-65 yrs</span>
+          </div>
+        </div>
+
+        <div class="space-y-2 text-sm text-white/70 font-light">
+          <p id="modal-desc">
+            Single aeronautical high-altitude freefall pass. Includes New Zealand certified master harness and telemetry tracking.
           </p>
-
-          <!-- Stylized Slider Control -->
-          <div class="space-y-4 bg-charcoal-900 p-6 rounded-2xl border border-charcoal-border">
-            <div class="flex justify-between items-center text-xs font-mono">
-              <span class="text-charcoal-muted">Filter Level:</span>
-              <span id="slider-intensity-label" class="text-accent-cyan font-bold uppercase tracking-wider">All Experiences (Level 1)</span>
-            </div>
-
-            <!-- Range input 1 to 4 -->
-            <input type="range" id="adrenaline-slider" min="1" max="4" value="1" step="1" class="w-full">
-
-            <div class="flex justify-between text-[10px] font-mono uppercase tracking-widest text-charcoal-muted pt-1">
-              <span>First Walk</span>
-              <span>Speed Glide</span>
-              <span>Giant Arc</span>
-              <span>Extreme Jump</span>
-            </div>
-          </div>
         </div>
 
-        <div class="mt-8 pt-6 hairline-t flex items-center justify-between">
-          <span id="slider-match-count" class="text-xs text-charcoal-muted font-mono">Showing: 4 Attractions Active</span>
-          <button onclick="openMapModal()" class="px-5 py-2.5 rounded-full border border-white/20 hover:border-white text-xs uppercase tracking-wider font-semibold text-white hover:bg-white hover:text-black transition-all flex items-center gap-1.5">
-            <span>View Filtered Pins</span>
-            <i data-lucide="compass" class="w-3.5 h-3.5"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- MODULE B: LIVE QUEUE & WEATHER STATION DASHBOARD -->
-      <div class="lg:col-span-6 p-8 rounded-3xl border border-charcoal-border bg-charcoal-850/80 backdrop-blur-md flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between pb-4 hairline-b mb-6">
-            <div class="flex items-center gap-2">
-              <i data-lucide="wind" class="w-4 h-4 text-accent-emerald"></i>
-              <span class="text-xs font-mono uppercase tracking-wider text-charcoal-muted">Interactive Module B</span>
-            </div>
-            <div class="flex items-center gap-1.5 text-xs font-mono text-accent-emerald font-bold">
-              <span class="w-2 h-2 rounded-full bg-accent-emerald animate-ping"></span>
-              <span>Conditions Optimal</span>
-            </div>
-          </div>
-
-          <h3 class="font-display text-2xl font-black uppercase text-white mb-2">Live Weather & Queue</h3>
-          <p class="text-sm text-charcoal-muted font-light leading-relaxed mb-6">
-            Real-time telemetry gathered from high-altitude gorge anemometers and turnstile digital telemetry.
-          </p>
-
-          <!-- Micro-Dashboard Grid -->
-          <div class="grid grid-cols-2 gap-4 mb-6">
-            <!-- Wind Station -->
-            <div class="p-4 rounded-2xl bg-charcoal-900 border border-charcoal-border">
-              <span class="text-[10px] uppercase font-mono tracking-widest text-charcoal-muted block mb-1">Bridge Wind Velocity</span>
-              <div class="flex items-baseline gap-2">
-                <span id="telemetry-wind" class="font-display text-2xl font-black text-white">12 km/h</span>
-                <span class="text-xs font-mono text-accent-emerald font-bold">Safe</span>
-              </div>
-              <span class="text-[11px] text-charcoal-muted block mt-1 font-light">Cross-canyon laminar breeze</span>
-            </div>
-
-            <!-- Gorge Temperature -->
-            <div class="p-4 rounded-2xl bg-charcoal-900 border border-charcoal-border">
-              <span class="text-[10px] uppercase font-mono tracking-widest text-charcoal-muted block mb-1">Alpine Air Temp</span>
-              <div class="flex items-baseline gap-2">
-                <span class="font-display text-2xl font-black text-white">18°C</span>
-                <span class="text-xs font-mono text-white/60">Clear</span>
-              </div>
-              <span class="text-[11px] text-charcoal-muted block mt-1 font-light">Visibility: 24 km horizon</span>
-            </div>
-          </div>
-
-          <!-- Queue Wait Times Micro-List -->
-          <div class="space-y-2.5 bg-charcoal-900 p-4 rounded-2xl border border-charcoal-border text-xs font-mono">
-            <div class="flex justify-between items-center py-1 hairline-b">
-              <span class="text-white flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-accent-cyan"></span> Bungee 207M</span>
-              <span class="text-accent-emerald font-bold">10 mins wait</span>
-            </div>
-            <div class="flex justify-between items-center py-1 hairline-b">
-              <span class="text-white flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-accent-amber"></span> Mega Zipline</span>
-              <span class="text-white/80 font-bold">15 mins wait</span>
-            </div>
-            <div class="flex justify-between items-center py-1">
-              <span class="text-white flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-accent-rose"></span> Giant Swing</span>
-              <span class="text-accent-emerald font-bold">05 mins wait</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="mt-6 pt-4 hairline-t flex items-center justify-between text-xs text-charcoal-muted">
-          <span>Flight Director: Clear to Jump</span>
-          <a href="#contact" class="text-white hover:underline font-semibold flex items-center gap-1 font-mono">
-            FastPass Desk <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+          <span class="text-xs font-mono text-cyberCyan">Telemetry Status: Optimal</span>
+          <a href="#contact" onclick="closeSlingshotModal()" class="px-6 py-3 rounded-xl bg-gradient-to-r from-cyberCyan to-cyberPink text-black font-cyber text-xs font-bold uppercase tracking-wider hover:brightness-110 transition-all shadow-[0_0_20px_#00F0FF]">
+            Instant Reserve
           </a>
         </div>
       </div>
 
     </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 3. LIVE COCKPIT TELEMETRY MIXER                                           -->
+  <!-- ========================================================================= -->
+  <section class="py-16 px-6 md:px-12 max-w-7xl mx-auto z-20 relative">
+    <div class="p-8 rounded-3xl bg-cockpitDark/90 border border-white/15 backdrop-blur-xl">
+      <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4 border-b border-white/10 pb-6">
+        <div>
+          <span class="text-xs font-mono uppercase tracking-[0.25em] text-cyberCyan">Avionics Sensor Interface</span>
+          <h3 class="font-cyber text-2xl sm:text-3xl font-bold uppercase text-white mt-1">Canyon Cockpit Telemetry</h3>
+        </div>
+        <div class="flex items-center gap-3 font-mono text-xs text-white/70">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+          <span>Digital Link Active (15s Loop)</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 font-mono">
+        <!-- Gauge 1 -->
+        <div class="p-5 rounded-2xl bg-black/60 border border-white/10">
+          <span class="text-[10px] uppercase text-white/50 block mb-2">Bridge Anemometer</span>
+          <div class="text-2xl font-cyber font-black text-cyberCyan" id="cockpit-wind">14 km/h</div>
+          <span class="text-xs text-emerald-400 font-bold mt-1 block">Safe To Jump</span>
+        </div>
+        <!-- Gauge 2 -->
+        <div class="p-5 rounded-2xl bg-black/60 border border-white/10">
+          <span class="text-[10px] uppercase text-white/50 block mb-2">Bungee 207M Queue</span>
+          <div class="text-2xl font-cyber font-black text-white">08 Mins</div>
+          <span class="text-xs text-cyberCyan block mt-1">Fast Turnaround</span>
+        </div>
+        <!-- Gauge 3 -->
+        <div class="p-5 rounded-2xl bg-black/60 border border-white/10">
+          <span class="text-[10px] uppercase text-white/50 block mb-2">Mega Zipline Queue</span>
+          <div class="text-2xl font-cyber font-black text-white">12 Mins</div>
+          <span class="text-xs text-white/60 block mt-1">Tandem Lane Open</span>
+        </div>
+        <!-- Gauge 4 -->
+        <div class="p-5 rounded-2xl bg-black/60 border border-white/10">
+          <span class="text-[10px] uppercase text-white/50 block mb-2">Gorge Air Density</span>
+          <div class="text-2xl font-cyber font-black text-cyberYellow">1.22 kg/m³</div>
+          <span class="text-xs text-white/60 block mt-1">Calm Laminar Drift</span>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ========================================================================= -->
-  <!-- REFINED TWO-TOUCH FOOTER                                                  -->
+  <!-- 4. FLUID TWO-TOUCH FOOTER (NO TEXT GUIDES, PURE VISUAL BLOOM & BACKGROUND)-->
   <!-- ========================================================================= -->
-  <footer id="contact" class="hairline-t bg-charcoal-950 pt-24 pb-16 relative z-20 overflow-hidden">
+  <footer id="contact" class="pt-28 pb-16 px-6 md:px-16 border-t border-white/10 bg-deepIndigo/90 backdrop-blur-2xl relative z-20 overflow-hidden">
     
-    <!-- Minimalist flat-design outline backdrop -->
-    <div id="footer-bg-layer" class="pointer-events-none absolute inset-0 z-0 flex items-center justify-center overflow-hidden">
-      <div id="flat-whatsapp-bg" class="absolute w-[380px] md:w-[500px] aspect-square text-white opacity-0 transition-opacity duration-700 gpu-accel pointer-events-none">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" class="w-full h-full">
+    <!-- GIANT TRANSPARENT AMBIENT BACKGROUND LOGO (FADES IN ON 1ST TOUCH) -->
+    <div id="footer-ambient-bloom" class="pointer-events-none absolute inset-0 z-0 flex items-center justify-center overflow-hidden">
+      <!-- WhatsApp Floating Ambient Icon -->
+      <div id="bloom-whatsapp" class="absolute w-[440px] md:w-[620px] aspect-square text-cyberCyan opacity-0 transition-all duration-700 gpu-accel pointer-events-none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" class="w-full h-full filter drop-shadow-[0_0_80px_#00F0FF] anim-float">
           <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
         </svg>
       </div>
 
-      <div id="flat-instagram-bg" class="absolute w-[380px] md:w-[500px] aspect-square text-white opacity-0 transition-opacity duration-700 gpu-accel pointer-events-none">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" class="w-full h-full">
+      <!-- Instagram Floating Ambient Icon -->
+      <div id="bloom-instagram" class="absolute w-[440px] md:w-[620px] aspect-square text-cyberPink opacity-0 transition-all duration-700 gpu-accel pointer-events-none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" class="w-full h-full filter drop-shadow-[0_0_80px_#FF0055] anim-float">
           <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
           <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
           <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2" stroke-linecap="round"/>
@@ -529,262 +597,70 @@
       </div>
     </div>
 
-    <!-- Contact Core -->
-    <div class="relative z-10 max-w-4xl mx-auto px-6 text-center space-y-10">
+    <!-- Main Footer Body -->
+    <div class="relative z-10 max-w-4xl mx-auto text-center space-y-10">
       <div>
-        <span class="text-xs uppercase tracking-[0.25em] text-charcoal-muted font-medium block mb-3">Direct Dispatch</span>
-        <h2 class="font-display text-4xl sm:text-5xl font-black uppercase text-white tracking-tight">Concierge & Channels</h2>
-        <p class="text-sm text-charcoal-muted max-w-md mx-auto mt-2 font-light">
-          Connect with flight operations for instant queue reservations, tandem packages, and private gorge access.
-        </p>
+        <span class="text-xs uppercase font-cyber tracking-[0.3em] text-cyberCyan font-bold">Fast Connection Desk</span>
+        <h2 class="font-cyber text-4xl sm:text-5xl font-black uppercase text-white tracking-wider mt-2">
+          Concierge <span class="text-cyberCyan neon-cyan-glow">Channels</span>
+        </h2>
       </div>
 
-      <!-- Pure Visual Two-Touch Interaction Buttons -->
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
-        <button id="touch-btn-whatsapp"
-                class="two-touch-action group relative w-full sm:w-72 px-8 py-5 rounded-2xl border border-charcoal-border hover:border-white/40 bg-charcoal-900 text-white transition-all duration-300 flex items-center justify-center gap-4 hover:-translate-y-0.5"
+      <!-- Pure Minimalist Vector Action Buttons (Zero Text Guides) -->
+      <div class="flex items-center justify-center gap-8">
+        
+        <!-- WhatsApp Action Button -->
+        <button id="fluid-touch-whatsapp"
+                class="fluid-touch-btn w-20 sm:w-24 aspect-square rounded-3xl bg-black/60 border-2 border-white/20 text-white/60 hover:text-white transition-all duration-300 flex items-center justify-center gpu-accel shadow-2xl"
                 data-type="whatsapp"
-                data-target="https://wa.me/15559876543?text=Inquiry%20regarding%20Skypark%20flights">
-          <i data-lucide="message-circle" class="w-5 h-5 text-charcoal-muted group-hover:text-white transition-colors icon-target"></i>
-          <span class="text-xs uppercase tracking-[0.2em] font-semibold text-charcoal-light group-hover:text-white transition-colors">WhatsApp</span>
+                data-target="https://wa.me/15559876543?text=Hello%20Skypark,%20I%20want%20to%20reserve%20a%20jump">
+          <i data-lucide="message-circle" class="w-9 h-9 sm:w-11 sm:h-11"></i>
         </button>
 
-        <button id="touch-btn-instagram"
-                class="two-touch-action group relative w-full sm:w-72 px-8 py-5 rounded-2xl border border-charcoal-border hover:border-white/40 bg-charcoal-900 text-white transition-all duration-300 flex items-center justify-center gap-4 hover:-translate-y-0.5"
+        <!-- Instagram Action Button -->
+        <button id="fluid-touch-instagram"
+                class="fluid-touch-btn w-20 sm:w-24 aspect-square rounded-3xl bg-black/60 border-2 border-white/20 text-white/60 hover:text-white transition-all duration-300 flex items-center justify-center gpu-accel shadow-2xl"
                 data-type="instagram"
                 data-target="https://instagram.com">
-          <i data-lucide="camera" class="w-5 h-5 text-charcoal-muted group-hover:text-white transition-colors icon-target"></i>
-          <span class="text-xs uppercase tracking-[0.2em] font-semibold text-charcoal-light group-hover:text-white transition-colors">Instagram</span>
+          <i data-lucide="camera" class="w-9 h-9 sm:w-11 sm:h-11"></i>
         </button>
+
       </div>
 
-      <!-- Copyright -->
-      <div class="pt-10 hairline-t flex flex-col sm:flex-row items-center justify-between text-xs text-charcoal-muted gap-4">
-        <p>© 2026 SKYPARK International Alpine Suspensions. All Rights Reserved.</p>
-        <div class="flex gap-8">
-          <a href="#" class="hover:text-white transition-colors">Safety Protocol</a>
-          <a href="#" class="hover:text-white transition-colors">Canyon Flight Rules</a>
+      <!-- Bottom Credits -->
+      <div class="pt-10 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-xs text-white/40 gap-4 font-mono">
+        <p>© 2026 SKYPARK International Extreme Suspensions. All Rights Reserved.</p>
+        <div class="flex gap-6">
+          <a href="#" class="hover:text-cyberCyan transition-colors">Flight Rules</a>
+          <a href="#" class="hover:text-cyberCyan transition-colors">Safety Standard</a>
         </div>
       </div>
     </div>
   </footer>
 
   <!-- ========================================================================= -->
-  <!-- 2. IMMERSIVE VISUAL MAP OVERHAUL (FULL-WIDTH SLIDE-UP DRAWER)             -->
-  <!-- FEATURING RICH GORGE/CANYON CLIFFS, WINDING RIVER, AND SUSPENSION TRAILS -->
-  <!-- ========================================================================= -->
-  <div id="map-drawer-overlay" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-500" onclick="closeMapModal()"></div>
-
-  <div id="map-drawer" class="fixed inset-x-0 bottom-0 z-50 h-[90vh] max-h-[940px] bg-charcoal-900 border-t border-charcoal-border rounded-t-[32px] shadow-2xl flex flex-col transform translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] gpu-accel pointer-events-none">
-    
-    <!-- Drawer Header Bar -->
-    <div class="px-6 md:px-12 py-5 hairline-b flex items-center justify-between shrink-0 bg-charcoal-900/90 backdrop-blur-md rounded-t-[32px]">
-      <div class="flex items-center gap-4">
-        <div class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
-          <i data-lucide="map" class="w-5 h-5 text-white"></i>
-        </div>
-        <div>
-          <h3 class="font-display text-lg font-bold uppercase text-white">Canyon Topographic Landscape</h3>
-          <p class="text-xs text-charcoal-muted">High-resolution vector terrain • Click any ride pin for flight passes & ages</p>
-        </div>
-      </div>
-
-      <button onclick="closeMapModal()" class="w-10 h-10 rounded-full bg-charcoal-800 hover:bg-charcoal-700 text-white flex items-center justify-center transition-colors">
-        <i data-lucide="x" class="w-5 h-5"></i>
-      </button>
-    </div>
-
-    <!-- Map Canvas Body -->
-    <div class="relative flex-1 overflow-hidden p-4 md:p-8 flex items-center justify-center bg-[#050608]">
-      
-      <!-- Scalable Topographic Map Viewport -->
-      <div class="relative w-full h-full max-w-6xl rounded-2xl overflow-hidden border border-charcoal-border bg-[#0A0D12] shadow-2xl flex items-center justify-center">
-        
-        <!-- RICH VISUAL VECTOR GORGE LANDSCAPE & WINDING RIVER -->
-        <svg viewBox="0 0 1000 560" class="w-full h-full absolute inset-0 select-none">
-          <defs>
-            <!-- River Gradient Flow -->
-            <linearGradient id="riverGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#0E2A47"/>
-              <stop offset="50%" stop-color="#143D66"/>
-              <stop offset="100%" stop-color="#0E2A47"/>
-            </linearGradient>
-
-            <!-- Canyon Wall Depth Shading -->
-            <linearGradient id="cliffWest" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#141821"/>
-              <stop offset="80%" stop-color="#1B222E"/>
-              <stop offset="100%" stop-color="#0E1218"/>
-            </linearGradient>
-            <linearGradient id="cliffEast" x1="100%" y1="0%" x2="0%" y2="0%">
-              <stop offset="0%" stop-color="#141821"/>
-              <stop offset="80%" stop-color="#1B222E"/>
-              <stop offset="100%" stop-color="#0E1218"/>
-            </linearGradient>
-          </defs>
-
-          <!-- 1. CANYON GORGE BED (CENTER BASIN) -->
-          <rect x="0" y="0" width="1000" height="560" fill="#080A0E"/>
-
-          <!-- 2. HIGH MOUNTAIN CLIFF RIDGES (WEST PLATEAU) -->
-          <path d="M 0 0 L 320 0 C 350 140 260 220 310 340 C 340 420 280 500 330 560 L 0 560 Z" fill="url(#cliffWest)"/>
-          <!-- Cliff Contour Facets -->
-          <path d="M 0 60 Q 180 80 270 160 T 260 380 Q 200 480 300 560" stroke="rgba(255,255,255,0.06)" stroke-width="2" fill="none"/>
-          <path d="M 0 180 Q 140 220 220 300 T 240 500" stroke="rgba(255,255,255,0.04)" stroke-width="2" fill="none"/>
-
-          <!-- 3. HIGH MOUNTAIN CLIFF RIDGES (EAST PLATEAU) -->
-          <path d="M 1000 0 L 680 0 C 650 140 740 220 690 340 C 660 420 720 500 670 560 L 1000 560 Z" fill="url(#cliffEast)"/>
-          <!-- Cliff Contour Facets -->
-          <path d="M 1000 60 Q 820 80 730 160 T 740 380 Q 800 480 700 560" stroke="rgba(255,255,255,0.06)" stroke-width="2" fill="none"/>
-          <path d="M 1000 180 Q 860 220 780 300 T 760 500" stroke="rgba(255,255,255,0.04)" stroke-width="2" fill="none"/>
-
-          <!-- 4. WINDING MOUNTAIN RIVER FLOWING THROUGH GORGE FLOOR -->
-          <path d="M 480 0 C 530 130 430 240 520 360 C 570 430 470 500 500 560" stroke="url(#riverGrad)" stroke-width="52" fill="none" opacity="0.8"/>
-          <!-- Stylized Active Water Current -->
-          <path d="M 480 0 C 530 130 430 240 520 360 C 570 430 470 500 500 560" stroke="#00F0FF" stroke-width="3" fill="none" opacity="0.5" class="river-anim"/>
-
-          <!-- 5. REALISTIC WALKING TRAILS (WEST & EAST APPROACHES) -->
-          <path d="M 80 80 Q 160 140 240 200 T 210 360 Q 140 440 220 520" stroke="#E2E8F0" stroke-width="2.5" stroke-dasharray="6 6" fill="none" opacity="0.4"/>
-          <path d="M 920 80 Q 840 140 760 200 T 790 360 Q 860 440 780 520" stroke="#E2E8F0" stroke-width="2.5" stroke-dasharray="6 6" fill="none" opacity="0.4"/>
-
-          <!-- 6. THE ICONIC SUSPENSION SKYBRIDGE 439M ACROSS CANYON -->
-          <!-- Bridge Shadow Depth -->
-          <line x1="220" y1="264" x2="780" y2="264" stroke="#000000" stroke-width="8" opacity="0.4"/>
-          <!-- Bridge Deck & Handrails -->
-          <line x1="220" y1="260" x2="780" y2="260" stroke="#FFB800" stroke-width="4.5" stroke-dasharray="10 5" opacity="0.85"/>
-          <line x1="220" y1="260" x2="780" y2="260" stroke="#FFFFFF" stroke-width="1.8" opacity="0.9"/>
-          <!-- Suspension Towers -->
-          <rect x="206" y="244" width="28" height="32" rx="4" fill="#1C222D" stroke="#FFFFFF" stroke-width="2"/>
-          <rect x="766" y="244" width="28" height="32" rx="4" fill="#1C222D" stroke="#FFFFFF" stroke-width="2"/>
-
-          <!-- 7. MEGA ZIPLINE CABLE CONNECTING DIAGONALLY ACROSS THE GORGE -->
-          <line x1="220" y1="130" x2="780" y2="400" stroke="#00F0FF" stroke-width="2.5" stroke-dasharray="12 6" opacity="0.75"/>
-          <!-- Drop Station Anchors -->
-          <circle cx="220" cy="130" r="8" fill="#00F0FF"/>
-          <circle cx="780" cy="400" r="8" fill="#00F0FF"/>
-
-          <!-- 8. GIANT SWING PENDULUM ARC OVER CANYON -->
-          <path d="M 680 180 Q 560 300 680 420" stroke="#FF2A6D" stroke-width="2" stroke-dasharray="8 6" fill="none" opacity="0.6"/>
-        </svg>
-
-        <!-- ============================================== -->
-        <!-- RIDE NODES / PINS (INTEGRATED WITH AI FILTER)  -->
-        <!-- ============================================== -->
-        <div id="pins-overlay" class="absolute inset-0 z-20 pointer-events-auto">
-          
-          <!-- NODE 1: BUNGEE 207M (Level 4: Extreme) -->
-          <div id="pin-bungee" class="ride-node absolute top-[46%] left-[22%] -translate-x-1/2 -translate-y-1/2 cursor-pointer group transition-all duration-300" data-level="4" onclick="showRideInfo('bungee')">
-            <div class="relative w-14 sm:w-16 h-14 sm:h-16 rounded-full bg-charcoal-950 border-2 border-white flex items-center justify-center text-white shadow-2xl group-hover:scale-110 active:scale-95 transition-transform pin-pulse">
-              <i data-lucide="activity" class="w-7 h-7 text-white"></i>
-            </div>
-            <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[11px] font-bold uppercase tracking-wider text-white bg-charcoal-900/95 px-2.5 py-1 rounded-md border border-white/20">
-              BUNGEE 207M
-            </span>
-          </div>
-
-          <!-- NODE 2: MEGA ZIPLINE (Level 2: Speed Glide) -->
-          <div id="pin-zipline" class="ride-node absolute top-[23%] left-[44%] -translate-x-1/2 -translate-y-1/2 cursor-pointer group transition-all duration-300" data-level="2" onclick="showRideInfo('zipline')">
-            <div class="relative w-14 sm:w-16 h-14 sm:h-16 rounded-full bg-charcoal-950 border-2 border-accent-cyan flex items-center justify-center text-accent-cyan shadow-2xl group-hover:scale-110 active:scale-95 transition-transform">
-              <i data-lucide="wind" class="w-7 h-7"></i>
-            </div>
-            <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[11px] font-bold uppercase tracking-wider text-accent-cyan bg-charcoal-900/95 px-2.5 py-1 rounded-md border border-accent-cyan/30">
-              MEGA ZIPLINE
-            </span>
-          </div>
-
-          <!-- NODE 3: GIANT SWING (Level 3: Giant Arc) -->
-          <div id="pin-swing" class="ride-node absolute top-[46%] left-[78%] -translate-x-1/2 -translate-y-1/2 cursor-pointer group transition-all duration-300" data-level="3" onclick="showRideInfo('swing')">
-            <div class="relative w-14 sm:w-16 h-14 sm:h-16 rounded-full bg-charcoal-950 border-2 border-accent-amber flex items-center justify-center text-accent-amber shadow-2xl group-hover:scale-110 active:scale-95 transition-transform">
-              <i data-lucide="rotate-ccw" class="w-7 h-7"></i>
-            </div>
-            <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[11px] font-bold uppercase tracking-wider text-accent-amber bg-charcoal-900/95 px-2.5 py-1 rounded-md border border-accent-amber/30">
-              GIANT SWING
-            </span>
-          </div>
-
-          <!-- NODE 4: SKYBRIDGE WALKWAY (Level 1: First Walk) -->
-          <div id="pin-bridge" class="ride-node absolute top-[68%] left-[50%] -translate-x-1/2 -translate-y-1/2 cursor-pointer group transition-all duration-300" data-level="1" onclick="showRideInfo('bridge')">
-            <div class="relative w-12 sm:w-14 h-12 sm:h-14 rounded-full bg-charcoal-950 border-2 border-white/60 flex items-center justify-center text-white shadow-2xl group-hover:scale-110 active:scale-95 transition-transform">
-              <i data-lucide="footprints" class="w-6 h-6"></i>
-            </div>
-            <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[11px] font-bold uppercase tracking-wider text-white/90 bg-charcoal-900/95 px-2.5 py-1 rounded-md border border-white/20">
-              SKYBRIDGE 439M
-            </span>
-          </div>
-
-        </div>
-
-        <!-- ============================================== -->
-        <!-- CLEAN, SPACIOUS RIDE METADATA CARD             -->
-        <!-- ============================================== -->
-        <div id="ride-info-card" class="hidden absolute top-6 right-6 w-80 md:w-96 p-6 rounded-2xl bg-charcoal-950/95 border border-white/20 shadow-2xl backdrop-blur-xl z-40 text-left">
-          <div class="flex items-start justify-between pb-4 hairline-b">
-            <div>
-              <span id="info-category" class="text-[10px] uppercase font-mono tracking-widest text-charcoal-muted font-bold block mb-1">Aeronautical Rating</span>
-              <h4 id="info-title" class="font-display text-xl font-bold text-white uppercase">BUNGEE 207M</h4>
-            </div>
-            <button onclick="hideRideInfo()" class="w-8 h-8 rounded-full bg-charcoal-800 hover:bg-charcoal-700 flex items-center justify-center text-white transition-colors">
-              <i data-lucide="x" class="w-4 h-4"></i>
-            </button>
-          </div>
-
-          <div class="py-4 space-y-3 text-sm">
-            <div class="flex justify-between items-baseline">
-              <span class="text-charcoal-muted font-medium">Single Flight Pass:</span>
-              <span id="info-price" class="font-display text-2xl font-black text-white">$220</span>
-            </div>
-            <div class="flex justify-between items-baseline">
-              <span class="text-charcoal-muted font-medium">Allowed Age Range:</span>
-              <span id="info-age" class="font-semibold text-white">17–19 years (or 18+)</span>
-            </div>
-            <div class="flex justify-between items-baseline">
-              <span class="text-charcoal-muted font-medium">Telemetry Spec:</span>
-              <span id="info-metric" class="font-semibold text-white">207m Vertical Freefall</span>
-            </div>
-          </div>
-
-          <p id="info-desc" class="text-xs text-charcoal-muted leading-relaxed font-light pb-4 hairline-b">
-            Full certified rigging by New Zealand jump masters. Includes telemetry sensor tag and 4K footage license.
-          </p>
-
-          <div class="pt-4 flex justify-between items-center">
-            <span class="text-[10px] font-mono text-accent-emerald">FastPass Valid</span>
-            <a href="#contact" onclick="closeMapModal()" class="px-5 py-2.5 rounded-full bg-white text-charcoal-950 text-xs font-bold uppercase tracking-wider hover:bg-charcoal-light transition-colors">
-              Book Ticket
-            </a>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ========================================================================= -->
-  <!-- 120HZ PHYSICS, PARALLAX SCROLL, AI FILTER & TWO-TOUCH SCRIPT              -->
+  <!-- 120HZ PHYSICS, SLINGSHOT DRAG, PARALLAX & PANIC MODE JAVASCRIPT ENGINE    -->
   <!-- ========================================================================= -->
   <script>
     lucide.createIcons();
 
     /* =========================================================================
-       1. GLOBAL FERRIS WHEEL CONTINUOUS ROTATION + CLOUD PARALLAX SCROLL
+       1. FERRIS WHEEL RAPID ROTATION & MOMENTUM DECAY ON Z-INDEX: 999
+       - Rapidly spins counter-clockwise & translates upward on scroll down
+       - Reverses dynamically on scroll up with momentum decay
     ========================================================================= */
-    (function initScrollPhysics() {
-      const wheel = document.getElementById('global-ferris-wheel');
-      const cloudLeft = document.getElementById('cloud-left');
-      const cloudRight = document.getElementById('cloud-right');
-      const windTelemetry = document.getElementById('telemetry-wind');
+    (function initFerrisPhysics() {
+      const wheel = document.getElementById('ferris-wheel-master');
+      const cloudL = document.getElementById('cloud-drift-left');
+      const cloudR = document.getElementById('cloud-drift-right');
 
       let lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
+      let scrollVelocity = 0;
       let wheelAngle = 0;
       let currentWheelY = -50;
       let targetWheelY = -50;
 
-      // Cloud Parallax Lateral Shift
-      let currentCloudShift = 0;
-      let targetCloudShift = 0;
-
-      function renderPhysics() {
+      function renderLoop() {
         const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
         const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
         const scrollFraction = Math.min(Math.max(currentScrollY / maxScroll, 0), 1);
@@ -792,168 +668,249 @@
         const delta = currentScrollY - lastScrollY;
         lastScrollY = currentScrollY;
 
-        // Continuous wheel rotation mapped to speed
-        wheelAngle -= delta * 0.28;
+        // Instant velocity transfer with realistic momentum decay
+        scrollVelocity += delta * 0.45;
+        scrollVelocity *= 0.88; // inertia friction decay
 
-        // Smooth elevation offset
-        targetWheelY = -50 - (scrollFraction * 26);
+        // Rapid spin counter-clockwise (downwards) / clockwise (upwards)
+        wheelAngle -= scrollVelocity * 0.35;
+
+        // Upward translation offset on scroll down
+        targetWheelY = -50 - (scrollFraction * 32);
         currentWheelY += (targetWheelY - currentWheelY) * 0.12;
 
         if (wheel) {
           wheel.style.transform = `translate3d(50%, ${currentWheelY.toFixed(2)}%, 0) rotate(${wheelAngle.toFixed(2)}deg)`;
         }
 
-        // Parallax Clouds: Part left and right as user accelerates downwards
-        const speedMagnitude = Math.abs(delta);
-        targetCloudShift = Math.min(speedMagnitude * 6 + (scrollFraction * 120), 220);
-        currentCloudShift += (targetCloudShift - currentCloudShift) * 0.1;
-
-        if (cloudLeft && cloudRight) {
-          cloudLeft.style.transform = `translate3d(-${currentCloudShift.toFixed(1)}px, 0, 0)`;
-          cloudRight.style.transform = `translate3d(${currentCloudShift.toFixed(1)}px, 0, 0)`;
+        // Horizontal Parallax Separation of Drifting Clouds based on acceleration
+        const cloudShift = Math.min(Math.abs(scrollVelocity) * 12 + (scrollFraction * 140), 240);
+        if (cloudL && cloudR) {
+          cloudL.style.transform = `translate3d(-${cloudShift.toFixed(1)}px, 0, 0)`;
+          cloudR.style.transform = `translate3d(${cloudShift.toFixed(1)}px, 0, 0)`;
         }
 
-        requestAnimationFrame(renderPhysics);
+        requestAnimationFrame(renderLoop);
       }
 
-      requestAnimationFrame(renderPhysics);
-
-      // Simulated micro-variance in bridge wind speed
-      setInterval(() => {
-        if (windTelemetry) {
-          const randomizedWind = Math.round(11 + Math.random() * 4);
-          windTelemetry.textContent = `${randomizedWind} km/h`;
-        }
-      }, 5000);
+      requestAnimationFrame(renderLoop);
     })();
 
     /* =========================================================================
-       2. ADRENALINE METER (AI FILTER) SLIDER LOGIC
+       2. PARALLAX MOUSE / GYRO CLIFF BALANCING MASCOT
     ========================================================================= */
-    const slider = document.getElementById('adrenaline-slider');
-    const intensityLabel = document.getElementById('slider-intensity-label');
-    const matchCountLabel = document.getElementById('slider-match-count');
+    (function initMascotParallax() {
+      const mascot = document.getElementById('mascot-parallax-stage');
+      const armL = document.getElementById('mascot-arm-l');
+      const armR = document.getElementById('mascot-arm-r');
 
-    const intensityTiers = {
-      1: { name: 'All Experiences (Level 1)', minLevel: 1, text: 'Showing: 4 Attractions Active' },
-      2: { name: 'Speed Flight & Up (Level 2)', minLevel: 2, text: 'Showing: 3 Attractions Active (Filtered)' },
-      3: { name: 'High Arc & Drop (Level 3)', minLevel: 3, text: 'Showing: 2 Attractions Active (Filtered)' },
-      4: { name: 'Extreme Freefall Only (Level 4)', minLevel: 4, text: 'Showing: 1 Attraction Active (Bungee Only)' }
-    };
+      let targetTiltX = 0;
+      let targetTiltY = 0;
+      let currentTiltX = 0;
+      let currentTiltY = 0;
 
-    if (slider) {
-      slider.addEventListener('input', (e) => {
-        const val = parseInt(e.target.value, 10);
-        const tier = intensityTiers[val];
+      // Mouse tracking
+      window.addEventListener('mousemove', (e) => {
+        const normX = (e.clientX / window.innerWidth) - 0.5;
+        const normY = (e.clientY / window.innerHeight) - 0.5;
+        targetTiltX = normX * 22; // max tilt deg
+        targetTiltY = normY * -15;
+      });
 
-        if (tier) {
-          intensityLabel.textContent = tier.name;
-          matchCountLabel.textContent = tier.text;
-
-          // Filter map pins
-          const nodes = document.querySelectorAll('.ride-node');
-          nodes.forEach(node => {
-            const level = parseInt(node.getAttribute('data-level'), 10);
-            if (level >= tier.minLevel) {
-              node.style.opacity = '1';
-              node.style.transform = 'translate(-50%, -50%) scale(1)';
-              node.style.pointerEvents = 'auto';
-            } else {
-              node.style.opacity = '0.2';
-              node.style.transform = 'translate(-50%, -50%) scale(0.85)';
-              node.style.pointerEvents = 'none';
-            }
-          });
+      // Device gyro tilt tracking for mobile
+      window.addEventListener('deviceorientation', (e) => {
+        if (e.gamma !== null) {
+          targetTiltX = (e.gamma / 45) * 18;
+          targetTiltY = ((e.beta - 45) / 45) * -12;
         }
       });
+
+      function mascotLoop() {
+        currentTiltX += (targetTiltX - currentTiltX) * 0.1;
+        currentTiltY += (targetTiltY - currentTiltY) * 0.1;
+
+        if (mascot) {
+          mascot.style.transform = `rotate(${currentTiltX.toFixed(2)}deg) translate3d(${currentTiltX.toFixed(1)}px, ${currentTiltY.toFixed(1)}px, 0)`;
+        }
+        if (armL && armR) {
+          armL.style.transform = `rotate(${(currentTiltX * -0.6).toFixed(2)}deg)`;
+          armR.style.transform = `rotate(${(currentTiltX * -0.6).toFixed(2)}deg)`;
+        }
+
+        requestAnimationFrame(mascotLoop);
+      }
+      requestAnimationFrame(mascotLoop);
+    })();
+
+    /* =========================================================================
+       3. PANIC MODE TOGGLE SWITCH (CRIMSON FLUSH + EKG SPEED)
+    ========================================================================= */
+    let panicActive = false;
+    const bodyEl = document.getElementById('master-body');
+    const panicLabel = document.getElementById('panic-label');
+    const heartRateEl = document.getElementById('ekg-heart-rate');
+
+    function togglePanicMode() {
+      panicActive = !panicActive;
+      if (panicActive) {
+        bodyEl.classList.add('panic-active');
+        panicLabel.textContent = 'PANIC ACTIVE!';
+        heartRateEl.textContent = '172 BPM';
+        heartRateEl.classList.remove('text-cyberCyan');
+        heartRateEl.classList.add('text-panicRed');
+      } else {
+        bodyEl.classList.remove('panic-active');
+        panicLabel.textContent = 'PANIC MODE';
+        heartRateEl.textContent = '84 BPM';
+        heartRateEl.classList.remove('text-panicRed');
+        heartRateEl.classList.add('text-cyberCyan');
+      }
     }
 
     /* =========================================================================
-       3. MAP MODAL DRAWER & RIDE METADATA CARD LOGIC
+       4. SLINGSHOT LAUNCH MECHANIC FOR RIDE SELECTION
+       - Drag a ride node downward with mouse/touch, stretching neon cable
+       - Releasing "launches" the node and pops open glassmorphic overlay
     ========================================================================= */
-    const drawerOverlay = document.getElementById('map-drawer-overlay');
-    const drawer = document.getElementById('map-drawer');
-    const rideCard = document.getElementById('ride-info-card');
-
-    const rideDatabase = {
+    const rideDetailsDB = {
       bungee: {
-        category: 'Apex Extreme (Level 4)',
-        title: 'Bungee Jump 207M',
+        badge: 'APEX FREEFALL',
+        title: 'BUNGEE 207M',
         price: '$220',
-        age: '17–19 years (or 18+)',
-        metric: '207 Meters Vertical Freefall',
-        desc: 'Suspended over the Mzymta river. Quadruple redundant aeronautical latex bungee with digital telemetry sensor.'
+        age: '17–19 yrs (or 18+)',
+        desc: 'World’s highest canyon gorge drop. Suspended directly from the glass-floor cabin with 7 seconds of supersonic zero-gravity.'
       },
       zipline: {
-        category: 'Speed Flight (Level 2)',
-        title: 'Mega Zipline',
+        badge: 'SUPERSONIC GLIDE',
+        title: 'MEGA ZIPLINE',
         price: '$65',
-        age: '14–65 years',
-        metric: '120 km/h Air Speed',
-        desc: 'Aeronautical double-cable span flying diagonally across the Olympic canyon basin. Tandem harness available.'
+        age: '14–65 yrs',
+        desc: 'Accelerated double-cable flight crossing the Olympic canyon at 120 km/h. High-tension rigging with panoramic mountain vistas.'
       },
       swing: {
-        category: 'Giant Arc (Level 3)',
-        title: 'Giant Sochi Swing',
+        badge: 'ZERO-G PENDULUM',
+        title: 'GIANT SOCHI SWING',
         price: '$110',
-        age: '12–60 years',
-        metric: '500M Pendulum Arc',
-        desc: 'World’s highest pendulum swing. Accelerated pneumatic release propels you through the canyon in seconds.'
-      },
-      bridge: {
-        category: 'All Welcome (Level 1)',
-        title: 'Skybridge Walkway',
-        price: '$10',
-        age: '3–99 years (Family Friendly)',
-        metric: '439 Meters Long',
-        desc: 'The nation’s longest pedestrian suspension bridge with panoramic 360-degree gorge and mountain vistas.'
+        age: '12–60 yrs',
+        desc: 'World’s highest pendulum swing. Accelerated pneumatic release launches you through a 500-meter canyon arc in seconds.'
       }
     };
 
-    function openMapModal() {
-      drawerOverlay.classList.remove('pointer-events-none', 'opacity-0');
-      drawerOverlay.classList.add('opacity-100');
+    (function initSlingshot() {
+      const arena = document.getElementById('slingshot-nodes-arena');
+      const nodes = document.querySelectorAll('.slingshot-drag-node');
+      const canvas = document.getElementById('slingshot-canvas');
+      const line = document.getElementById('slingshot-line');
 
-      drawer.classList.remove('pointer-events-none', 'translate-y-full');
-      drawer.classList.add('translate-y-0');
-      document.body.style.overflow = 'hidden';
-    }
+      let activeNode = null;
+      let startMouseY = 0;
+      let currentDragY = 0;
+      let originRect = null;
 
-    function closeMapModal() {
-      drawerOverlay.classList.add('opacity-0', 'pointer-events-none');
-      drawerOverlay.classList.remove('opacity-100');
+      function onStart(e, node) {
+        activeNode = node;
+        originRect = node.getBoundingClientRect();
+        startMouseY = e.clientY || (e.touches && e.touches[0].clientY);
+        currentDragY = 0;
 
-      drawer.classList.add('translate-y-full', 'pointer-events-none');
-      drawer.classList.remove('translate-y-0');
-      document.body.style.overflow = '';
-      hideRideInfo();
-    }
+        canvas.style.display = 'block';
+        updateCable();
 
-    function showRideInfo(rideKey) {
-      const data = rideDatabase[rideKey];
+        window.addEventListener('mousemove', onMove);
+        window.addEventListener('touchmove', onMove, { passive: false });
+        window.addEventListener('mouseup', onEnd);
+        window.addEventListener('touchend', onEnd);
+      }
+
+      function onMove(e) {
+        if (!activeNode) return;
+        const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+        const dy = clientY - startMouseY;
+
+        // Downward drag constraint (0 to 140px)
+        currentDragY = Math.max(0, Math.min(dy, 140));
+        activeNode.style.transform = `translate3d(0, ${currentDragY}px, 0)`;
+
+        updateCable();
+      }
+
+      function updateCable() {
+        if (!activeNode || !originRect) return;
+        const rect = activeNode.getBoundingClientRect();
+        
+        // Canvas coordinate mapping
+        line.setAttribute('x1', originRect.left + originRect.width / 2);
+        line.setAttribute('y1', originRect.top + originRect.height / 2);
+        line.setAttribute('x2', rect.left + rect.width / 2);
+        line.setAttribute('y2', rect.top + rect.height / 2);
+      }
+
+      function onEnd() {
+        if (!activeNode) return;
+
+        window.removeEventListener('mousemove', onMove);
+        window.removeEventListener('touchmove', onMove);
+        window.removeEventListener('mouseup', onEnd);
+        window.removeEventListener('touchend', onEnd);
+
+        // Snap back animation
+        activeNode.style.transition = 'transform 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28)';
+        activeNode.style.transform = 'translate3d(0, 0, 0)';
+
+        canvas.style.display = 'none';
+
+        // Launch trigger threshold: dragged > 35px
+        if (currentDragY > 35) {
+          const rideKey = activeNode.getAttribute('data-ride');
+          launchModal(rideKey);
+        }
+
+        setTimeout(() => {
+          if (activeNode) activeNode.style.transition = '';
+          activeNode = null;
+        }, 250);
+      }
+
+      nodes.forEach(n => {
+        n.addEventListener('mousedown', (e) => onStart(e, n));
+        n.addEventListener('touchstart', (e) => onStart(e, n));
+      });
+    })();
+
+    // Modal Display Trigger
+    const modalOverlay = document.getElementById('slingshot-modal-overlay');
+    const modalCard = document.getElementById('slingshot-modal-card');
+
+    function launchModal(rideKey) {
+      const data = rideDetailsDB[rideKey];
       if (!data) return;
 
-      document.getElementById('info-category').textContent = data.category;
-      document.getElementById('info-title').textContent = data.title;
-      document.getElementById('info-price').textContent = data.price;
-      document.getElementById('info-age').textContent = data.age;
-      document.getElementById('info-metric').textContent = data.metric;
-      document.getElementById('info-desc').textContent = data.desc;
+      document.getElementById('modal-badge').textContent = data.badge;
+      document.getElementById('modal-title').textContent = data.title;
+      document.getElementById('modal-price').textContent = data.price;
+      document.getElementById('modal-age').textContent = data.age;
+      document.getElementById('modal-desc').textContent = data.desc;
 
-      rideCard.classList.remove('hidden');
+      modalOverlay.classList.remove('opacity-0', 'pointer-events-none');
+      modalOverlay.classList.add('opacity-100');
+      modalCard.classList.remove('scale-90');
+      modalCard.classList.add('scale-100');
     }
 
-    function hideRideInfo() {
-      rideCard.classList.add('hidden');
+    function closeSlingshotModal() {
+      modalOverlay.classList.add('opacity-0', 'pointer-events-none');
+      modalOverlay.classList.remove('opacity-100');
+      modalCard.classList.remove('scale-100');
+      modalCard.classList.add('scale-90');
     }
 
     /* =========================================================================
-       4. TWO-TOUCH REFINED FOOTER INTERACTION
+       5. FLUID TWO-TOUCH FOOTER (HEAVY NEON BLOOM + DIRECT REDIRECTION)
     ========================================================================= */
-    (function initRefinedTwoTouch() {
-      const buttons = document.querySelectorAll('.two-touch-action');
-      const waBg = document.getElementById('flat-whatsapp-bg');
-      const igBg = document.getElementById('flat-instagram-bg');
+    (function initFluidTwoTouch() {
+      const buttons = document.querySelectorAll('.fluid-touch-btn');
+      const waBloom = document.getElementById('bloom-whatsapp');
+      const igBloom = document.getElementById('bloom-instagram');
 
       let activeTouchBtn = null;
 
@@ -969,41 +926,42 @@
             return;
           }
 
-          // FIRST TOUCH: Pure visual feedback
+          // FIRST TOUCH: Heavy neon bloom + giant background logo fade-in
           activeTouchBtn = btn;
 
+          // Reset styles
           buttons.forEach(b => {
-            b.classList.remove('border-white', 'bg-charcoal-800');
-            const icon = b.querySelector('.icon-target');
-            if (icon) icon.classList.remove('text-white');
+            b.classList.remove('border-cyberCyan', 'border-cyberPink', 'text-cyberCyan', 'text-cyberPink', 'shadow-[0_0_35px_#00F0FF]', 'shadow-[0_0_35px_#FF0055]', 'scale-110');
+            b.classList.add('text-white/60');
           });
 
-          waBg.style.opacity = '0';
-          igBg.style.opacity = '0';
+          waBloom.style.opacity = '0';
+          igBloom.style.opacity = '0';
 
-          btn.classList.add('border-white', 'bg-charcoal-800');
-          const activeIcon = btn.querySelector('.icon-target');
-          if (activeIcon) activeIcon.classList.add('text-white');
+          btn.classList.remove('text-white/60');
+          btn.classList.add('scale-110');
 
           if (type === 'whatsapp') {
-            waBg.style.opacity = '0.08';
+            btn.classList.add('border-cyberCyan', 'text-cyberCyan', 'shadow-[0_0_35px_#00F0FF]');
+            waBloom.style.opacity = '0.22';
           } else if (type === 'instagram') {
-            igBg.style.opacity = '0.08';
+            btn.classList.add('border-cyberPink', 'text-cyberPink', 'shadow-[0_0_35px_#FF0055]');
+            igBloom.style.opacity = '0.22';
           }
         });
       });
 
+      // Clear when tapping outside
       document.addEventListener('click', (e) => {
         if (!e.target.closest('#contact')) {
           if (activeTouchBtn) {
             activeTouchBtn = null;
             buttons.forEach(b => {
-              b.classList.remove('border-white', 'bg-charcoal-800');
-              const icon = b.querySelector('.icon-target');
-              if (icon) icon.classList.remove('text-white');
+              b.classList.remove('border-cyberCyan', 'border-cyberPink', 'text-cyberCyan', 'text-cyberPink', 'shadow-[0_0_35px_#00F0FF]', 'shadow-[0_0_35px_#FF0055]', 'scale-110');
+              b.classList.add('text-white/60');
             });
-            waBg.style.opacity = '0';
-            igBg.style.opacity = '0';
+            waBloom.style.opacity = '0';
+            igBloom.style.opacity = '0';
           }
         }
       });
