@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Starbucks Reserve™ | Pure Terroir</title>
+  <title>SKYPARK | Edge of Adrenaline</title>
   
-  <!-- Premium Fonts -->
+  <!-- Premium Google Fonts: Orbitron for Neon Cyber Display, Plus Jakarta Sans for UI -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -17,22 +17,17 @@
       theme: {
         extend: {
           colors: {
-            noir: {
-              950: '#070707',
-              900: '#0D0D0D', // Solid luxury dark background
-              850: '#121212',
-              800: '#171717',
-              700: '#262626',
-              600: '#3D3D3D',
-              muted: '#7E7E7E',
-              light: '#EAEAEA',
-              cream: '#F5F2EB',
-              accent: '#C79D58'
-            }
+            neonCyan: '#00F0FF',
+            neonPink: '#FF007A',
+            neonYellow: '#FFE600',
+            neonPurple: '#9D00FF',
+            darkSpace: '#070913',
+            deepAbyss: '#03050B'
           },
           fontFamily: {
-            serif: ['"Playfair Display"', 'Georgia', 'serif'],
-            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            neon: ['"Orbitron"', 'sans-serif'],
+            display: ['"Syne"', 'sans-serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
           }
         }
       }
@@ -43,589 +38,983 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
-    /* Custom Dark Track Scrollbar */
+    /* Custom Scrollbar */
     ::-webkit-scrollbar {
-      width: 5px;
+      width: 6px;
     }
     ::-webkit-scrollbar-track {
-      background: #0D0D0D;
+      background: #070913;
     }
     ::-webkit-scrollbar-thumb {
-      background: #242424;
+      background: #00F0FF33;
+      border-radius: 9999px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #3B3B3B;
+      background: #00F0FF88;
     }
 
-    /* Dedicated Global Background Canvas layer */
-    #global-cocoa-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 1;
-      overflow: hidden;
-    }
-
-    /* 120Hz Hardware acceleration primitives */
-    .cocoa-particle {
-      position: absolute;
-      top: 0;
-      left: 0;
+    /* Hardware acceleration */
+    .gpu-accel {
       transform: translate3d(0, 0, 0);
       backface-visibility: hidden;
       perspective: 1000px;
-      will-change: transform, opacity, filter;
+      will-change: transform;
     }
 
-    .hairline-b {
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    /* Glow utilities */
+    .neon-text-glow {
+      text-shadow: 0 0 10px rgba(0, 240, 255, 0.7), 0 0 25px rgba(0, 240, 255, 0.4), 0 0 50px rgba(0, 240, 255, 0.2);
     }
-    .hairline-t {
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    .neon-pink-glow {
+      text-shadow: 0 0 10px rgba(255, 0, 122, 0.7), 0 0 25px rgba(255, 0, 122, 0.4), 0 0 50px rgba(255, 0, 122, 0.2);
+    }
+    .neon-box-cyan {
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.35), inset 0 0 15px rgba(0, 240, 255, 0.2);
+    }
+    .neon-box-pink {
+      box-shadow: 0 0 20px rgba(255, 0, 122, 0.35), inset 0 0 15px rgba(255, 0, 122, 0.2);
+    }
+
+    /* Character idle breathing & arm sway */
+    @keyframes mascotBreathe {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-10px) scale(1.02); }
+    }
+    @keyframes leftArmEmbrace {
+      0%, 100% { transform: rotate(-5deg); }
+      50% { transform: rotate(10deg); }
+    }
+    @keyframes rightArmEmbrace {
+      0%, 100% { transform: rotate(5deg); }
+      50% { transform: rotate(-10deg); }
+    }
+    @keyframes antennaPulse {
+      0%, 100% { opacity: 0.6; filter: drop-shadow(0 0 5px #00F0FF); }
+      50% { opacity: 1; filter: drop-shadow(0 0 18px #00F0FF); }
+    }
+
+    .mascot-body {
+      animation: mascotBreathe 4s ease-in-out infinite;
+    }
+    .mascot-left-arm {
+      transform-origin: 100px 140px;
+      animation: leftArmEmbrace 3.5s ease-in-out infinite;
+    }
+    .mascot-right-arm {
+      transform-origin: 260px 140px;
+      animation: rightArmEmbrace 3.5s ease-in-out infinite;
+    }
+    .mascot-antenna {
+      animation: antennaPulse 2s ease-in-out infinite;
+    }
+
+    /* Idle sway for footer icons */
+    @keyframes floatSway {
+      0%, 100% { transform: translate3d(0, 0, 0) rotate(-4deg); }
+      50% { transform: translate3d(0, -18px, 0) rotate(5deg); }
+    }
+    .anim-sway {
+      animation: floatSway 4.5s ease-in-out infinite;
+    }
+
+    /* Map vector contour grid */
+    .map-grid-bg {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(0, 240, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
     }
   </style>
 </head>
-<body class="bg-noir-900 text-noir-cream font-sans antialiased selection:bg-noir-accent selection:text-noir-950 overflow-x-hidden">
+<body id="dynamic-body" class="bg-[#071329] text-white font-sans antialiased overflow-x-hidden transition-colors duration-700 select-none">
 
-  <!-- ========================================================================= -->
-  <!-- 2. GLOBAL BACKGROUND CANVAS FOR COCOA ELEMENTS (FULLSCREEN FIXED Z-INDEX: 1)-->
-  <!-- ========================================================================= -->
-  <div id="global-cocoa-canvas" aria-hidden="true">
-    <div id="cocoa-stage" class="relative w-full h-full">
+  <!-- ========================================================= -->
+  <!-- 3. STICKY VERTICAL NEON ALTIMETER GAUGE (LEFT SIDE: 0-200M) -->
+  <!-- ========================================================= -->
+  <aside class="fixed left-4 md:left-8 top-1/2 -translate-y-1/2 z-50 pointer-events-none flex items-center gap-3">
+    <!-- Vertical Progress Track -->
+    <div class="relative w-2.5 h-64 md:h-80 rounded-full bg-white/10 backdrop-blur-md border border-white/20 overflow-hidden flex flex-col justify-end p-0.5 shadow-2xl">
+      <!-- Glow level fill -->
+      <div id="altimeter-fill" class="w-full bg-gradient-to-t from-neonCyan via-neonYellow to-neonPink rounded-full transition-all duration-75 shadow-[0_0_15px_#00F0FF]" style="height: 0%;"></div>
+      <!-- Ticks markers -->
+      <div class="absolute inset-y-0 left-0 w-full flex flex-col justify-between py-2 pointer-events-none opacity-40">
+        <div class="w-1.5 h-0.5 bg-white ml-auto"></div>
+        <div class="w-1.5 h-0.5 bg-white ml-auto"></div>
+        <div class="w-1.5 h-0.5 bg-white ml-auto"></div>
+        <div class="w-1.5 h-0.5 bg-white ml-auto"></div>
+        <div class="w-1.5 h-0.5 bg-white ml-auto"></div>
+      </div>
+    </div>
 
-      <!-- Particle 1: Majestic Cocoa Pod (Hero Upper Left) -->
-      <div class="cocoa-particle w-32 md:w-44 aspect-[1/1.3]" data-base-y="0.14" data-speed="1.25" data-rot-bias="0.22" data-sway="22">
-        <svg viewBox="0 0 160 210" class="w-full h-full drop-shadow-[0_25px_35px_rgba(0,0,0,0.85)]">
+    <!-- Readout Box -->
+    <div class="flex flex-col">
+      <div class="px-2.5 py-1.5 rounded-lg bg-black/60 backdrop-blur-lg border border-neonCyan/40 shadow-[0_0_15px_rgba(0,240,255,0.25)] flex items-baseline gap-1">
+        <span id="altimeter-counter" class="font-neon text-base md:text-xl font-black text-neonCyan tracking-wider">0</span>
+        <span class="font-neon text-[10px] text-neonCyan/80 font-semibold uppercase">M</span>
+      </div>
+      <span class="text-[9px] uppercase tracking-widest text-white/50 font-semibold mt-1 pl-1">Altitude</span>
+    </div>
+  </aside>
+
+  <!-- ========================================================= -->
+  <!-- 1. FERRIS WHEEL SCROLL-DRIVEN INTERACTION (RIGHT EDGE)    -->
+  <!-- ========================================================= -->
+  <!-- Fixed right boundary viewport wrapper for exactly ONE HALF -->
+  <div class="fixed right-0 top-0 h-screen w-40 sm:w-64 md:w-80 lg:w-96 pointer-events-none z-20 overflow-hidden">
+    <!-- Wheel Pivot Anchor: Origin placed exactly on the right border (100% X) -->
+    <div id="ferris-wheel-anchor" class="absolute -right-4 top-1/2 w-[340px] sm:w-[480px] md:w-[600px] aspect-square gpu-accel" style="transform: translate3d(50%, -50%, 0) rotate(0deg);">
+      <svg viewBox="0 0 600 600" class="w-full h-full filter drop-shadow-[0_0_25px_rgba(0,240,255,0.5)]">
+        <defs>
+          <radialGradient id="hubGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#00F0FF"/>
+            <stop offset="60%" stop-color="#9D00FF"/>
+            <stop offset="100%" stop-color="#FF007A"/>
+          </radialGradient>
+          <linearGradient id="neonRimGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#00F0FF"/>
+            <stop offset="50%" stop-color="#FF007A"/>
+            <stop offset="100%" stop-color="#FFE600"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Outer Double Neon Rim -->
+        <circle cx="300" cy="300" r="270" stroke="url(#neonRimGrad)" stroke-width="6" fill="none" opacity="0.9" stroke-dasharray="12 6"/>
+        <circle cx="300" cy="300" r="255" stroke="#00F0FF" stroke-width="2.5" fill="none" opacity="0.6"/>
+        <circle cx="300" cy="300" r="160" stroke="#FF007A" stroke-width="2" fill="none" opacity="0.4"/>
+
+        <!-- 12 Structural Radial Spokes with Cabins -->
+        <g stroke="url(#neonRimGrad)" stroke-width="3" opacity="0.8">
+          <!-- 0 deg -->
+          <line x1="300" y1="300" x2="570" y2="300"/>
+          <!-- 30 deg -->
+          <line x1="300" y1="300" x2="533.8" y2="435"/>
+          <!-- 60 deg -->
+          <line x1="300" y1="300" x2="435" y2="533.8"/>
+          <!-- 90 deg -->
+          <line x1="300" y1="300" x2="300" y2="570"/>
+          <!-- 120 deg -->
+          <line x1="300" y1="300" x2="165" y2="533.8"/>
+          <!-- 150 deg -->
+          <line x1="300" y1="300" x2="66.2" y2="435"/>
+          <!-- 180 deg -->
+          <line x1="300" y1="300" x2="30" y2="300"/>
+          <!-- 210 deg -->
+          <line x1="300" y1="300" x2="66.2" y2="165"/>
+          <!-- 240 deg -->
+          <line x1="300" y1="300" x2="165" y2="66.2"/>
+          <!-- 270 deg -->
+          <line x1="300" y1="300" x2="300" y2="30"/>
+          <!-- 300 deg -->
+          <line x1="300" y1="300" x2="435" y2="66.2"/>
+          <!-- 330 deg -->
+          <line x1="300" y1="300" x2="533.8" y2="165"/>
+        </g>
+
+        <!-- Cabins (Gondolas with Neon Lighting) -->
+        <!-- Cabin 1 -->
+        <circle cx="570" cy="300" r="18" fill="#070913" stroke="#00F0FF" stroke-width="4"/>
+        <circle cx="570" cy="300" r="6" fill="#00F0FF"/>
+        <!-- Cabin 2 -->
+        <circle cx="533.8" cy="435" r="18" fill="#070913" stroke="#FF007A" stroke-width="4"/>
+        <circle cx="533.8" cy="435" r="6" fill="#FF007A"/>
+        <!-- Cabin 3 -->
+        <circle cx="435" cy="533.8" r="18" fill="#070913" stroke="#FFE600" stroke-width="4"/>
+        <circle cx="435" cy="533.8" r="6" fill="#FFE600"/>
+        <!-- Cabin 4 -->
+        <circle cx="300" cy="570" r="18" fill="#070913" stroke="#00F0FF" stroke-width="4"/>
+        <circle cx="300" cy="570" r="6" fill="#00F0FF"/>
+        <!-- Cabin 5 -->
+        <circle cx="165" cy="533.8" r="18" fill="#070913" stroke="#FF007A" stroke-width="4"/>
+        <circle cx="165" cy="533.8" r="6" fill="#FF007A"/>
+        <!-- Cabin 6 -->
+        <circle cx="66.2" cy="435" r="18" fill="#070913" stroke="#FFE600" stroke-width="4"/>
+        <circle cx="66.2" cy="435" r="6" fill="#FFE600"/>
+        <!-- Cabin 7 -->
+        <circle cx="30" cy="300" r="18" fill="#070913" stroke="#00F0FF" stroke-width="4"/>
+        <circle cx="30" cy="300" r="6" fill="#00F0FF"/>
+        <!-- Cabin 8 -->
+        <circle cx="66.2" cy="165" r="18" fill="#070913" stroke="#FF007A" stroke-width="4"/>
+        <circle cx="66.2" cy="165" r="6" fill="#FF007A"/>
+        <!-- Cabin 9 -->
+        <circle cx="165" cy="66.2" r="18" fill="#070913" stroke="#FFE600" stroke-width="4"/>
+        <circle cx="165" cy="66.2" r="6" fill="#FFE600"/>
+        <!-- Cabin 10 -->
+        <circle cx="300" cy="30" r="18" fill="#070913" stroke="#00F0FF" stroke-width="4"/>
+        <circle cx="300" cy="30" r="6" fill="#00F0FF"/>
+        <!-- Cabin 11 -->
+        <circle cx="435" cy="66.2" r="18" fill="#070913" stroke="#FF007A" stroke-width="4"/>
+        <circle cx="435" cy="66.2" r="6" fill="#FF007A"/>
+        <!-- Cabin 12 -->
+        <circle cx="533.8" cy="165" r="18" fill="#070913" stroke="#FFE600" stroke-width="4"/>
+        <circle cx="533.8" cy="165" r="6" fill="#FFE600"/>
+
+        <!-- Center Hub with Glowing Core -->
+        <circle cx="300" cy="300" r="42" fill="url(#hubGrad)"/>
+        <circle cx="300" cy="300" r="24" fill="#070913" stroke="#FFF" stroke-width="3"/>
+        <circle cx="300" cy="300" r="8" fill="#00F0FF"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- NAVIGATION BAR                                            -->
+  <!-- ========================================================= -->
+  <header class="relative z-40 px-6 md:px-16 py-6 flex items-center justify-between border-b border-white/10 backdrop-blur-md bg-black/20">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-neonCyan to-neonPink flex items-center justify-center p-0.5 shadow-[0_0_15px_#00F0FF]">
+        <div class="w-full h-full bg-[#070913] rounded-[10px] flex items-center justify-center">
+          <i data-lucide="zap" class="w-5 h-5 text-neonCyan"></i>
+        </div>
+      </div>
+      <span class="font-neon text-xl font-black tracking-widest text-white">SKY<span class="text-neonCyan">PARK</span></span>
+    </div>
+
+    <!-- Quick Hop Navigation -->
+    <nav class="hidden md:flex items-center gap-8 text-xs font-neon tracking-widest uppercase">
+      <a href="#hero" class="text-white hover:text-neonCyan transition-colors">Overview</a>
+      <a href="#interactive-map" class="text-white/70 hover:text-neonCyan transition-colors">Park Map</a>
+      <a href="#rides" class="text-white/70 hover:text-neonCyan transition-colors">Rides</a>
+      <a href="#contact" class="text-white/70 hover:text-neonPink transition-colors">Contact</a>
+    </nav>
+
+    <!-- Map Fast-Action CTA -->
+    <a href="#interactive-map" class="px-5 py-2.5 rounded-full font-neon text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-neonCyan to-neonPink text-black hover:scale-105 active:scale-95 transition-all shadow-[0_0_20px_rgba(0,240,255,0.4)]">
+      <span>Jump to Map</span>
+    </a>
+  </header>
+
+  <!-- ========================================================= -->
+  <!-- 1. HERO SECTION (WIREFRAME 1 SETUP)                       -->
+  <!-- ========================================================= -->
+  <section id="hero" class="relative min-h-[92vh] flex flex-col items-center justify-between px-6 pt-12 pb-16 z-30 max-w-7xl mx-auto">
+    
+    <!-- Top Header Typography -->
+    <div class="text-center space-y-3">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-xs font-neon tracking-widest uppercase text-neonCyan shadow-inner">
+        <span class="w-2 h-2 rounded-full bg-neonCyan animate-ping"></span>
+        International Extreme Amusement Zone
+      </div>
+      
+      <h1 class="font-neon text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-wider uppercase text-transparent bg-clip-text bg-gradient-to-b from-white via-neonCyan to-[#0099FF] neon-text-glow leading-none pt-2">
+        SKYPARK
+      </h1>
+      
+      <p class="font-sans text-sm sm:text-base md:text-lg text-white/80 font-medium tracking-wide max-w-xl mx-auto">
+        Welcome to the edge of adrenaline
+      </p>
+    </div>
+
+    <!-- Centerpiece: Welcoming Mascot Character with Arms Wide Open -->
+    <div class="my-6 relative flex items-center justify-center">
+      <!-- Glow Aura behind Mascot -->
+      <div class="absolute w-72 sm:w-96 aspect-square rounded-full bg-gradient-to-r from-neonCyan/20 to-neonPink/20 blur-3xl pointer-events-none"></div>
+
+      <!-- Vector Mascot Character SVG -->
+      <div class="relative w-64 sm:w-80 md:w-96 aspect-[1.2/1] mascot-body gpu-accel">
+        <svg viewBox="0 0 360 300" class="w-full h-full filter drop-shadow-[0_15px_30px_rgba(0,240,255,0.35)]">
           <defs>
-            <radialGradient id="podGrad1" cx="35%" cy="30%" r="72%">
-              <stop offset="0%" stop-color="#5A3A25"/>
-              <stop offset="38%" stop-color="#362013"/>
-              <stop offset="85%" stop-color="#190D07"/>
-              <stop offset="100%" stop-color="#080402"/>
+            <radialGradient id="helmetGrad" cx="35%" cy="30%" r="65%">
+              <stop offset="0%" stop-color="#38E1FF"/>
+              <stop offset="60%" stop-color="#0066CC"/>
+              <stop offset="100%" stop-color="#04122C"/>
             </radialGradient>
-            <linearGradient id="ridgeGrad1" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#7B5034" stop-opacity="0.8"/>
-              <stop offset="50%" stop-color="#381E10" stop-opacity="0.4"/>
-              <stop offset="100%" stop-color="#120603" stop-opacity="0.9"/>
+            <radialGradient id="visorGrad" cx="50%" cy="35%" r="70%">
+              <stop offset="0%" stop-color="#FFE600"/>
+              <stop offset="45%" stop-color="#FF007A"/>
+              <stop offset="100%" stop-color="#3D0066"/>
+            </radialGradient>
+            <linearGradient id="suitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#00F0FF"/>
+              <stop offset="50%" stop-color="#1A2B4C"/>
+              <stop offset="100%" stop-color="#0A1124"/>
             </linearGradient>
           </defs>
-          <path d="M80 12 C125 35 150 90 142 145 C135 185 100 202 80 205 C60 202 25 185 18 145 C10 90 35 35 80 12 Z" fill="url(#podGrad1)"/>
-          <path d="M80 12 Q98 100 80 205" stroke="url(#ridgeGrad1)" stroke-width="3" fill="none"/>
-          <path d="M80 12 Q125 100 110 185" stroke="url(#ridgeGrad1)" stroke-width="2.2" fill="none"/>
-          <path d="M80 12 Q35 100 50 185" stroke="url(#ridgeGrad1)" stroke-width="2.2" fill="none"/>
-          <ellipse cx="68" cy="74" rx="14" ry="34" fill="#C79D58" opacity="0.08" transform="rotate(-18 68 74)"/>
+
+          <!-- ANTENNA WITH GLOW BULB -->
+          <line x1="180" y1="50" x2="180" y2="18" stroke="#00F0FF" stroke-width="4.5" stroke-linecap="round"/>
+          <circle cx="180" cy="14" r="9" fill="#00F0FF" class="mascot-antenna"/>
+
+          <!-- LEFT ARM (WELCOMING SPREAD WIDE OPEN) -->
+          <g class="mascot-left-arm">
+            <!-- Upper Arm and Forearm stretching leftward -->
+            <path d="M 120 150 Q 60 140 18 100 Q 12 115 50 160 Q 85 180 120 170 Z" fill="url(#suitGrad)" stroke="#00F0FF" stroke-width="3"/>
+            <!-- Cyber Welcoming Hand Palm Open -->
+            <ellipse cx="20" cy="95" rx="14" ry="12" fill="#FFE600" stroke="#070913" stroke-width="3" transform="rotate(-25 20 95)"/>
+            <circle cx="10" cy="85" r="5" fill="#00F0FF"/>
+            <circle cx="20" cy="80" r="5" fill="#00F0FF"/>
+            <circle cx="30" cy="82" r="5" fill="#00F0FF"/>
+            <!-- Neon Thruster Cuff -->
+            <ellipse cx="48" cy="130" rx="9" ry="14" fill="#FF007A" transform="rotate(-30 48 130)"/>
+          </g>
+
+          <!-- RIGHT ARM (WELCOMING SPREAD WIDE OPEN) -->
+          <g class="mascot-right-arm">
+            <!-- Upper Arm and Forearm stretching rightward -->
+            <path d="M 240 150 Q 300 140 342 100 Q 348 115 310 160 Q 275 180 240 170 Z" fill="url(#suitGrad)" stroke="#00F0FF" stroke-width="3"/>
+            <!-- Cyber Welcoming Hand Palm Open -->
+            <ellipse cx="340" cy="95" rx="14" ry="12" fill="#FFE600" stroke="#070913" stroke-width="3" transform="rotate(25 340 95)"/>
+            <circle cx="350" cy="85" r="5" fill="#00F0FF"/>
+            <circle cx="340" cy="80" r="5" fill="#00F0FF"/>
+            <circle cx="330" cy="82" r="5" fill="#00F0FF"/>
+            <!-- Neon Thruster Cuff -->
+            <ellipse cx="312" cy="130" rx="9" ry="14" fill="#FF007A" transform="rotate(30 312 130)"/>
+          </g>
+
+          <!-- TORSO / SUIT -->
+          <path d="M 125 140 Q 180 125 235 140 L 225 250 Q 180 265 135 250 Z" fill="url(#suitGrad)" stroke="#00F0FF" stroke-width="3.5"/>
+          <!-- Cyber Core Chest Reactor -->
+          <polygon points="180,170 196,192 180,214 164,192" fill="#FFE600" stroke="#FF007A" stroke-width="3"/>
+          <circle cx="180" cy="192" r="6" fill="#FFF"/>
+
+          <!-- HEAD / AERODYNAMIC HELMET -->
+          <ellipse cx="180" cy="100" rx="65" ry="60" fill="url(#helmetGrad)" stroke="#00F0FF" stroke-width="4"/>
+          <!-- Neon Visor with Gradient Reflection -->
+          <path d="M 130 95 Q 180 80 230 95 Q 225 125 180 132 Q 135 125 130 95 Z" fill="url(#visorGrad)" stroke="#FFE600" stroke-width="2.5"/>
+          <!-- Cheerful Visor Glow Smile -->
+          <path d="M 160 115 Q 180 125 200 115" stroke="#FFF" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+          
+          <!-- Cute Jet Thrusters at base -->
+          <rect x="145" y="250" width="22" height="18" rx="6" fill="#FF007A"/>
+          <rect x="193" y="250" width="22" height="18" rx="6" fill="#FF007A"/>
+          <path d="M 148 268 L 156 288 L 164 268 Z" fill="#FFE600" opacity="0.8"/>
+          <path d="M 196 268 L 204 288 L 212 268 Z" fill="#FFE600" opacity="0.8"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Layout Navigation Buttons: Rounded grid action cards transitioning to Park Map -->
+    <div class="w-full max-w-3xl grid grid-cols-1 sm:grid-cols-3 gap-4">
+      
+      <!-- Card 1 -->
+      <a href="#interactive-map" class="group p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-neonCyan hover:bg-black/40 backdrop-blur-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(0,240,255,0.3)] flex flex-col justify-between">
+        <div class="flex items-center justify-between mb-3">
+          <span class="w-9 h-9 rounded-xl bg-neonCyan/20 text-neonCyan flex items-center justify-center font-bold">
+            <i data-lucide="compass" class="w-5 h-5"></i>
+          </span>
+          <span class="text-[10px] font-neon uppercase tracking-wider text-neonCyan font-bold">Map 3D</span>
+        </div>
+        <div>
+          <h3 class="font-neon text-sm font-bold text-white group-hover:text-neonCyan transition-colors">Explore All Rides</h3>
+          <p class="text-xs text-white/60 font-light mt-1">Direct live view of altitude stations & queue times.</p>
+        </div>
+        <div class="mt-3 flex items-center gap-1.5 text-xs text-neonCyan font-semibold">
+          <span>Navigate Map</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
+        </div>
+      </a>
+
+      <!-- Card 2 -->
+      <a href="#interactive-map" onclick="highlightRide('bungee')" class="group p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-neonPink hover:bg-black/40 backdrop-blur-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(255,0,122,0.3)] flex flex-col justify-between">
+        <div class="flex items-center justify-between mb-3">
+          <span class="w-9 h-9 rounded-xl bg-neonPink/20 text-neonPink flex items-center justify-center font-bold">
+            <i data-lucide="activity" class="w-5 h-5"></i>
+          </span>
+          <span class="text-[10px] font-neon uppercase tracking-wider text-neonPink font-bold">Peak Adrenaline</span>
+        </div>
+        <div>
+          <h3 class="font-neon text-sm font-bold text-white group-hover:text-neonPink transition-colors">Bungee 207M</h3>
+          <p class="text-xs text-white/60 font-light mt-1">World’s highest gorge freefall with supersonic harness.</p>
+        </div>
+        <div class="mt-3 flex items-center gap-1.5 text-xs text-neonPink font-semibold">
+          <span>Inspect Pin</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
+        </div>
+      </a>
+
+      <!-- Card 3 -->
+      <a href="#interactive-map" onclick="highlightRide('zipline')" class="group p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-neonYellow hover:bg-black/40 backdrop-blur-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(255,230,0,0.3)] flex flex-col justify-between">
+        <div class="flex items-center justify-between mb-3">
+          <span class="w-9 h-9 rounded-xl bg-neonYellow/20 text-neonYellow flex items-center justify-center font-bold">
+            <i data-lucide="wind" class="w-5 h-5"></i>
+          </span>
+          <span class="text-[10px] font-neon uppercase tracking-wider text-neonYellow font-bold">Flight Speed</span>
+        </div>
+        <div>
+          <h3 class="font-neon text-sm font-bold text-white group-hover:text-neonYellow transition-colors">Mega Zipline</h3>
+          <p class="text-xs text-white/60 font-light mt-1">120 km/h flight glide over the Olympic canyon river.</p>
+        </div>
+        <div class="mt-3 flex items-center gap-1.5 text-xs text-neonYellow font-semibold">
+          <span>Inspect Pin</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- 2. INTERACTIVE ATTRACTION MAP SECTION (WIREFRAME 2 SETUP) -->
+  <!-- ========================================================= -->
+  <section id="interactive-map" class="relative py-28 px-4 sm:px-8 max-w-7xl mx-auto z-30">
+    <div class="text-center mb-12">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neonCyan/10 border border-neonCyan/30 text-neonCyan font-neon text-xs uppercase tracking-widest mb-3">
+        <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+        <span>Live Interactive Overview</span>
+      </div>
+      <h2 class="font-neon text-3xl sm:text-4xl md:text-5xl font-black uppercase text-white tracking-wider">
+        Amusement <span class="text-neonCyan">Park Map</span>
+      </h2>
+      <p class="text-white/70 text-sm max-w-xl mx-auto mt-2">
+        Click any attraction pin below to inspect real-time pass pricing and safety age limits.
+      </p>
+    </div>
+
+    <!-- Custom Illustrative Amusement Park Vector Top-Down Canvas -->
+    <div class="relative w-full aspect-[16/10] sm:aspect-[16/9] md:aspect-[2/1] rounded-3xl overflow-hidden border-2 border-neonCyan/40 bg-[#060D1E] map-grid-bg shadow-[0_0_50px_rgba(0,240,255,0.15)]">
+      
+      <!-- Vector Top-Down Landscape: Canyon, Suspension Bridge, Rivers, Cliffs -->
+      <svg viewBox="0 0 1000 500" class="w-full h-full absolute inset-0 pointer-events-none">
+        <!-- Mountain Cliffs & Gorge Contours -->
+        <path d="M 0 60 Q 200 40 400 120 T 750 80 Q 900 120 1000 70 L 1000 0 L 0 0 Z" fill="#0C1B33" opacity="0.6"/>
+        <path d="M 0 440 Q 250 460 500 390 T 800 420 Q 920 380 1000 430 L 1000 500 L 0 500 Z" fill="#0C1B33" opacity="0.6"/>
+        
+        <!-- Deep Canyon River Valley (Neon Teal Flow) -->
+        <path d="M 0 280 C 220 290 320 220 520 260 C 720 300 820 220 1000 240 L 1000 290 C 800 270 700 350 500 310 C 300 270 200 340 0 330 Z" fill="#003366" opacity="0.5"/>
+        <path d="M 0 295 C 220 305 320 235 520 275 C 720 315 820 235 1000 255" stroke="#00F0FF" stroke-width="3" stroke-dasharray="10 15" fill="none" opacity="0.4"/>
+
+        <!-- The Iconic Skybridge Suspension Walkway across Gorge -->
+        <line x1="160" y1="120" x2="840" y2="380" stroke="#FFE600" stroke-width="4.5" stroke-dasharray="8 6" opacity="0.6"/>
+        <line x1="160" y1="120" x2="840" y2="380" stroke="#00F0FF" stroke-width="1.5" opacity="0.9"/>
+        
+        <!-- Suspension Bridge Towers -->
+        <rect x="145" y="105" width="30" height="30" rx="6" fill="#1A2B4C" stroke="#00F0FF" stroke-width="2"/>
+        <rect x="825" y="365" width="30" height="30" rx="6" fill="#1A2B4C" stroke="#00F0FF" stroke-width="2"/>
+
+        <!-- Top-down Park Walking Trails & Plaza Rings -->
+        <circle cx="500" cy="250" r="70" stroke="#FF007A" stroke-width="1.5" stroke-dasharray="6 6" fill="none" opacity="0.3"/>
+        <circle cx="500" cy="250" r="140" stroke="#00F0FF" stroke-width="1" stroke-dasharray="8 10" fill="none" opacity="0.2"/>
+        <path d="M 220 170 Q 340 180 500 250 T 780 320" stroke="#FFFFFF" stroke-width="1" stroke-dasharray="4 6" fill="none" opacity="0.2"/>
+      </svg>
+
+      <!-- ============================================== -->
+      <!-- PINS LAYER WITH INTERACTIVE METADATA BADGES    -->
+      <!-- ============================================== -->
+      <div id="map-pins-container" class="absolute inset-0 z-20">
+        
+        <!-- PIN 1: BUNGEE 207M -->
+        <div class="ride-pin-wrapper absolute top-[30%] left-[24%] -translate-x-1/2 -translate-y-1/2 cursor-pointer group" onclick="togglePinBadge(this, 'bungee')">
+          <!-- Pulse Wave -->
+          <span class="absolute inset-0 rounded-full bg-neonCyan animate-ping opacity-40"></span>
+          
+          <!-- Circular Pin Button with Icon -->
+          <button class="relative w-12 sm:w-14 h-12 sm:h-14 rounded-full bg-[#070913] border-2 border-neonCyan flex items-center justify-center text-neonCyan shadow-[0_0_20px_#00F0FF] group-hover:scale-110 active:scale-95 transition-transform" aria-label="Bungee 207m Details">
+            <i data-lucide="activity" class="w-6 h-6"></i>
+          </button>
+          <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] font-neon font-black tracking-wider text-neonCyan bg-black/70 px-2 py-0.5 rounded border border-neonCyan/30">BUNGEE 207M</span>
+
+          <!-- FLOATING NEON BADGE OVER THE PIN (METADATA) -->
+          <div class="pin-badge hidden absolute bottom-full left-1/2 -translate-x-1/2 mb-4 w-52 p-4 rounded-2xl bg-black/90 backdrop-blur-xl border border-neonCyan neon-box-cyan z-50 text-left pointer-events-auto">
+            <div class="flex items-center justify-between pb-2 border-b border-neonCyan/30">
+              <span class="font-neon text-xs font-black text-neonCyan">BUNGEE 207M</span>
+              <button onclick="event.stopPropagation(); closeBadge(this)" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-3.5 h-3.5"></i></button>
+            </div>
+            <div class="mt-2.5 space-y-1.5 text-xs">
+              <div class="flex justify-between items-center">
+                <span class="text-white/70">Single Pass:</span>
+                <span class="font-neon font-bold text-neonYellow text-sm">220$</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-white/70">Age Range:</span>
+                <span class="font-semibold text-neonCyan">17-19 years</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-white/70">Height Drop:</span>
+                <span class="font-semibold text-white">207 Meters</span>
+              </div>
+            </div>
+            <div class="mt-3 pt-2 border-t border-white/10 flex justify-end">
+              <span class="text-[9px] uppercase font-neon text-neonCyan font-bold tracking-widest">Instant Jump Ready</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- PIN 2: MEGA ZIPLINE -->
+        <div class="ride-pin-wrapper absolute top-[48%] left-[50%] -translate-x-1/2 -translate-y-1/2 cursor-pointer group" onclick="togglePinBadge(this, 'zipline')">
+          <span class="absolute inset-0 rounded-full bg-neonPink animate-ping opacity-40"></span>
+          
+          <button class="relative w-12 sm:w-14 h-12 sm:h-14 rounded-full bg-[#070913] border-2 border-neonPink flex items-center justify-center text-neonPink shadow-[0_0_20px_#FF007A] group-hover:scale-110 active:scale-95 transition-transform" aria-label="Mega Zipline Details">
+            <i data-lucide="wind" class="w-6 h-6"></i>
+          </button>
+          <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] font-neon font-black tracking-wider text-neonPink bg-black/70 px-2 py-0.5 rounded border border-neonPink/30">MEGA ZIPLINE</span>
+
+          <!-- FLOATING NEON BADGE -->
+          <div class="pin-badge hidden absolute bottom-full left-1/2 -translate-x-1/2 mb-4 w-52 p-4 rounded-2xl bg-black/90 backdrop-blur-xl border border-neonPink neon-box-pink z-50 text-left pointer-events-auto">
+            <div class="flex items-center justify-between pb-2 border-b border-neonPink/30">
+              <span class="font-neon text-xs font-black text-neonPink">MEGA ZIPLINE</span>
+              <button onclick="event.stopPropagation(); closeBadge(this)" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-3.5 h-3.5"></i></button>
+            </div>
+            <div class="mt-2.5 space-y-1.5 text-xs">
+              <div class="flex justify-between items-center">
+                <span class="text-white/70">Flight Pass:</span>
+                <span class="font-neon font-bold text-neonYellow text-sm">65$</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-white/70">Age Range:</span>
+                <span class="font-semibold text-neonPink">14-65 years</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-white/70">Max Velocity:</span>
+                <span class="font-semibold text-white">120 km/h</span>
+              </div>
+            </div>
+            <div class="mt-3 pt-2 border-t border-white/10 flex justify-end">
+              <span class="text-[9px] uppercase font-neon text-neonPink font-bold tracking-widest">Tandem Available</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- PIN 3: SOCHI SWING (GIANT SWING 170M) -->
+        <div class="ride-pin-wrapper absolute top-[36%] left-[76%] -translate-x-1/2 -translate-y-1/2 cursor-pointer group" onclick="togglePinBadge(this, 'swing')">
+          <span class="absolute inset-0 rounded-full bg-neonYellow animate-ping opacity-40"></span>
+          
+          <button class="relative w-12 sm:w-14 h-12 sm:h-14 rounded-full bg-[#070913] border-2 border-neonYellow flex items-center justify-center text-neonYellow shadow-[0_0_20px_#FFE600] group-hover:scale-110 active:scale-95 transition-transform" aria-label="Giant Swing Details">
+            <i data-lucide="rotate-ccw" class="w-6 h-6"></i>
+          </button>
+          <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] font-neon font-black tracking-wider text-neonYellow bg-black/70 px-2 py-0.5 rounded border border-neonYellow/30">GIANT SWING</span>
+
+          <!-- FLOATING NEON BADGE -->
+          <div class="pin-badge hidden absolute bottom-full left-1/2 -translate-x-1/2 mb-4 w-52 p-4 rounded-2xl bg-black/90 backdrop-blur-xl border border-neonYellow shadow-[0_0_20px_rgba(255,230,0,0.3)] z-50 text-left pointer-events-auto">
+            <div class="flex items-center justify-between pb-2 border-b border-neonYellow/30">
+              <span class="font-neon text-xs font-black text-neonYellow">GIANT SWING</span>
+              <button onclick="event.stopPropagation(); closeBadge(this)" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-3.5 h-3.5"></i></button>
+            </div>
+            <div class="mt-2.5 space-y-1.5 text-xs">
+              <div class="flex justify-between items-center">
+                <span class="text-white/70">Single Pass:</span>
+                <span class="font-neon font-bold text-neonYellow text-sm">110$</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-white/70">Age Range:</span>
+                <span class="font-semibold text-neonYellow">12-60 years</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-white/70">Pendulum Arc:</span>
+                <span class="font-semibold text-white">500M Radius</span>
+              </div>
+            </div>
+            <div class="mt-3 pt-2 border-t border-white/10 flex justify-end">
+              <span class="text-[9px] uppercase font-neon text-neonYellow font-bold tracking-widest">Zero-G Apex Moment</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- PIN 4: SKYBRIDGE WALKWAY (FAMILY ATTRACTION) -->
+        <div class="ride-pin-wrapper absolute top-[68%] left-[34%] -translate-x-1/2 -translate-y-1/2 cursor-pointer group" onclick="togglePinBadge(this, 'bridge')">
+          <button class="relative w-11 h-11 rounded-full bg-[#070913] border-2 border-white/70 flex items-center justify-center text-white shadow-[0_0_15px_rgba(255,255,255,0.4)] group-hover:scale-110 active:scale-95 transition-transform" aria-label="Skybridge Details">
+            <i data-lucide="footprints" class="w-5 h-5"></i>
+          </button>
+          <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] font-neon font-black tracking-wider text-white bg-black/70 px-2 py-0.5 rounded border border-white/30">SKYBRIDGE 439M</span>
+
+          <!-- FLOATING NEON BADGE -->
+          <div class="pin-badge hidden absolute bottom-full left-1/2 -translate-x-1/2 mb-4 w-52 p-4 rounded-2xl bg-black/90 backdrop-blur-xl border border-white/50 shadow-[0_0_20px_rgba(255,255,255,0.25)] z-50 text-left pointer-events-auto">
+            <div class="flex items-center justify-between pb-2 border-b border-white/30">
+              <span class="font-neon text-xs font-black text-white">SKYBRIDGE 439M</span>
+              <button onclick="event.stopPropagation(); closeBadge(this)" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-3.5 h-3.5"></i></button>
+            </div>
+            <div class="mt-2.5 space-y-1.5 text-xs">
+              <div class="flex justify-between items-center">
+                <span class="text-white/70">Entry Ticket:</span>
+                <span class="font-neon font-bold text-neonYellow text-sm">10$</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-white/70">Age Range:</span>
+                <span class="font-semibold text-neonCyan">3-99 years</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-white/70">Total Span:</span>
+                <span class="font-semibold text-white">439 Meters</span>
+              </div>
+            </div>
+            <div class="mt-3 pt-2 border-t border-white/10 flex justify-end">
+              <span class="text-[9px] uppercase font-neon text-white font-bold tracking-widest">360° Gorge Panoramas</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Map Overlay Legend -->
+      <div class="absolute bottom-4 left-4 right-4 sm:right-auto px-4 py-2.5 rounded-xl bg-black/75 backdrop-blur-md border border-white/15 flex items-center gap-4 text-xs font-neon">
+        <span class="flex items-center gap-1.5 text-neonCyan"><span class="w-2 h-2 rounded-full bg-neonCyan"></span> Bungee</span>
+        <span class="flex items-center gap-1.5 text-neonPink"><span class="w-2 h-2 rounded-full bg-neonPink"></span> Zipline</span>
+        <span class="flex items-center gap-1.5 text-neonYellow"><span class="w-2 h-2 rounded-full bg-neonYellow"></span> Giant Swing</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- RIDES SPECIFICATIONS & ACCORDION GRID                     -->
+  <!-- ========================================================= -->
+  <section id="rides" class="py-24 px-6 md:px-12 max-w-7xl mx-auto z-30 relative">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+      <div>
+        <span class="text-xs font-neon uppercase tracking-widest text-neonCyan">Precision Extreme Engineering</span>
+        <h2 class="font-neon text-3xl md:text-5xl font-black uppercase text-white mt-2">Attraction Passes</h2>
+      </div>
+      <p class="text-white/70 text-sm max-w-md">
+        All passes include full international certified safety rigging, high-speed 4K telemetry recording, and instant digital jump certificate.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      
+      <!-- Ride 1 -->
+      <div class="p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-neonCyan transition-all backdrop-blur-lg flex flex-col justify-between group">
+        <div>
+          <div class="flex justify-between items-start mb-6">
+            <span class="text-xs font-neon tracking-widest px-3 py-1 rounded-full bg-neonCyan/20 text-neonCyan font-bold">207M GORGE</span>
+            <span class="font-neon text-2xl font-black text-neonYellow">220$</span>
+          </div>
+          <h3 class="font-neon text-2xl font-bold text-white group-hover:text-neonCyan transition-colors">Bungee Jump 207</h3>
+          <p class="text-sm text-white/70 mt-3 leading-relaxed font-light">
+            Step onto the glass platform suspended 207 meters above the roaring Mzymta River. 7 seconds of absolute zero gravity freefall.
+          </p>
+        </div>
+        <div class="mt-8 pt-6 border-t border-white/10 flex justify-between items-center text-xs">
+          <span class="text-white/60">Req: 17–19 yrs or 18+</span>
+          <button onclick="highlightRide('bungee')" class="text-neonCyan font-neon font-bold hover:underline flex items-center gap-1">
+            Pin on Map <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Ride 2 -->
+      <div class="p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-neonPink transition-all backdrop-blur-lg flex flex-col justify-between group">
+        <div>
+          <div class="flex justify-between items-start mb-6">
+            <span class="text-xs font-neon tracking-widest px-3 py-1 rounded-full bg-neonPink/20 text-neonPink font-bold">120 KM/H</span>
+            <span class="font-neon text-2xl font-black text-neonYellow">65$</span>
+          </div>
+          <h3 class="font-neon text-2xl font-bold text-white group-hover:text-neonPink transition-colors">Mega Zipline Canyons</h3>
+          <p class="text-sm text-white/70 mt-3 leading-relaxed font-light">
+            Soar across the valley at motorway speeds on quadruple tension aeronautical cables with unobstructed alpine panoramas.
+          </p>
+        </div>
+        <div class="mt-8 pt-6 border-t border-white/10 flex justify-between items-center text-xs">
+          <span class="text-white/60">Req: 14+ yrs (Tandem ok)</span>
+          <button onclick="highlightRide('zipline')" class="text-neonPink font-neon font-bold hover:underline flex items-center gap-1">
+            Pin on Map <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Ride 3 -->
+      <div class="p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-neonYellow transition-all backdrop-blur-lg flex flex-col justify-between group">
+        <div>
+          <div class="flex justify-between items-start mb-6">
+            <span class="text-xs font-neon tracking-widest px-3 py-1 rounded-full bg-neonYellow/20 text-neonYellow font-bold">170M PENDULUM</span>
+            <span class="font-neon text-2xl font-black text-neonYellow">110$</span>
+          </div>
+          <h3 class="font-neon text-2xl font-bold text-white group-hover:text-neonYellow transition-colors">Sochi Giant Swing</h3>
+          <p class="text-sm text-white/70 mt-3 leading-relaxed font-light">
+            The world’s highest pendulum swing. Accelerated release propels you through a 500-meter canyon arc in seconds.
+          </p>
+        </div>
+        <div class="mt-8 pt-6 border-t border-white/10 flex justify-between items-center text-xs">
+          <span class="text-white/60">Req: 12+ yrs</span>
+          <button onclick="highlightRide('swing')" class="text-neonYellow font-neon font-bold hover:underline flex items-center gap-1">
+            Pin on Map <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- 4. TWO-TOUCH DOUBLE INTERACTIVE NEON FOOTER               -->
+  <!-- ========================================================= -->
+  <footer id="contact" class="relative z-30 pt-28 pb-20 px-6 md:px-16 border-t border-white/10 bg-black/60 backdrop-blur-2xl overflow-hidden">
+    
+    <!-- DYNAMIC BACKGROUND FLOATING GRAPHICS LAYER (TRIGGERED ON FIRST TOUCH) -->
+    <div id="footer-backdrop-icons" class="pointer-events-none absolute inset-0 z-0 flex items-center justify-center overflow-hidden">
+      
+      <!-- WhatsApp Floating Phone Receiver Graphic -->
+      <div id="whatsapp-bg-graphic" class="absolute w-[340px] md:w-[480px] aspect-square text-neonCyan opacity-0 transition-all duration-700 gpu-accel pointer-events-none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" class="w-full h-full filter drop-shadow-[0_0_50px_#00F0FF] anim-sway">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
         </svg>
       </div>
 
-      <!-- Particle 2: Roasted Micro-Lot Bean (Hero Right) -->
-      <div class="cocoa-particle w-24 md:w-32 aspect-square" data-base-y="0.26" data-speed="1.7" data-rot-bias="-0.32" data-sway="28">
-        <svg viewBox="0 0 140 140" class="w-full h-full drop-shadow-[0_20px_30px_rgba(0,0,0,0.85)]">
-          <defs>
-            <radialGradient id="beanGrad1" cx="30%" cy="30%" r="72%">
-              <stop offset="0%" stop-color="#4F3320"/>
-              <stop offset="45%" stop-color="#2D190E"/>
-              <stop offset="100%" stop-color="#0A0503"/>
-            </radialGradient>
-          </defs>
-          <path d="M22 68 C20 30 52 14 88 18 C124 22 135 60 130 92 C125 124 92 136 54 130 C24 125 24 96 22 68 Z" fill="url(#beanGrad1)"/>
-          <path d="M40 28 C64 45 68 85 96 118" stroke="#000000" stroke-width="5" stroke-linecap="round" fill="none"/>
-          <ellipse cx="92" cy="50" rx="8" ry="16" fill="#FFF" opacity="0.06" transform="rotate(22 92 50)"/>
-        </svg>
-      </div>
-
-      <!-- Particle 3: Cocoa Pod Husk (Hero Lower Center-Left) -->
-      <div class="cocoa-particle w-28 md:w-36 aspect-[1.2/1]" data-base-y="0.44" data-speed="1.4" data-rot-bias="0.25" data-sway="24">
-        <svg viewBox="0 0 150 120" class="w-full h-full drop-shadow-[0_20px_25px_rgba(0,0,0,0.8)]">
-          <defs>
-            <radialGradient id="beanGrad2" cx="35%" cy="30%" r="70%">
-              <stop offset="0%" stop-color="#553621"/>
-              <stop offset="50%" stop-color="#2A170C"/>
-              <stop offset="100%" stop-color="#090402"/>
-            </radialGradient>
-          </defs>
-          <path d="M25 60 C25 25 65 15 110 25 C145 35 145 78 130 98 C110 120 45 115 28 92 C18 78 25 70 25 60 Z" fill="url(#beanGrad2)"/>
-          <path d="M38 42 C70 52 85 70 125 80" stroke="#000000" stroke-width="4.5" stroke-linecap="round" fill="none"/>
-        </svg>
-      </div>
-
-      <!-- Particle 4: Golden Slender Reserve Pod (Mid-Page Right) -->
-      <div class="cocoa-particle w-32 md:w-44 aspect-[1/1.35]" data-base-y="0.60" data-speed="1.15" data-rot-bias="-0.18" data-sway="20">
-        <svg viewBox="0 0 160 210" class="w-full h-full drop-shadow-[0_25px_35px_rgba(0,0,0,0.85)]">
-          <path d="M80 14 C128 38 152 92 144 148 C136 186 98 202 80 205 C62 202 24 186 16 148 C8 92 32 38 80 14 Z" fill="#311D12"/>
-          <path d="M80 14 Q100 105 80 205" stroke="#C79D58" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.35"/>
-          <path d="M80 14 Q128 105 112 188" stroke="#170A04" stroke-width="2.5" fill="none"/>
-          <path d="M80 14 Q32 105 48 188" stroke="#170A04" stroke-width="2.5" fill="none"/>
-        </svg>
-      </div>
-
-      <!-- Particle 5: Dark Terroir Roasted Seed (Lower Mid) -->
-      <div class="cocoa-particle w-24 md:w-32 aspect-square" data-base-y="0.75" data-speed="1.55" data-rot-bias="0.3" data-sway="26">
-        <svg viewBox="0 0 140 140" class="w-full h-full drop-shadow-[0_20px_30px_rgba(0,0,0,0.85)]">
-          <path d="M22 68 C20 30 52 14 88 18 C124 22 135 60 130 92 C125 124 92 136 54 130 C24 125 24 96 22 68 Z" fill="#2E1B10"/>
-          <path d="M40 28 C64 45 68 85 96 118" stroke="#050201" stroke-width="5" stroke-linecap="round" fill="none"/>
-        </svg>
-      </div>
-
-      <!-- Particle 6: Floating Petite Bean (Lower Viewport) -->
-      <div class="cocoa-particle w-20 md:w-28 aspect-square" data-base-y="0.88" data-speed="1.35" data-rot-bias="-0.25" data-sway="22">
-        <svg viewBox="0 0 140 140" class="w-full h-full drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)]">
-          <path d="M22 68 C20 30 52 14 88 18 C124 22 135 60 130 92 C125 124 92 136 54 130 C24 125 24 96 22 68 Z" fill="#24150C"/>
-          <path d="M40 28 C64 45 68 85 96 118" stroke="#000000" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+      <!-- Instagram Floating Camera Graphic -->
+      <div id="instagram-bg-graphic" class="absolute w-[340px] md:w-[480px] aspect-square text-neonPink opacity-0 transition-all duration-700 gpu-accel pointer-events-none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" class="w-full h-full filter drop-shadow-[0_0_50px_#FF007A] anim-sway">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2.5" stroke-linecap="round"/>
         </svg>
       </div>
 
     </div>
-  </div>
 
-  <!-- ========================================================================= -->
-  <!-- FOREGROUND INTERACTIVE CONTENT (Z-INDEX: 10 RELATIVE TO CANVAS)           -->
-  <!-- ========================================================================= -->
-  <div class="relative z-10">
-
-    <!-- MINIMALIST NAVIGATION -->
-    <header class="sticky top-0 z-50 bg-noir-900/90 backdrop-blur-md hairline-b">
-      <div class="max-w-7xl mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
-        
-        <!-- Logo -->
-        <a href="#" class="flex items-center gap-3">
-          <span class="font-serif tracking-tight text-xl font-normal text-white">Starbucks</span>
-          <span class="text-[11px] uppercase tracking-[0.25em] text-noir-muted pl-2 border-l border-white/10 font-medium">Reserve</span>
-        </a>
-
-        <!-- Desktop Navigation Links -->
-        <nav class="hidden md:flex items-center gap-10 text-xs uppercase tracking-[0.18em] font-medium text-noir-muted">
-          <a href="#menu" class="hover:text-white transition-colors">Menu</a>
-          <a href="#locations" class="hover:text-white transition-colors">Locations</a>
-          <a href="#reviews" class="hover:text-white transition-colors">Reviews</a>
-          <a href="#contact" class="hover:text-white transition-colors">Concierge</a>
-        </nav>
-
-        <!-- Header Concierge Link -->
-        <div>
-          <a href="https://wa.me/15559876543?text=Starbucks%20Reserve%20Inquiry" 
-             target="_blank" 
-             rel="noopener noreferrer" 
-             class="inline-flex items-center gap-2 text-xs uppercase tracking-wider px-4 py-2 border border-white/15 hover:border-white text-noir-cream hover:text-white transition-all">
-            <i data-lucide="message-circle" class="w-3.5 h-3.5 text-noir-muted"></i>
-            <span>Concierge</span>
-          </a>
-        </div>
-      </div>
-    </header>
-
-    <!-- 3. HERO SECTION (WITH PARTICLES SURROUNDING TEXT) -->
-    <section id="hero" class="max-w-7xl mx-auto px-6 md:px-12 pt-32 pb-36 min-h-[85vh] flex flex-col justify-center">
-      <div class="max-w-4xl">
-        <p class="text-xs uppercase tracking-[0.25em] text-noir-muted mb-8 font-medium">Starbucks Reserve™ Roastery</p>
-        
-        <h1 class="text-5xl sm:text-7xl md:text-8xl font-serif font-normal text-white tracking-tight leading-[1.05] mb-10">
-          Rare harvest.<br>
-          <span class="italic font-normal text-noir-muted">Artisan calibration.</span>
-        </h1>
-
-        <p class="text-base md:text-lg text-noir-muted font-light leading-relaxed max-w-xl mb-12">
-          An intimate exploration of terroir, micro-lot coffee beans, and slow extraction bar methods roasted exclusively in micro-batches.
+    <!-- Main Footer Content -->
+    <div class="relative z-10 max-w-5xl mx-auto text-center space-y-10">
+      
+      <div>
+        <span class="text-xs font-neon uppercase tracking-[0.3em] text-neonCyan font-bold">Instant Extreme Concierge</span>
+        <h2 class="font-neon text-4xl sm:text-5xl font-black uppercase tracking-wider text-white mt-2">
+          Contact <span class="text-transparent bg-clip-text bg-gradient-to-r from-neonCyan via-neonYellow to-neonPink">Skypark</span>
+        </h2>
+        <p class="text-sm text-white/70 max-w-md mx-auto mt-3">
+          Tap once to activate the channel aura. Tap again to jump straight into chat & highlights.
         </p>
+      </div>
 
+      <!-- Prominent Glowing Neon Action Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+        
+        <!-- BUTTON 1: WHATSAPP -->
+        <button id="btn-whatsapp" 
+                class="two-touch-btn relative w-full sm:w-72 px-8 py-5 rounded-2xl bg-[#081226]/80 border-2 border-neonCyan/50 text-white font-neon font-black text-sm uppercase tracking-wider transition-all duration-300 hover:scale-105 active:scale-95 flex items-center justify-center gap-3.5 shadow-[0_0_15px_rgba(0,240,255,0.25)]"
+                data-type="whatsapp"
+                data-target="https://wa.me/15559876543?text=Hello%20Skypark,%20I%20want%20to%20book%20a%20jump">
+          <i data-lucide="message-circle" class="w-5 h-5 text-neonCyan"></i>
+          <span class="btn-text">WhatsApp Chat</span>
+          <!-- Status Indicator Tag -->
+          <span class="touch-status absolute -top-3 right-4 px-2 py-0.5 rounded text-[9px] font-neon font-bold tracking-widest bg-black/80 border border-neonCyan/50 text-neonCyan">
+            TAP 1
+          </span>
+        </button>
+
+        <!-- BUTTON 2: INSTAGRAM -->
+        <button id="btn-instagram" 
+                class="two-touch-btn relative w-full sm:w-72 px-8 py-5 rounded-2xl bg-[#081226]/80 border-2 border-neonPink/50 text-white font-neon font-black text-sm uppercase tracking-wider transition-all duration-300 hover:scale-105 active:scale-95 flex items-center justify-center gap-3.5 shadow-[0_0_15px_rgba(255,0,122,0.25)]"
+                data-type="instagram"
+                data-target="https://instagram.com">
+          <i data-lucide="camera" class="w-5 h-5 text-neonPink"></i>
+          <span class="btn-text">Instagram Media</span>
+          <!-- Status Indicator Tag -->
+          <span class="touch-status absolute -top-3 right-4 px-2 py-0.5 rounded text-[9px] font-neon font-bold tracking-widest bg-black/80 border border-neonPink/50 text-neonPink">
+            TAP 1
+          </span>
+        </button>
+
+      </div>
+
+      <!-- Clean Status Tip -->
+      <div id="touch-prompt" class="text-xs text-white/50 font-mono tracking-wide h-5">
+        Ready for touch connection...
+      </div>
+
+      <!-- Copyright & Legal -->
+      <div class="pt-12 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-xs text-white/40 gap-4">
+        <p>© 2026 SKYPARK Extreme Entertainment Corp. All Rights Reserved.</p>
         <div class="flex items-center gap-6">
-          <a href="#menu" class="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-semibold text-white hover:text-noir-accent transition-colors">
-            <span>Explore Menu</span>
-            <i data-lucide="arrow-down" class="w-3.5 h-3.5"></i>
-          </a>
+          <a href="#" class="hover:text-neonCyan transition-colors">Flight Safety Standard</a>
+          <a href="#" class="hover:text-neonCyan transition-colors">Canyon Weather Rules</a>
+          <a href="#" class="hover:text-neonCyan transition-colors">Privacy Protocol</a>
         </div>
       </div>
-    </section>
 
-    <!-- SECTION 1: MENU -->
-    <section id="menu" class="py-28 px-6 md:px-12 max-w-7xl mx-auto hairline-t">
-      <div class="flex flex-col md:flex-row md:items-baseline justify-between mb-16 gap-6">
-        <div>
-          <span class="text-xs uppercase tracking-[0.25em] text-noir-muted block mb-3">Selection</span>
-          <h2 class="text-3xl md:text-4xl font-serif text-white font-normal">Signature Menu</h2>
-        </div>
-        <p class="text-xs uppercase tracking-widest text-noir-muted">Clover® & Chemex Micro-Lot Pours</p>
-      </div>
+    </div>
+  </footer>
 
-      <!-- Menu Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        
-        <!-- Card 1 -->
-        <article class="p-8 border border-white/10 bg-noir-850/60 backdrop-blur-sm hover:border-white/20 transition-colors flex flex-col justify-between">
-          <div>
-            <div class="flex items-baseline justify-between pb-4 hairline-b mb-6">
-              <span class="text-xs uppercase tracking-widest text-noir-muted">Ethiopia</span>
-              <span class="font-serif text-white text-lg">$14.50</span>
-            </div>
-            <h3 class="text-2xl font-serif text-white mb-4">Geisha Cold Brew</h3>
-            <p class="text-sm text-noir-muted leading-relaxed font-light mb-8">
-              Slow-steeped over 24 hours. Bergamot, delicate white florals, Meyer lemon clarity, served over hand-carved ice sphere.
-            </p>
-          </div>
-          <div class="pt-4 hairline-t flex items-center justify-between text-xs tracking-wider text-noir-muted">
-            <span>Clover® Extraction</span>
-            <a href="https://wa.me/15559876543?text=Order:%20Geisha%20Cold%20Brew" target="_blank" class="text-white hover:text-noir-accent font-medium">Inquire</a>
-          </div>
-        </article>
-
-        <!-- Card 2 -->
-        <article class="p-8 border border-white/10 bg-noir-850/60 backdrop-blur-sm hover:border-white/20 transition-colors flex flex-col justify-between">
-          <div>
-            <div class="flex items-baseline justify-between pb-4 hairline-b mb-6">
-              <span class="text-xs uppercase tracking-widest text-noir-muted">Kentucky Rested</span>
-              <span class="font-serif text-white text-lg">$12.00</span>
-            </div>
-            <h3 class="text-2xl font-serif text-white mb-4">Oak Cortado</h3>
-            <p class="text-sm text-noir-muted leading-relaxed font-light mb-8">
-              Aged green beans conditioned in charred oak barrels. Pulled with micro-textured oat foam and whole vanilla bean.
-            </p>
-          </div>
-          <div class="pt-4 hairline-t flex items-center justify-between text-xs tracking-wider text-noir-muted">
-            <span>Double Ristretto</span>
-            <a href="https://wa.me/15559876543?text=Order:%20Oak%20Cortado" target="_blank" class="text-white hover:text-noir-accent font-medium">Inquire</a>
-          </div>
-        </article>
-
-        <!-- Card 3 -->
-        <article class="p-8 border border-white/10 bg-noir-850/60 backdrop-blur-sm hover:border-white/20 transition-colors flex flex-col justify-between">
-          <div>
-            <div class="flex items-baseline justify-between pb-4 hairline-b mb-6">
-              <span class="text-xs uppercase tracking-widest text-noir-muted">Costa Rica</span>
-              <span class="font-serif text-white text-lg">$15.00</span>
-            </div>
-            <h3 class="text-2xl font-serif text-white mb-4">Nitro Reserve</h3>
-            <p class="text-sm text-noir-muted leading-relaxed font-light mb-8">
-              Infused with pure nitrogen for velvety cascara crema. Rich dark cocoa undertones, black cherry, and crushed walnut finish.
-            </p>
-          </div>
-          <div class="pt-4 hairline-t flex items-center justify-between text-xs tracking-wider text-noir-muted">
-            <span>Cascara Infused</span>
-            <a href="https://wa.me/15559876543?text=Order:%20Nitro%20Reserve" target="_blank" class="text-white hover:text-noir-accent font-medium">Inquire</a>
-          </div>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- SECTION 2: LOCATIONS -->
-    <section id="locations" class="py-28 px-6 md:px-12 max-w-7xl mx-auto hairline-t">
-      <div class="flex flex-col md:flex-row md:items-baseline justify-between mb-16 gap-6">
-        <div>
-          <span class="text-xs uppercase tracking-[0.25em] text-noir-muted block mb-3">Geography</span>
-          <h2 class="text-3xl md:text-4xl font-serif text-white font-normal">Flagship Roasteries</h2>
-        </div>
-        <p class="text-xs uppercase tracking-widest text-noir-muted">Sanctuaries of Coffee Architecture</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        
-        <!-- Milan -->
-        <div class="p-8 border border-white/10 bg-noir-850/60 backdrop-blur-sm flex flex-col justify-between">
-          <div>
-            <span class="text-xs uppercase tracking-widest text-noir-muted block mb-4">Italy</span>
-            <h3 class="text-2xl font-serif text-white mb-2">Milano</h3>
-            <p class="text-sm text-noir-muted font-light mb-8">Piazza Cordusio 3, 20123 Milano</p>
-          </div>
-          <div class="pt-6 hairline-t flex items-center justify-between text-xs">
-            <span class="text-noir-muted">Daily 07:00 – 22:00</span>
-            <span class="text-white">Arriviamo Bar</span>
-          </div>
-        </div>
-
-        <!-- New York -->
-        <div class="p-8 border border-white/10 bg-noir-850/60 backdrop-blur-sm flex flex-col justify-between">
-          <div>
-            <span class="text-xs uppercase tracking-widest text-noir-muted block mb-4">United States</span>
-            <h3 class="text-2xl font-serif text-white mb-2">New York</h3>
-            <p class="text-sm text-noir-muted font-light mb-8">61 9th Ave, Meatpacking District</p>
-          </div>
-          <div class="pt-6 hairline-t flex items-center justify-between text-xs">
-            <span class="text-noir-muted">Daily 08:00 – 21:00</span>
-            <span class="text-white">Princi™ Bakery</span>
-          </div>
-        </div>
-
-        <!-- Tokyo -->
-        <div class="p-8 border border-white/10 bg-noir-850/60 backdrop-blur-sm flex flex-col justify-between">
-          <div>
-            <span class="text-xs uppercase tracking-widest text-noir-muted block mb-4">Japan</span>
-            <h3 class="text-2xl font-serif text-white mb-2">Tokyo</h3>
-            <p class="text-sm text-noir-muted font-light mb-8">2-19-23 Aobadai, Meguro City</p>
-          </div>
-          <div class="pt-6 hairline-t flex items-center justify-between text-xs">
-            <span class="text-noir-muted">Daily 07:00 – 23:00</span>
-            <span class="text-white">Cherry Terrace</span>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- SECTION 3: REVIEWS -->
-    <section id="reviews" class="py-28 px-6 md:px-12 max-w-7xl mx-auto hairline-t">
-      <div class="flex flex-col md:flex-row md:items-baseline justify-between mb-16 gap-6">
-        <div>
-          <span class="text-xs uppercase tracking-[0.25em] text-noir-muted block mb-3">Critique</span>
-          <h2 class="text-3xl md:text-4xl font-serif text-white font-normal">Acclaim & Critique</h2>
-        </div>
-        <p class="text-xs uppercase tracking-widest text-noir-muted">Press & Palates</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        
-        <!-- Review 1 -->
-        <blockquote class="p-8 border border-white/10 bg-noir-850/60 backdrop-blur-sm flex flex-col justify-between">
-          <p class="font-serif italic text-white text-lg leading-relaxed mb-8">
-            “Precision in extraction temperature and grind geometry elevates their single-origin pours into pure sensory poetry.”
-          </p>
-          <footer class="pt-4 hairline-t">
-            <cite class="not-italic block text-sm text-white font-medium">Elena Sarti</cite>
-            <span class="text-xs text-noir-muted">Milan Food & Wine</span>
-          </footer>
-        </blockquote>
-
-        <!-- Review 2 -->
-        <blockquote class="p-8 border border-white/10 bg-noir-850/60 backdrop-blur-sm flex flex-col justify-between">
-          <p class="font-serif italic text-white text-lg leading-relaxed mb-8">
-            “A restrained, deliberate space where micro-lot roasting is treated with culinary reverence. The oak cortado is singular.”
-          </p>
-          <footer class="pt-4 hairline-t">
-            <cite class="not-italic block text-sm text-white font-medium">Marcus Vance</cite>
-            <span class="text-xs text-noir-muted">Manhattan Hospitality Index</span>
-          </footer>
-        </blockquote>
-
-        <!-- Review 3 -->
-        <blockquote class="p-8 border border-white/10 bg-noir-850/60 backdrop-blur-sm flex flex-col justify-between">
-          <p class="font-serif italic text-white text-lg leading-relaxed mb-8">
-            “Cascara notes and copper cask architecture provide an uncompromising, elevated tasting experience.”
-          </p>
-          <footer class="pt-4 hairline-t">
-            <cite class="not-italic block text-sm text-white font-medium">Yuto Takahashi</cite>
-            <span class="text-xs text-noir-muted">Specialty Coffee Q-Grader</span>
-          </footer>
-        </blockquote>
-
-      </div>
-    </section>
-
-    <!-- 1. FOOTER: CLEAN CONTACT AREA ONLY (NO MAP CONTAINERS) -->
-    <footer id="contact" class="hairline-t bg-noir-950 pt-24 pb-20">
-      <div class="max-w-4xl mx-auto px-6 md:px-12 text-center">
-        
-        <div class="space-y-8 pb-16 hairline-b">
-          <div>
-            <span class="text-xs uppercase tracking-[0.28em] text-noir-muted block mb-3 font-medium">Concierge Inquiries</span>
-            <h3 class="text-3xl sm:text-4xl font-serif text-white mb-4">Direct Contact</h3>
-            <p class="text-sm text-noir-muted font-light leading-relaxed max-w-md mx-auto">
-              Inquire directly for private tasting flights, roastery reservations, or rare harvest micro-lot shipments.
-            </p>
-          </div>
-
-          <!-- Clean WhatsApp Phone Button with Icon -->
-          <div class="flex justify-center">
-            <a href="https://wa.me/15559876543?text=Starbucks%20Reserve%20Inquiry" 
-               target="_blank" 
-               rel="noopener noreferrer" 
-               class="inline-flex items-center gap-3 px-8 py-4 border border-white/15 hover:border-white text-white text-xs uppercase tracking-widest font-semibold transition-all hover:bg-white hover:text-noir-950">
-              <i data-lucide="phone" class="w-4 h-4"></i>
-              <span>WhatsApp: +1 (555) 987-6543</span>
-            </a>
-          </div>
-
-          <p class="text-xs text-noir-muted">
-            Direct dispatch: <a href="mailto:concierge@starbucksreserve.com" class="text-white hover:underline">concierge@starbucksreserve.com</a>
-          </p>
-        </div>
-
-        <!-- Copyright -->
-        <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-noir-muted gap-4">
-          <p>© 2026 Starbucks Coffee Company. All Rights Reserved. Pure Terroir Distinction.</p>
-          <div class="flex gap-8">
-            <a href="#" class="hover:text-white transition-colors">Privacy</a>
-            <a href="#" class="hover:text-white transition-colors">Terms of Experience</a>
-          </div>
-        </div>
-
-      </div>
-    </footer>
-
-  </div>
-
-  <!-- ========================================================================= -->
-  <!-- 4. 120HZ SEAMLESS SCREEN-EDGE LOOP & DYNAMIC AMPLITUDE PHYSICS ENGINE     -->
-  <!-- ========================================================================= -->
+  <!-- ========================================================= -->
+  <!-- 120HZ INTERACTIVE ENGINE JAVASCRIPT LOGIC                 -->
+  <!-- ========================================================= -->
   <script>
+    // Initialize Lucide Icons
     lucide.createIcons();
 
-    (function() {
-      const stage = document.getElementById('cocoa-stage');
-      const particles = document.querySelectorAll('.cocoa-particle');
-      const menuSection = document.getElementById('menu');
-      const contactSection = document.getElementById('contact');
+    /* =========================================================
+       1. FERRIS WHEEL SCROLL LOGIC & ALTIMETER 0-200M COUNTER
+       - As user scrolls DOWN: counter-clockwise rotation, moves UPWARD.
+       - As user scrolls UP: clockwise rotation, moves DOWNWARD.
+       - Altimeter counts up 0 to 200m, shifts body hue from sky blue to synthwave sunset.
+    ========================================================= */
+    (function initScrollMechanics() {
+      const wheel = document.getElementById('ferris-wheel-anchor');
+      const altimeterFill = document.getElementById('altimeter-fill');
+      const altimeterCounter = document.getElementById('altimeter-counter');
+      const dynamicBody = document.getElementById('dynamic-body');
 
-      // Global viewport dimensions
-      let winW = window.innerWidth;
-      let winH = window.innerHeight;
+      let currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+      let lastScrollY = currentScrollY;
+      
+      // Rotational angle accumulator for continuous rotation
+      let wheelAngle = 0;
+      let currentWheelY = -50; // percentage anchor Y
+      let targetWheelY = -50;
 
-      window.addEventListener('resize', () => {
-        winW = window.innerWidth;
-        winH = window.innerHeight;
-      }, { passive: true });
+      let smoothAltitude = 0;
 
-      let lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
-      let targetVelocity = 0;
-      let currentVelocity = 0;
-      let levitationClock = 0;
+      function onScrollTick() {
+        const pageScroll = window.pageYOffset || document.documentElement.scrollTop;
+        const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+        const scrollFraction = Math.min(Math.max(pageScroll / maxScroll, 0), 1);
 
-      // Blur & opacity state
-      let currentBlur = 0;
-      let currentOpacity = 1;
+        const delta = pageScroll - lastScrollY;
+        lastScrollY = pageScroll;
 
-      // Particle State Array
-      // Distinct initial spread across the viewport from top to bottom
-      const initialSpreads = [
-        0.08 * winW,
-        0.72 * winW,
-        0.28 * winW,
-        0.82 * winW,
-        0.18 * winW,
-        0.58 * winW
-      ];
+        // Ferris Wheel Physics:
+        // Scrolling DOWN (delta > 0): rotate COUNTER-CLOCKWISE (negative angle), move UPWARD (-Y)
+        // Scrolling UP (delta < 0): rotate CLOCKWISE (positive angle), move DOWNWARD (+Y)
+        wheelAngle -= delta * 0.28; // deg proportional to speed
 
-      const particlesData = Array.from(particles).map((el, index) => {
-        const itemWidth = el.offsetWidth || 150;
-        const baseYRatio = parseFloat(el.getAttribute('data-base-y')) || (0.15 + index * 0.14);
+        // Smooth elevation offset for vertical wheel translation based on depth
+        // Moves upward by up to 35% on deeper scroll
+        targetWheelY = -50 - (scrollFraction * 28);
+        currentWheelY += (targetWheelY - currentWheelY) * 0.1;
+
+        // Apply hardware-accelerated 3D transform
+        if (wheel) {
+          wheel.style.transform = `translate3d(50%, ${currentWheelY.toFixed(2)}%, 0) rotate(${wheelAngle.toFixed(2)}deg)`;
+        }
+
+        // Altimeter Gauge 0m to 200m calculation
+        const targetAltitude = scrollFraction * 200;
+        smoothAltitude += (targetAltitude - smoothAltitude) * 0.15;
         
-        return {
-          el: el,
-          itemWidth: itemWidth,
-          x: initialSpreads[index] % (winW + itemWidth), // Precise screen coordinate
-          baseYRatio: baseYRatio,
-          speedFactor: parseFloat(el.getAttribute('data-speed')) || 1.3,
-          rotBias: parseFloat(el.getAttribute('data-rot-bias')) || 0.2,
-          baseSway: parseFloat(el.getAttribute('data-sway')) || 22,
-          phaseOffset: index * 1.45,
-          currentRenderX: initialSpreads[index],
-          currentRenderY: baseYRatio * winH,
-          currentRot: 0
-        };
-      });
-
-      // Passive scroll monitor for instantaneous velocity computation
-      window.addEventListener('scroll', () => {
-        const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
-        const delta = currentScrollY - lastScrollY;
-
-        // Downward scroll adds positive rightward impulse
-        if (delta > 0) {
-          targetVelocity = Math.min(targetVelocity + delta * 0.45, 65);
-        } else if (delta < 0) {
-          // Upward scroll decelerates velocity slightly
-          targetVelocity = Math.max(targetVelocity + delta * 0.15, -15);
+        if (altimeterFill) {
+          altimeterFill.style.height = `${(scrollFraction * 100).toFixed(1)}%`;
+        }
+        if (altimeterCounter) {
+          altimeterCounter.textContent = Math.round(smoothAltitude);
         }
 
-        lastScrollY = currentScrollY;
-      }, { passive: true });
-
-      let prevTime = performance.now();
-
-      function animationLoop(timestamp) {
-        requestAnimationFrame(animationLoop);
-
-        const dt = Math.min((timestamp - prevTime) / 1000, 0.1);
-        prevTime = timestamp;
-
-        // 1. Friction decay: smoothly slow down velocity to 0 when user stops scrolling
-        targetVelocity *= Math.pow(0.85, dt * 60);
-        if (Math.abs(targetVelocity) < 0.001) targetVelocity = 0;
-
-        currentVelocity += (targetVelocity - currentVelocity) * Math.min(1, dt * 8);
-        levitationClock += dt * 1.5;
-
-        // 2. Visual Polish: Motion Blur & Fade at specific trigger areas ("Menu", "Concierge")
-        let targetBlurVal = 0;
-        let targetOpacityVal = 1;
-
-        // Menu trigger region
-        if (menuSection) {
-          const menuRect = menuSection.getBoundingClientRect();
-          // Near the menu heading/trigger area
-          if (menuRect.top < winH * 0.5 && menuRect.top > -winH * 0.4) {
-            targetBlurVal = 8;
-            targetOpacityVal = 0.55;
+        // Global background color hue shifting:
+        // Daytime high-altitude cyan/blue (#071329) -> Sunset Synthwave Neon (#230829) -> Deep Twilight (#10061e)
+        if (dynamicBody) {
+          if (scrollFraction < 0.5) {
+            // Daytime to Synthwave Transition
+            const p = scrollFraction * 2;
+            const r = Math.round(7 + (35 - 7) * p);
+            const g = Math.round(19 + (8 - 19) * p);
+            const b = Math.round(41 + (45 - 41) * p);
+            dynamicBody.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+          } else {
+            // Synthwave to Twilight Neon
+            const p = (scrollFraction - 0.5) * 2;
+            const r = Math.round(35 + (14 - 35) * p);
+            const g = Math.round(8 + (5 - 8) * p);
+            const b = Math.round(45 + (26 - 45) * p);
+            dynamicBody.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
           }
         }
 
-        // Concierge / Contact trigger region
-        if (contactSection) {
-          const contactRect = contactSection.getBoundingClientRect();
-          if (contactRect.top < winH) {
-            const progress = Math.max(0, Math.min(1, (winH - contactRect.top) / 350));
-            targetBlurVal = Math.max(targetBlurVal, progress * 20); // Deep Gaussian blur on exit
-            targetOpacityVal = Math.min(targetOpacityVal, 1 - progress); // Gracefully fade to 0
-          }
-        }
-
-        // Smooth transition of blur and opacity
-        currentBlur += (targetBlurVal - currentBlur) * Math.min(1, dt * 6);
-        currentOpacity += (targetOpacityVal - currentOpacity) * Math.min(1, dt * 6);
-
-        stage.style.filter = currentBlur > 0.4 ? `blur(${currentBlur.toFixed(1)}px)` : 'none';
-        stage.style.opacity = currentOpacity.toFixed(3);
-
-        if (currentOpacity < 0.005) return;
-
-        // 3. Dynamic Amplitude Physics:
-        // Faster scroll = wider vertical sway + increased rotational sway
-        const speedMagnitude = Math.abs(currentVelocity);
-        const amplitudeMultiplier = 1 + (speedMagnitude * 0.14);
-
-        // Ambient gentle drift to the right (px/sec)
-        const ambientRightSpeed = 16;
-
-        // 4. Update Particle Coordinates with True Screen Edge Loop
-        for (let i = 0; i < particlesData.length; i++) {
-          const p = particlesData[i];
-
-          // Rightward horizontal advance: ambient float + scroll acceleration
-          const advanceX = (ambientRightSpeed + (currentVelocity * p.speedFactor * 16)) * dt;
-          p.x += advanceX;
-
-          // TRUE SCREEN EDGE CONVEYOR BELT LOOP:
-          // When the element moves completely past the RIGHT edge (winW),
-          // immediately reset position to enter from the LEFT edge (-p.itemWidth).
-          if (p.x > winW) {
-            p.x = -p.itemWidth;
-            p.currentRenderX = -p.itemWidth;
-          } else if (p.x < -p.itemWidth) {
-            // Reverse handling if scrolled up vigorously
-            p.x = winW;
-            p.currentRenderX = winW;
-          }
-
-          // Dynamic harmonic levitation
-          const currentSway = p.baseSway * amplitudeMultiplier;
-          const swayX = Math.cos(levitationClock + p.phaseOffset) * (currentSway * 0.35);
-          const swayY = Math.sin(levitationClock * 0.85 + p.phaseOffset) * currentSway;
-          const swayRot = Math.sin(levitationClock * 0.45 + p.phaseOffset) * (7 * amplitudeMultiplier) + (currentVelocity * p.rotBias * 3.5);
-
-          const targetPosX = p.x + swayX;
-          const targetPosY = (p.baseYRatio * winH) + swayY;
-
-          // 120Hz smooth coordinate lerp
-          const lerpRate = Math.min(1, dt * 14);
-          p.currentRenderX += (targetPosX - p.currentRenderX) * lerpRate;
-          p.currentRenderY += (targetPosY - p.currentRenderY) * lerpRate;
-          p.currentRot += (swayRot - p.currentRot) * lerpRate;
-
-          p.el.style.transform = `translate3d(${p.currentRenderX.toFixed(2)}px, ${p.currentRenderY.toFixed(2)}px, 0) rotate(${p.currentRot.toFixed(2)}deg)`;
-        }
+        requestAnimationFrame(onScrollTick);
       }
 
-      requestAnimationFrame(animationLoop);
+      requestAnimationFrame(onScrollTick);
+    })();
+
+    /* =========================================================
+       2. INTERACTIVE ATTRACTION MAP CLICK BADGE METADATA LOGIC
+    ========================================================= */
+    function togglePinBadge(wrapperEl, rideKey) {
+      const badge = wrapperEl.querySelector('.pin-badge');
+      const isAlreadyOpen = !badge.classList.contains('hidden');
+
+      // Close all other open badges first
+      document.querySelectorAll('.pin-badge').forEach(b => b.classList.add('hidden'));
+
+      if (!isAlreadyOpen) {
+        badge.classList.remove('hidden');
+        // Gentle haptic feedback if supported
+        if (navigator.vibrate) navigator.vibrate(30);
+      }
+    }
+
+    function closeBadge(btnEl) {
+      const badge = btnEl.closest('.pin-badge');
+      if (badge) badge.classList.add('hidden');
+    }
+
+    // Scroll helper to jump directly to pin
+    function highlightRide(rideKey) {
+      const mapSection = document.getElementById('interactive-map');
+      if (mapSection) {
+        mapSection.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => {
+          const pin = document.querySelector(`.ride-pin-wrapper[onclick*="${rideKey}"]`);
+          if (pin) togglePinBadge(pin, rideKey);
+        }, 500);
+      }
+    }
+
+    /* =========================================================
+       4. TWO-TOUCH DOUBLE INTERACTIVE NEON FOOTER LOGIC
+       - 1st Touch: Flashes button into maximum neon brightness, 
+         fades in large translucent background graphic with idle sway.
+       - 2nd Touch: Triggers external window.open redirection.
+    ========================================================= */
+    (function initTwoTouchFooter() {
+      const buttons = document.querySelectorAll('.two-touch-btn');
+      const whatsappBg = document.getElementById('whatsapp-bg-graphic');
+      const instagramBg = document.getElementById('instagram-bg-graphic');
+      const promptEl = document.getElementById('touch-prompt');
+
+      let activeTouchedBtn = null;
+
+      buttons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const type = btn.getAttribute('data-type');
+          const targetUrl = btn.getAttribute('data-target');
+
+          // If this button has ALREADY been touched once, this is the SECOND touch -> open URL
+          if (activeTouchedBtn === btn) {
+            promptEl.textContent = `Connecting to ${type.toUpperCase()}...`;
+            window.open(targetUrl, '_blank', 'noopener,noreferrer');
+            return;
+          }
+
+          // FIRST TOUCH EVENT
+          activeTouchedBtn = btn;
+
+          // Reset all buttons styling
+          buttons.forEach(b => {
+            b.classList.remove('neon-box-cyan', 'neon-box-pink', 'border-white', 'scale-105');
+            const statusTag = b.querySelector('.touch-status');
+            if (statusTag) {
+              statusTag.textContent = 'TAP 1';
+              statusTag.classList.remove('bg-neonYellow', 'text-black', 'border-white');
+            }
+          });
+
+          // Reset background graphics
+          whatsappBg.style.opacity = '0';
+          instagramBg.style.opacity = '0';
+
+          // Activate selected button with maximum neon brightness
+          if (type === 'whatsapp') {
+            btn.classList.add('neon-box-cyan', 'scale-105', 'border-white');
+            whatsappBg.style.opacity = '0.18';
+            promptEl.innerHTML = `<span class="text-neonCyan font-bold">WhatsApp Primed:</span> Tap again to launch live concierge chat!`;
+          } else if (type === 'instagram') {
+            btn.classList.add('neon-box-pink', 'scale-105', 'border-white');
+            instagramBg.style.opacity = '0.18';
+            promptEl.innerHTML = `<span class="text-neonPink font-bold">Instagram Primed:</span> Tap again to view official 4K jump feeds!`;
+          }
+
+          // Update Status Tag on button
+          const activeStatus = btn.querySelector('.touch-status');
+          if (activeStatus) {
+            activeStatus.textContent = 'TAP 2 (OPEN)';
+            activeStatus.classList.add('bg-neonYellow', 'text-black', 'border-white');
+          }
+
+          // Gentle pulse feedback
+          if (navigator.vibrate) navigator.vibrate([40, 60, 40]);
+        });
+      });
+
+      // Clear state when clicking anywhere outside the footer buttons
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('#contact')) {
+          if (activeTouchedBtn) {
+            activeTouchedBtn = null;
+            buttons.forEach(b => {
+              b.classList.remove('neon-box-cyan', 'neon-box-pink', 'border-white', 'scale-105');
+              const statusTag = b.querySelector('.touch-status');
+              if (statusTag) statusTag.textContent = 'TAP 1';
+            });
+            whatsappBg.style.opacity = '0';
+            instagramBg.style.opacity = '0';
+            promptEl.textContent = 'Ready for touch connection...';
+          }
+        }
+      });
     })();
   </script>
 </body>
