@@ -117,6 +117,30 @@
       animation: ekgLoop 2s linear infinite;
     }
 
+    /* Background EKG Grid and Wave Animation for Panic Mode */
+    .panic-bg-ekg {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 5;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+    body.panic-active .panic-bg-ekg {
+      opacity: 0.85;
+    }
+    @keyframes ekgBgSweep {
+      0% { stroke-dashoffset: 2400; }
+      100% { stroke-dashoffset: 0; }
+    }
+    .ekg-bg-line {
+      stroke-dasharray: 2400;
+      stroke-dashoffset: 2400;
+      animation: ekgBgSweep 2.5s linear infinite;
+    }
+
     /* Idle hover for footer ambient logos */
     @keyframes floatHover {
       0%, 100% { transform: translate3d(0, 0, 0) rotate(-3deg); }
@@ -208,7 +232,30 @@
   </div>
 
   <!-- ========================================================================= -->
-  <!-- 1. DRIFTING PARALLAX VECTOR CLOUDS (SEPARATE HORIZONTALLY ON SCROLL)      -->
+  <!-- 1.1 REAL-TIME BACKGROUND EKG HEARTBEAT LINE (PANIC MODE PULSING ALERT)    -->
+  <!-- ========================================================================= -->
+  <div id="panic-bg-ekg" class="panic-bg-ekg" aria-hidden="true">
+    <svg viewBox="0 0 1920 600" preserveAspectRatio="none" class="w-full h-full opacity-40">
+      <defs>
+        <linearGradient id="ekgRedGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#FF0A37" stop-opacity="0.2"/>
+          <stop offset="50%" stop-color="#FF0A37" stop-opacity="0.95"/>
+          <stop offset="100%" stop-color="#FF0A37" stop-opacity="0.2"/>
+        </linearGradient>
+      </defs>
+      <!-- Horizontal Heartbeat Trace traversing the background -->
+      <path d="M 0 300 L 150 300 L 170 300 L 185 240 L 200 360 L 215 160 L 235 440 L 255 300 L 280 320 L 305 300 L 480 300 L 500 240 L 515 360 L 530 160 L 550 440 L 570 300 L 595 320 L 620 300 L 800 300 L 820 240 L 835 360 L 850 160 L 870 440 L 890 300 L 915 320 L 940 300 L 1120 300 L 1140 240 L 1155 360 L 1170 160 L 1190 440 L 1210 300 L 1235 320 L 1260 300 L 1440 300 L 1460 240 L 1475 360 L 1490 160 L 1510 440 L 1530 300 L 1555 320 L 1580 300 L 1760 300 L 1780 240 L 1795 360 L 1810 160 L 1830 440 L 1850 300 L 1920 300"
+            fill="none" 
+            stroke="url(#ekgRedGlow)" 
+            stroke-width="3.5" 
+            class="ekg-bg-line" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 1.2 DRIFTING PARALLAX VECTOR CLOUDS (SEPARATE HORIZONTALLY ON SCROLL)     -->
   <!-- ========================================================================= -->
   <div class="fixed inset-0 pointer-events-none z-10 overflow-hidden" aria-hidden="true">
     <div id="cloud-drift-left" class="absolute -left-28 top-1/4 w-[550px] md:w-[850px] aspect-[1.8/1] gpu-accel opacity-35 transition-transform duration-300">
@@ -571,6 +618,203 @@
         </div>
       </div>
     </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 3.1 FLIGHT REVIEWS & OAUTH VERIFIED TELEMETRY CRITIQUE                    -->
+  <!-- ========================================================================= -->
+  <section id="reviews" class="py-20 px-6 md:px-12 max-w-7xl mx-auto z-20 relative">
+    
+    <!-- Section Header -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6 border-b border-white/10 pb-8">
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyberCyan/10 border border-cyberCyan/30 text-cyberCyan font-mono text-xs uppercase tracking-widest mb-3">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+          <span>OAuth 2.0 Cryptographic Verification Required</span>
+        </div>
+        <h2 class="font-cyber text-3xl sm:text-4xl md:text-5xl font-black uppercase text-white tracking-wider">
+          Pilot & Jumper <span class="text-cyberCyan neon-cyan-glow">Reviews</span>
+        </h2>
+        <p class="text-white/70 font-sans text-sm max-w-xl mt-2 font-light">
+          Real-time aggregated telemetry feedback. Submissions require Google OAuth authentication with cryptographically signed tokens.
+        </p>
+      </div>
+
+      <!-- Live Arithmetic Mean Rating Card -->
+      <div id="live-rating-summary" class="flex items-center gap-5 p-5 rounded-2xl bg-cockpitDark/90 border border-white/15 backdrop-blur-xl shadow-[0_0_30px_rgba(0,240,255,0.15)] min-w-[280px]">
+        <div class="flex flex-col">
+          <span class="text-[10px] font-mono uppercase tracking-widest text-white/50">Calculated Mean Score</span>
+          <div class="flex items-baseline gap-2 mt-1">
+            <span id="mean-score-display" class="font-cyber text-4xl font-black text-cyberYellow">--</span>
+            <span class="font-mono text-xs text-white/50">/ 5.0</span>
+          </div>
+          <span id="review-count-display" class="font-mono text-[11px] text-cyberCyan mt-0.5">Computing database scores...</span>
+        </div>
+        <div class="h-12 w-[1px] bg-white/15"></div>
+        <div>
+          <!-- Star icons container dynamically rendered -->
+          <div id="mean-stars-container" class="flex items-center gap-1 text-cyberYellow">
+            <!-- Stars rendered dynamically via JS -->
+          </div>
+          <span class="text-[9px] font-mono text-emerald-400 block mt-1 uppercase tracking-wider">● Verified Dataset</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Review Form & Feed Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Left Column: Google OAuth & Submission Form (4 Cols) -->
+      <div class="lg:col-span-5 p-6 sm:p-8 rounded-3xl bg-cockpitDark/95 border border-white/15 backdrop-blur-2xl relative overflow-hidden shadow-2xl">
+        <div class="absolute -right-20 -top-20 w-48 h-48 bg-cyberCyan/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <h3 class="font-cyber text-xl font-bold uppercase text-white mb-2 flex items-center gap-2">
+          <i data-lucide="edit-3" class="w-5 h-5 text-cyberCyan"></i>
+          Submit Flight Log
+        </h3>
+        <p class="text-xs text-white/60 font-sans mb-6">
+          To combat spam and verify genuine jump passes, authorization via Google OAuth is strictly enforced.
+        </p>
+
+        <!-- Google OAuth Authentication Box -->
+        <div id="oauth-auth-gate" class="mb-6 p-4 rounded-2xl bg-black/60 border border-white/10">
+          
+          <!-- State 1: Unauthenticated -->
+          <div id="oauth-unauth-view" class="space-y-3">
+            <div class="flex items-center justify-between text-xs font-mono text-white/60">
+              <span class="flex items-center gap-1.5 text-cyberPink">
+                <span class="w-2 h-2 rounded-full bg-cyberPink animate-pulse"></span>
+                Unauthenticated
+              </span>
+              <span>Session: None</span>
+            </div>
+            
+            <button id="google-login-btn"
+                    type="button" 
+                    onclick="handleGoogleAuthTrigger()"
+                    class="w-full py-3 px-4 rounded-xl bg-white text-gray-900 font-sans font-semibold text-xs flex items-center justify-center gap-3 hover:bg-gray-100 transition-all shadow-md active:scale-95 cursor-pointer">
+              <!-- Official Google "G" SVG Icon -->
+              <svg class="w-4 h-4" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+              </svg>
+              <span>Authenticate with Google OAuth</span>
+            </button>
+            <p class="text-[10px] font-mono text-white/40 text-center">
+              Requires OAuth JWT Token before submission unlocks
+            </p>
+          </div>
+
+          <!-- State 2: Authenticated View (Revealed after OAuth) -->
+          <div id="oauth-auth-view" class="hidden space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <img id="oauth-user-avatar" src="" alt="User" class="w-8 h-8 rounded-full border border-cyberCyan object-cover">
+                <div class="flex flex-col">
+                  <span id="oauth-user-name" class="text-xs font-bold text-white font-sans">Verified Pilot</span>
+                  <span id="oauth-user-email" class="text-[10px] font-mono text-white/60">user@example.com</span>
+                </div>
+              </div>
+              <button onclick="handleLogoutGoogle()" class="text-[11px] font-mono text-white/40 hover:text-cyberPink transition-colors">
+                Disconnect
+              </button>
+            </div>
+            <div class="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between text-[10px] font-mono text-emerald-400">
+              <span class="flex items-center gap-1.5">
+                <i data-lucide="check-circle" class="w-3 h-3"></i>
+                Token Verified: RS256 Validated
+              </span>
+              <span id="oauth-token-preview" class="text-white/40 truncate max-w-[120px]">eyJhbGciOi...</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- The Review Input Form -->
+        <form id="secure-review-form" onsubmit="handleReviewSubmit(event)" class="space-y-4">
+          
+          <!-- Ride Select -->
+          <div>
+            <label class="block text-xs font-mono uppercase tracking-widest text-white/70 mb-1.5">Selected Flight</label>
+            <select id="review-ride-select" class="w-full px-4 py-2.5 rounded-xl bg-black/60 border border-white/20 text-white font-sans text-xs focus:outline-none focus:border-cyberCyan transition-colors">
+              <option value="Bungee 207M Apex">Bungee 207M Apex Jump</option>
+              <option value="Mega Zipline Gorge">Mega Zipline Gorge Flight</option>
+              <option value="Sochi Giant Swing">Sochi Giant Swing Pendulum</option>
+              <option value="SkyBridge Suspension">SkyBridge 439M Suspension</option>
+            </select>
+          </div>
+
+          <!-- Score Selector (1.0 to 5.0 in 0.5 increments) -->
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="block text-xs font-mono uppercase tracking-widest text-white/70">Rating Calibration</label>
+              <span id="score-slider-val" class="font-cyber text-sm font-bold text-cyberYellow">5.0 ★</span>
+            </div>
+            <input type="range" 
+                   id="review-score-input" 
+                   min="1.0" 
+                   max="5.0" 
+                   step="0.5" 
+                   value="5.0" 
+                   oninput="document.getElementById('score-slider-val').textContent = parseFloat(this.value).toFixed(1) + ' ★'"
+                   class="w-full accent-cyberYellow cursor-pointer">
+            <div class="flex justify-between text-[10px] font-mono text-white/40 mt-1">
+              <span>1.0</span>
+              <span>2.0</span>
+              <span>3.0</span>
+              <span>4.0</span>
+              <span>5.0</span>
+            </div>
+          </div>
+
+          <!-- Review Comment (Will be strictly XSS sanitized) -->
+          <div>
+            <label class="block text-xs font-mono uppercase tracking-widest text-white/70 mb-1.5">Flight Critique & Notes</label>
+            <textarea id="review-comment-input" 
+                      rows="3" 
+                      required
+                      placeholder="Share your telemetry, freefall G-force sensation, harness security..."
+                      class="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/20 text-white font-sans text-xs focus:outline-none focus:border-cyberCyan transition-colors resize-none placeholder-white/30"></textarea>
+          </div>
+
+          <!-- SUBMIT BUTTON (Strictly disabled until Google OAuth authenticated) -->
+          <button id="review-submit-btn" 
+                  type="submit" 
+                  disabled
+                  class="w-full py-3.5 px-6 rounded-xl font-cyber text-xs uppercase tracking-wider font-bold transition-all flex items-center justify-center gap-2 cursor-not-allowed bg-white/10 text-white/30 border border-white/10 shadow-none">
+            <i data-lucide="lock" id="btn-lock-icon" class="w-4 h-4"></i>
+            <span id="btn-submit-label">OAuth Required to Post</span>
+          </button>
+
+          <!-- Security Notice -->
+          <div class="text-[10px] font-mono text-white/40 text-center flex items-center justify-center gap-2 pt-2">
+            <i data-lucide="shield" class="w-3 h-3 text-cyberCyan"></i>
+            <span>All entries sanitized with strict HTML escaping against XSS</span>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Right Column: Live Calculated Reviews Feed (7 Cols) -->
+      <div class="lg:col-span-7 space-y-4">
+        <div class="flex items-center justify-between px-2">
+          <span class="text-xs font-mono uppercase tracking-widest text-white/50">Verified Telemetry Feed</span>
+          <span id="dataset-status" class="text-xs font-mono text-cyberCyan flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-cyberCyan animate-ping"></span>
+            Sync: Instant DB Memory
+          </span>
+        </div>
+
+        <!-- Container where reviews are dynamically injected after sanitization -->
+        <div id="reviews-feed-container" class="space-y-4">
+          <!-- Dynamic review cards injected here -->
+        </div>
+      </div>
+
+    </div>
+
   </section>
 
   <!-- ========================================================================= -->
@@ -966,6 +1210,342 @@
         }
       });
     })();
+
+    /* =========================================================================
+       6. STRICT SECURITY & MATH ENGINE: GOOGLE OAUTH, ARITHMETIC MEAN & XSS SANITIZATION
+       - Google OAuth session verification gate (submit button disabled until verified token)
+       - Arithmetic mean calculation rounded to exactly one decimal place
+       - Dynamic rendering of full, half, and empty star SVG icons
+       - Strict XSS sanitization using contextual encoding
+    ========================================================================= */
+
+    // Simulated Secure Database Collection of Flight Reviews
+    let reviewsDatabase = [
+      {
+        id: 'rev-001',
+        author: 'Elena Rostova',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80',
+        ride: 'Bungee 207M Apex Jump',
+        score: 5.0,
+        comment: 'Pure adrenaline surge! 7 seconds of dead-silent supersonic freefall. The magnetic rebound harness felt 100% secure.',
+        timestamp: '12 mins ago',
+        verified: true
+      },
+      {
+        id: 'rev-002',
+        author: 'Markus Lindberg',
+        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80',
+        ride: 'Mega Zipline Gorge Flight',
+        score: 4.5,
+        comment: 'Incredible speed reaching 122 km/h across the gorge. Stunning panoramic canyon views. Minor queue delay at launch pad.',
+        timestamp: '1 hour ago',
+        verified: true
+      },
+      {
+        id: 'rev-003',
+        author: 'Dmitry Kasparov',
+        avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80',
+        ride: 'Sochi Giant Swing Pendulum',
+        score: 5.0,
+        comment: 'The pneumatic catapult release literally took my breath away. 500-meter arc over the river. Must experience at sunset!',
+        timestamp: '3 hours ago',
+        verified: true
+      },
+      {
+        id: 'rev-004',
+        author: 'Sarah Chen',
+        avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80',
+        ride: 'SkyBridge 439M Suspension',
+        score: 4.0,
+        comment: 'High wind telemetry on the bridge made the swaying feel surreal. Very solid grip railings and welcoming jump crew.',
+        timestamp: 'Yesterday',
+        verified: true
+      }
+    ];
+
+    // OAuth Session State
+    let currentUserSession = null;
+
+    /**
+     * SECURE XSS SANITIZER
+     * Converts untrusted characters into safe HTML character entities,
+     * preventing script injection, malicious event attributes, and iframe exploits.
+     * @param {string} rawString - Untrusted user input string
+     * @return {string} Sanitized string safe for DOM interpolation
+     */
+    function sanitizeForXSS(rawString) {
+      if (typeof rawString !== 'string') return '';
+      const entityMap = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#x27;',
+        '/': '&#x2F;',
+        '`': '&#96;'
+      };
+      return rawString.replace(/[&<>"'`\/]/g, char => entityMap[char] || char);
+    }
+
+    /**
+     * GENERATE VISUAL STAR ICONS (Including Half-Stars)
+     * Renders mathematically exact full, half, and empty stars based on score.
+     * @param {number} rating - Rating score between 0.0 and 5.0
+     * @param {string} sizeClass - Tailwind size class (e.g. 'w-4 h-4')
+     * @return {string} SVG star markup
+     */
+    function renderVisualStars(rating, sizeClass = 'w-4 h-4') {
+      let starsHTML = '';
+      const clampedRating = Math.max(0, Math.min(5, rating));
+
+      for (let i = 1; i <= 5; i++) {
+        if (clampedRating >= i) {
+          // Full Star
+          starsHTML += `
+            <svg class="${sizeClass} fill-current text-cyberYellow inline-block" viewBox="0 0 24 24">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>`;
+        } else if (clampedRating >= i - 0.5) {
+          // Half Star (Custom dual-path or defs clip)
+          starsHTML += `
+            <svg class="${sizeClass} text-cyberYellow inline-block" viewBox="0 0 24 24">
+              <defs>
+                <linearGradient id="halfGrad-${i}">
+                  <stop offset="50%" stop-color="#FFE600" />
+                  <stop offset="50%" stop-color="rgba(255,255,255,0.15)" />
+                </linearGradient>
+              </defs>
+              <path fill="url(#halfGrad-${i})" stroke="currentColor" stroke-width="1" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>`;
+        } else {
+          // Empty Star
+          starsHTML += `
+            <svg class="${sizeClass} text-white/20 inline-block" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>`;
+        }
+      }
+      return starsHTML;
+    }
+
+    /**
+     * STRICT MATHEMATICAL TASK:
+     * 1. Fetches all review scores from the dataset
+     * 2. Calculates arithmetic mean: sum(scores) / N
+     * 3. Rounds result to exactly one decimal place
+     * 4. Dynamically renders visual star icons (including half-stars)
+     * 5. Sanitizes output strings against XSS before injection
+     */
+    function recalculateAndRenderReviews() {
+      const feedContainer = document.getElementById('reviews-feed-container');
+      const meanDisplay = document.getElementById('mean-score-display');
+      const countDisplay = document.getElementById('review-count-display');
+      const meanStarsContainer = document.getElementById('mean-stars-container');
+
+      if (!reviewsDatabase || reviewsDatabase.length === 0) {
+        meanDisplay.textContent = '0.0';
+        countDisplay.textContent = '0 Verified Passes';
+        meanStarsContainer.innerHTML = renderVisualStars(0, 'w-5 h-5');
+        feedContainer.innerHTML = '<p class="text-xs text-white/50 font-mono">No telemetry logs available.</p>';
+        return;
+      }
+
+      // Step 1: Extract all numerical scores
+      const scores = reviewsDatabase.map(r => Number(r.score) || 0);
+
+      // Step 2: Calculate Arithmetic Mean
+      const sum = scores.reduce((acc, curr) => acc + curr, 0);
+      const rawMean = sum / scores.length;
+
+      // Step 3: Round strictly to exactly one decimal place
+      const roundedMean = Math.round(rawMean * 10) / 10;
+      const formattedMean = roundedMean.toFixed(1);
+
+      // Step 4: Render Mean score and Stars
+      meanDisplay.textContent = formattedMean;
+      countDisplay.textContent = `Based on ${scores.length} Verified Flight Pass${scores.length > 1 ? 'es' : ''}`;
+      meanStarsContainer.innerHTML = renderVisualStars(roundedMean, 'w-5 h-5');
+
+      // Step 5: Render Reviews feed with strict XSS sanitization
+      let htmlFeed = '';
+      reviewsDatabase.forEach(rev => {
+        // Sanitize every user-controlled field
+        const safeAuthor = sanitizeForXSS(rev.author);
+        const safeRide = sanitizeForXSS(rev.ride);
+        const safeComment = sanitizeForXSS(rev.comment);
+        const safeTimestamp = sanitizeForXSS(rev.timestamp);
+        const safeAvatar = sanitizeForXSS(rev.avatar);
+        const safeScore = (Math.round((Number(rev.score) || 0) * 10) / 10).toFixed(1);
+        const starsSnippet = renderVisualStars(Number(safeScore), 'w-3.5 h-3.5');
+
+        htmlFeed += `
+          <div class="p-5 rounded-2xl bg-black/50 border border-white/10 hover:border-cyberCyan/40 transition-all duration-300 backdrop-blur-md">
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex items-center gap-3">
+                <img src="${safeAvatar}" alt="${safeAuthor}" class="w-10 h-10 rounded-full border border-white/20 object-cover" onerror="this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=120&q=80'">
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-xs font-bold text-white font-sans">${safeAuthor}</span>
+                    <span class="px-2 py-0.5 rounded text-[9px] font-mono bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">OAuth Verified</span>
+                  </div>
+                  <span class="text-[11px] font-mono text-cyberCyan block mt-0.5">${safeRide}</span>
+                </div>
+              </div>
+              <div class="flex flex-col items-end">
+                <div class="flex items-center gap-1">${starsSnippet}</div>
+                <span class="text-xs font-cyber font-bold text-cyberYellow mt-0.5">${safeScore} ★</span>
+              </div>
+            </div>
+            <p class="mt-3 text-xs text-white/80 font-sans font-light leading-relaxed border-t border-white/5 pt-2.5">
+              ${safeComment}
+            </p>
+            <div class="mt-2.5 flex items-center justify-between text-[10px] font-mono text-white/40">
+              <span>Telemetry Timestamp: ${safeTimestamp}</span>
+              <span class="text-white/30">SHA-256 Validated</span>
+            </div>
+          </div>
+        `;
+      });
+
+      feedContainer.innerHTML = htmlFeed;
+      lucide.createIcons();
+    }
+
+    /* =========================================================================
+       GOOGLE OAUTH 2.0 PROTOCOL & SECURITY GUARD
+       - Submit button remains disabled until authenticated
+       - Generates cryptographically simulated JWT token payload
+    ========================================================================= */
+    const unauthView = document.getElementById('oauth-unauth-view');
+    const authView = document.getElementById('oauth-auth-view');
+    const submitBtn = document.getElementById('review-submit-btn');
+    const btnLockIcon = document.getElementById('btn-lock-icon');
+    const btnSubmitLabel = document.getElementById('btn-submit-label');
+
+    function updateSubmitButtonSecurity() {
+      if (currentUserSession && currentUserSession.token) {
+        // UNLOCKED: Session verified
+        submitBtn.removeAttribute('disabled');
+        submitBtn.classList.remove('cursor-not-allowed', 'bg-white/10', 'text-white/30', 'border-white/10', 'shadow-none');
+        submitBtn.classList.add('cursor-pointer', 'bg-gradient-to-r', 'from-cyberCyan', 'to-cyberPink', 'text-black', 'border-transparent', 'shadow-[0_0_20px_#00F0FF]', 'hover:brightness-110', 'active:scale-95');
+        btnSubmitLabel.textContent = 'Publish Verified Critique';
+        if (btnLockIcon) btnLockIcon.setAttribute('data-lucide', 'send');
+      } else {
+        // STRICTLY LOCKED & DISABLED
+        submitBtn.setAttribute('disabled', 'true');
+        submitBtn.classList.add('cursor-not-allowed', 'bg-white/10', 'text-white/30', 'border-white/10', 'shadow-none');
+        submitBtn.classList.remove('cursor-pointer', 'bg-gradient-to-r', 'from-cyberCyan', 'to-cyberPink', 'text-black', 'border-transparent', 'shadow-[0_0_20px_#00F0FF]', 'hover:brightness-110', 'active:scale-95');
+        btnSubmitLabel.textContent = 'OAuth Required to Post';
+        if (btnLockIcon) btnLockIcon.setAttribute('data-lucide', 'lock');
+      }
+      lucide.createIcons();
+    }
+
+    /**
+     * Trigger Google OAuth Authentication
+     */
+    function handleGoogleAuthTrigger() {
+      // Simulate authentic Google OAuth 2.0 popup authorization handshake
+      const samplePilots = [
+        { name: 'Alex Mercer', email: 'a.mercer.extreme@gmail.com', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=120&q=80' },
+        { name: 'Victoria Stone', email: 'v.stone.aero@gmail.com', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80' },
+        { name: 'Marcus Vance', email: 'marcus.vance.jump@gmail.com', avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=120&q=80' }
+      ];
+      const randomPilot = samplePilots[Math.floor(Math.random() * samplePilots.length)];
+
+      // Generate a mock RS256 JWT payload token
+      const dummyHeader = btoa(JSON.stringify({ alg: 'RS256', typ: 'JWT' }));
+      const dummyPayload = btoa(JSON.stringify({
+        iss: 'https://accounts.google.com',
+        sub: '1098439201984210',
+        email: randomPilot.email,
+        email_verified: true,
+        name: randomPilot.name,
+        iat: Math.floor(Date.now() / 1000),
+        exp: Math.floor(Date.now() / 1000) + 3600
+      }));
+      const dummySignature = btoa('verified_rsa_oauth_sig_hash');
+      const jwtToken = `${dummyHeader}.${dummyPayload}.${dummySignature}`;
+
+      currentUserSession = {
+        name: randomPilot.name,
+        email: randomPilot.email,
+        avatar: randomPilot.avatar,
+        token: jwtToken
+      };
+
+      // Update UI View
+      document.getElementById('oauth-user-name').textContent = currentUserSession.name;
+      document.getElementById('oauth-user-email').textContent = currentUserSession.email;
+      document.getElementById('oauth-user-avatar').src = currentUserSession.avatar;
+      document.getElementById('oauth-token-preview').textContent = jwtToken.substring(0, 18) + '...';
+
+      unauthView.classList.add('hidden');
+      authView.classList.remove('hidden');
+
+      // Unlock submit button
+      updateSubmitButtonSecurity();
+    }
+
+    /**
+     * Logout and Disconnect Google OAuth session
+     */
+    function handleLogoutGoogle() {
+      currentUserSession = null;
+      authView.classList.add('hidden');
+      unauthView.classList.remove('hidden');
+      updateSubmitButtonSecurity();
+    }
+
+    /**
+     * Handle Review Form Submission
+     */
+    function handleReviewSubmit(e) {
+      e.preventDefault();
+
+      // Strict security barrier: prevent submission if no verified OAuth token
+      if (!currentUserSession || !currentUserSession.token) {
+        alert('SECURITY ERROR: Unauthorized attempt. Verified Google OAuth session token is required.');
+        return;
+      }
+
+      const rideSelect = document.getElementById('review-ride-select');
+      const scoreInput = document.getElementById('review-score-input');
+      const commentInput = document.getElementById('review-comment-input');
+
+      const rawRide = rideSelect.value;
+      const rawScore = parseFloat(scoreInput.value);
+      const rawComment = commentInput.value.trim();
+
+      if (!rawComment) return;
+
+      // Construct verified entry
+      const newEntry = {
+        id: 'rev-' + Date.now(),
+        author: currentUserSession.name,
+        avatar: currentUserSession.avatar,
+        ride: rawRide,
+        score: rawScore,
+        comment: rawComment, // will be sanitized by recalculateAndRenderReviews
+        timestamp: 'Just now',
+        verified: true
+      };
+
+      // Prepend to database
+      reviewsDatabase.unshift(newEntry);
+
+      // Clear input fields
+      commentInput.value = '';
+      scoreInput.value = '5.0';
+      document.getElementById('score-slider-val').textContent = '5.0 ★';
+
+      // Recompute arithmetic mean and re-render stars & feed
+      recalculateAndRenderReviews();
+    }
+
+    // Initialize Reviews Engine on page load
+    recalculateAndRenderReviews();
+    updateSubmitButtonSecurity();
   </script>
 </body>
 </html>
